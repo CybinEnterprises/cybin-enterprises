@@ -530,7 +530,7 @@ export default function FraudDeflectPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
             {benefits.map(({ icon: Icon, title, desc }, i) => (
               <div
-                key={title}
+                key={`benefit-${i}`}
                 className="animate-fade-up cybin-glass-card p-6"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >

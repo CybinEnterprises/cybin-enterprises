@@ -1,5 +1,6 @@
 import { JsonLd } from "@/components/JsonLd";
 import { useSeo } from "@/hooks/useSeo";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { Link, useParams } from "@/lib/router";
 import { AlertTriangle, CheckCircle, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
@@ -568,13 +569,15 @@ export default function IndustryLandingPage() {
         },
   );
 
+  const colors = useThemeColors();
+
   if (!industry) {
     return (
       <div
         className="min-h-screen flex flex-col items-center justify-center"
-        style={{ backgroundColor: "#0a0f1e" }}
+        style={{ backgroundColor: colors.bgPrimary }}
       >
-        <h1 className="text-2xl font-bold mb-4" style={{ color: "#e8edf8" }}>
+        <h1 className="text-2xl font-bold mb-4" style={{ color: colors.textPrimary }}>
           Industry Not Found
         </h1>
         <Link to="/industries" className="cybin-btn-primary">
@@ -767,8 +770,8 @@ export default function IndustryLandingPage() {
             How Cybin Can Help
           </h2>
           <div className="flex flex-col gap-3 text-left">
-            {industry.benefits.map((b) => (
-              <div key={b} className="flex items-center gap-3">
+            {industry.benefits.map((b, bIdx) => (
+              <div key={`benefit-${bIdx}`} className="flex items-center gap-3">
                 <CheckCircle
                   size={16}
                   style={{ color: "#00d4b8", flexShrink: 0 }}
@@ -810,7 +813,7 @@ export default function IndustryLandingPage() {
           <div className="flex flex-col gap-4">
             {industry.faq.map((item, idx) => (
               <div
-                key={item.q}
+                key={`faq-${idx}`}
                 data-ocid={`industry.faq.item.${idx + 1}`}
                 className="animate-fade-up"
                 style={{

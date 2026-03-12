@@ -219,7 +219,7 @@ export default function IntegrationsPage() {
             {categories.map(
               ({ id, icon: Icon, title, description, tools, color }, i) => (
                 <div
-                  key={id}
+                  key={`integration-${i}`}
                   className="animate-fade-up cybin-glass-card p-6 flex flex-col"
                   style={{ transitionDelay: `${i * 60}ms` }}
                 >
@@ -254,9 +254,9 @@ export default function IntegrationsPage() {
 
                   {/* Tool Badges */}
                   <div className="flex flex-wrap gap-2 mb-6 flex-1">
-                    {tools.map((tool) => (
+                    {tools.map((tool, toolIndex) => (
                       <span
-                        key={tool}
+                        key={`tool-${toolIndex}`}
                         className="text-xs px-3 py-1.5 rounded-full font-medium"
                         style={{
                           backgroundColor: `${color}10`,
@@ -318,8 +318,8 @@ export default function IntegrationsPage() {
                 label: "Bespoke integrations on request",
                 color: "#ffc832",
               },
-            ].map(({ value, label, color }) => (
-              <div key={label} className="animate-fade-up">
+            ].map(({ value, label, color }, statIdx) => (
+              <div key={`stat-${statIdx}`} className="animate-fade-up">
                 <p
                   className="text-4xl font-bold mb-2"
                   style={{ fontFamily: "Sora, sans-serif", color }}

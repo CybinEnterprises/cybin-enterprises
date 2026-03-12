@@ -187,8 +187,8 @@ export default function HardwarePage() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
-            {perks.map(({ icon: Icon, label }) => (
-              <div key={label} className="flex items-center gap-2">
+            {perks.map(({ icon: Icon, label }, perkIdx) => (
+              <div key={`perk-${perkIdx}`} className="flex items-center gap-2">
                 <Icon size={16} style={{ color: "#00d4b8", flexShrink: 0 }} />
                 <span
                   className="text-sm font-medium"

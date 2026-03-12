@@ -9,6 +9,7 @@ import {
   ChevronRight,
   CreditCard,
   Globe,
+  Laptop,
   RefreshCw,
   ShoppingBag,
   Smartphone,
@@ -32,7 +33,7 @@ const capabilities = [
     desc: "In-store payment terminals and point-of-sale solutions tailored to your industry.",
   },
   {
-    icon: Globe,
+    icon: Laptop,
     title: "Online Payment Gateways",
     desc: "Secure, high-converting checkout experiences for e-commerce and digital businesses.",
   },
@@ -257,7 +258,7 @@ export default function PaymentSolutionsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {capabilities.map(({ icon: Icon, title, desc }, i) => (
               <div
-                key={title}
+                key={`capability-${i}`}
                 className="animate-fade-up cybin-glass-card p-6"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
@@ -324,8 +325,8 @@ export default function PaymentSolutionsPage() {
                   "Cross-border commerce",
                   "Multi-channel sales",
                   "Regulated industries",
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-3">
+                ].map((item, index) => (
+                  <div key={`feature-${index}`} className="flex items-center gap-3">
                     <CheckCircle
                       size={16}
                       style={{ color: "#00d4b8", flexShrink: 0 }}
@@ -408,7 +409,7 @@ export default function PaymentSolutionsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6">
               {steps.map(({ num, title, desc }, i) => (
                 <div
-                  key={num}
+                  key={`step-${i}`}
                   className="animate-fade-up relative text-center"
                   style={{ transitionDelay: `${i * 100}ms` }}
                 >
