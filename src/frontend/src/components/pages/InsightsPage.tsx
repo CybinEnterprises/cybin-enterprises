@@ -159,7 +159,10 @@ export default function InsightsPage() {
       </section>
 
       {/* Articles */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "60px 0 80px" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "60px 0 80px" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Category Filter */}
           <div className="mb-10 overflow-x-auto animate-fade-up">

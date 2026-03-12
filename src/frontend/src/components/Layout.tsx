@@ -89,7 +89,9 @@ function ThemeToggle() {
         height: 34,
         borderRadius: "8px",
         border: `1px solid ${isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.1)"}`,
-        backgroundColor: isLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.04)",
+        backgroundColor: isLight
+          ? "rgba(0,0,0,0.06)"
+          : "rgba(255,255,255,0.04)",
         color: isLight ? "#1a2040" : "rgba(232,237,248,0.6)",
         cursor: "pointer",
         flexShrink: 0,
@@ -122,7 +124,9 @@ export default function Layout({ children }: LayoutProps) {
   const site = useLiveSiteSettings();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
-  const logoImg = isLight ? "/assets/cybin-logo-light.png" : "/assets/cybin-logo-dark.png";
+  const logoImg = isLight
+    ? "/assets/cybin-logo-light.png"
+    : "/assets/cybin-logo-dark.png";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -214,7 +218,9 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ backgroundColor: isLight ? "var(--cybin-navy)" : "var(--cybin-navy)" }}
+      style={{
+        backgroundColor: isLight ? "var(--cybin-navy)" : "var(--cybin-navy)",
+      }}
     >
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 60 }}>
         <TickerBar />

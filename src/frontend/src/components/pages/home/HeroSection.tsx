@@ -111,14 +111,10 @@ export function HeroSection() {
 
   /* Theme tokens */
   const cardBg = isLight ? "rgba(255,255,255,0.85)" : "rgba(14,20,40,0.7)";
-  const cardBorder = isLight
-    ? "rgba(0,0,0,0.06)"
-    : "rgba(255,255,255,0.06)";
+  const cardBorder = isLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)";
   const textPrimary = isLight ? "#0f172a" : "#f1f5f9";
   const textMuted = isLight ? "rgba(15,23,42,0.55)" : "rgba(241,245,249,0.45)";
-  const glowColor = isLight
-    ? "rgba(0,212,184,0.07)"
-    : "rgba(0,212,184,0.12)";
+  const _glowColor = isLight ? "rgba(0,212,184,0.07)" : "rgba(0,212,184,0.12)";
 
   return (
     <section className="relative overflow-hidden min-h-screen flex flex-col justify-center bg-white dark:bg-cybin-navy">
@@ -157,7 +153,8 @@ export function HeroSection() {
             </div>
 
             {/* Headline — pain → relief */}
-            <h1 className="font-display text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.1] mb-6"
+            <h1
+              className="font-display text-[clamp(2.25rem,5vw,3.5rem)] font-bold leading-[1.1] mb-6"
               style={{ color: textPrimary }}
             >
               Your processor shut you&nbsp;down.{" "}
@@ -350,58 +347,67 @@ export function HeroSection() {
                       label: "Avg. Review",
                       delay: 1000,
                     },
-                  ].map(({ icon: Icon, value, suffix, prefix, label, delay: d }) => (
-                    <motion.div
-                      key={label}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: d / 1000, duration: 0.5 }}
-                      style={{
-                        textAlign: "center",
-                        padding: "14px 8px",
-                        borderRadius: 12,
-                        backgroundColor: isLight
-                          ? "rgba(0,0,0,0.02)"
-                          : "rgba(255,255,255,0.03)",
-                        border: `1px solid ${cardBorder}`,
-                      }}
-                    >
-                      <Icon
-                        size={16}
+                  ].map(
+                    ({
+                      icon: Icon,
+                      value,
+                      suffix,
+                      prefix,
+                      label,
+                      delay: d,
+                    }) => (
+                      <motion.div
+                        key={label}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: d / 1000, duration: 0.5 }}
                         style={{
-                          color: "#00d4b8",
-                          margin: "0 auto 6px",
-                          display: "block",
-                        }}
-                      />
-                      <div
-                        style={{
-                          fontSize: "1.15rem",
-                          fontWeight: 800,
-                          fontFamily: "Sora, system-ui, sans-serif",
-                          color: textPrimary,
-                          lineHeight: 1,
+                          textAlign: "center",
+                          padding: "14px 8px",
+                          borderRadius: 12,
+                          backgroundColor: isLight
+                            ? "rgba(0,0,0,0.02)"
+                            : "rgba(255,255,255,0.03)",
+                          border: `1px solid ${cardBorder}`,
                         }}
                       >
-                        <AnimatedCounter
-                          end={value}
-                          suffix={suffix}
-                          prefix={prefix}
-                          delay={d}
+                        <Icon
+                          size={16}
+                          style={{
+                            color: "#00d4b8",
+                            margin: "0 auto 6px",
+                            display: "block",
+                          }}
                         />
-                      </div>
-                      <div
-                        style={{
-                          fontSize: "0.6rem",
-                          color: textMuted,
-                          marginTop: 4,
-                          letterSpacing: "0.02em",
-                        }}
-                      >
-                        {label}
-                      </div>
-                    </motion.div>
-                  ))}
+                        <div
+                          style={{
+                            fontSize: "1.15rem",
+                            fontWeight: 800,
+                            fontFamily: "Sora, system-ui, sans-serif",
+                            color: textPrimary,
+                            lineHeight: 1,
+                          }}
+                        >
+                          <AnimatedCounter
+                            end={value}
+                            suffix={suffix}
+                            prefix={prefix}
+                            delay={d}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            fontSize: "0.6rem",
+                            color: textMuted,
+                            marginTop: 4,
+                            letterSpacing: "0.02em",
+                          }}
+                        >
+                          {label}
+                        </div>
+                      </motion.div>
+                    ),
+                  )}
                 </div>
 
                 {/* ─── Simulated transaction feed (social proof) ─── */}
@@ -435,10 +441,9 @@ export function HeroSection() {
                     >
                       Recent Approvals
                     </span>
-                    <span
-                      style={{ fontSize: "0.6rem", color: "#00d4b8" }}
-                    >
-                      View All <ArrowUpRight size={10} style={{ display: "inline" }} />
+                    <span style={{ fontSize: "0.6rem", color: "#00d4b8" }}>
+                      View All{" "}
+                      <ArrowUpRight size={10} style={{ display: "inline" }} />
                     </span>
                   </div>
                   {[
@@ -493,10 +498,7 @@ export function HeroSection() {
                             justifyContent: "center",
                           }}
                         >
-                          <CreditCard
-                            size={12}
-                            style={{ color: "#00d4b8" }}
-                          />
+                          <CreditCard size={12} style={{ color: "#00d4b8" }} />
                         </div>
                         <div>
                           <p
@@ -534,10 +536,7 @@ export function HeroSection() {
                         >
                           {time}
                         </span>
-                        <CheckCircle
-                          size={14}
-                          style={{ color: "#00d4b8" }}
-                        />
+                        <CheckCircle size={14} style={{ color: "#00d4b8" }} />
                       </div>
                     </motion.div>
                   ))}
@@ -567,8 +566,7 @@ export function HeroSection() {
                   width: 28,
                   height: 28,
                   borderRadius: "50%",
-                  background:
-                    "linear-gradient(135deg, #00d4b8, #7c5cbf)",
+                  background: "linear-gradient(135deg, #00d4b8, #7c5cbf)",
                 }}
               />
               {/* Floating badge bottom-left */}

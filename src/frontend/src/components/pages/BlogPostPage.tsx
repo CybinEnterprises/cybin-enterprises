@@ -251,7 +251,10 @@ export default function BlogPostPage() {
       </section>
 
       {/* Article body */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "60px 0 80px" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "60px 0 80px" }}
+      >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <article>
             {post.sections.map((section, i) => (

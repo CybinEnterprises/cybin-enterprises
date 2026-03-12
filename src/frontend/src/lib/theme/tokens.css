@@ -10,12 +10,12 @@
   --color-brand-primary: #0a0f1e;
   --color-brand-accent: #00d4b8;
   --color-brand-accent-warm: #a87ef5;
-  
+
   /* Typography */
-  --font-display: 'Sora', system-ui, sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
-  
+  --font-display: "Sora", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;
@@ -25,14 +25,14 @@
   --space-2xl: 48px;
   --space-3xl: 64px;
   --space-4xl: 80px;
-  
+
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-full: 9999px;
-  
+
   /* Transitions */
   --transition-fast: 150ms ease;
   --transition-base: 200ms ease;
@@ -43,40 +43,40 @@
    DARK THEME (Default)
    ============================================ */
 :root,
-[data-theme='dark'] {
+[data-theme="dark"] {
   /* Surfaces */
   --color-background: #0a0f1e;
   --color-surface: #110f22;
   --color-surface-elevated: #1a1833;
   --color-hero-bg: #0d1526;
-  
+
   /* Text - Mint and White */
   --color-text-primary: #ffffff;
   --color-text-secondary: #e8edf8;
   --color-text-muted: rgba(232, 237, 248, 0.65);
   --color-text-inverse: #0a0f1e;
-  
+
   /* Accent - Mint */
   --color-text-accent: #00d4b8;
-  
+
   /* Borders */
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-subtle: rgba(255, 255, 255, 0.04);
   --color-border-accent: rgba(0, 212, 184, 0.12);
-  
+
   /* Cards */
   --color-card-bg: rgba(255, 255, 255, 0.03);
   --color-card-border: rgba(255, 255, 255, 0.07);
-  
+
   /* Buttons */
   --color-button-primary-bg: #00d4b8;
   --color-button-primary-text: #0a0f1e;
   --color-button-primary-hover: #00f5cc;
-  
+
   /* Links - Lavender */
   --color-link: #a87ef5;
   --color-link-hover: #c4b5fd;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -87,40 +87,40 @@
 /* ============================================
    LIGHT THEME
    ============================================ */
-[data-theme='light'] {
+[data-theme="light"] {
   /* Surfaces */
   --color-background: #ffffff;
   --color-surface: #f8fafc;
   --color-surface-elevated: #ffffff;
   --color-hero-bg: #f8fafc;
-  
+
   /* Text - Mint and Black */
   --color-text-primary: #0a0f1e;
   --color-text-secondary: rgba(10, 15, 30, 0.8);
   --color-text-muted: rgba(10, 15, 30, 0.55);
   --color-text-inverse: #ffffff;
-  
+
   /* Accent - Mint */
   --color-text-accent: #00d4b8;
-  
+
   /* Borders */
   --color-border: #e2e8f0;
   --color-border-subtle: #f1f5f9;
   --color-border-accent: rgba(0, 212, 184, 0.2);
-  
+
   /* Cards */
   --color-card-bg: rgba(0, 212, 184, 0.04);
   --color-card-border: rgba(0, 212, 184, 0.12);
-  
+
   /* Buttons */
   --color-button-primary-bg: #00d4b8;
   --color-button-primary-text: #0a0f1e;
   --color-button-primary-hover: #00b89a;
-  
+
   /* Links - Lavender */
   --color-link: #a87ef5;
   --color-link-hover: #8b5cf6;
-  
+
   /* Shadows */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -132,13 +132,13 @@
    NEURON CANVAS - Automatic theme colors
    ============================================ */
 :root,
-[data-theme='dark'] {
+[data-theme="dark"] {
   --neuron-color: #00d4b8;
   --neuron-secondary: #a87ef5;
   --neuron-opacity: 0.4;
 }
 
-[data-theme='light'] {
+[data-theme="light"] {
   --neuron-color: #00a896;
   --neuron-secondary: #8b5cf6;
   --neuron-opacity: 0.25;

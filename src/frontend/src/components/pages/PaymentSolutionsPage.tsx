@@ -201,13 +201,21 @@ export default function PaymentSolutionsPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232,237,248,0.45)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.6)"
+                    : "rgba(232,237,248,0.45)",
+                }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: isLight ? "rgba(20,30,60,0.3)" : "rgba(232,237,248,0.3)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.3)"
+                    : "rgba(232,237,248,0.3)",
+                }}
               />
               <span className="text-sm" style={{ color: "#00d4b8" }}>
                 Payment Solutions
@@ -227,7 +235,12 @@ export default function PaymentSolutionsPage() {
             </h1>
             <p
               className="text-lg"
-              style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.65)", lineHeight: 1.7 }}
+              style={{
+                color: isLight
+                  ? "rgba(20,30,60,0.7)"
+                  : "rgba(232, 237, 248, 0.65)",
+                lineHeight: 1.7,
+              }}
             >
               Cybin Enterprises helps businesses access reliable payment
               infrastructure across domestic and international markets.
@@ -238,7 +251,10 @@ export default function PaymentSolutionsPage() {
       </section>
 
       {/* Capabilities */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "72px 0" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <span
@@ -276,13 +292,20 @@ export default function PaymentSolutionsPage() {
                 </div>
                 <h3
                   className="text-base font-bold mb-2"
-                  style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
+                  style={{
+                    fontFamily: "Sora, sans-serif",
+                    color: isLight ? "#1a2040" : "#e8edf8",
+                  }}
                 >
                   {title}
                 </h3>
                 <p
                   className="text-sm leading-relaxed"
-                  style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232, 237, 248, 0.6)" }}
+                  style={{
+                    color: isLight
+                      ? "rgba(20,30,60,0.6)"
+                      : "rgba(232, 237, 248, 0.6)",
+                  }}
                 >
                   {desc}
                 </p>
@@ -295,7 +318,12 @@ export default function PaymentSolutionsPage() {
       <div className="cybin-section-divider" />
 
       {/* Complex Business Models */}
-      <section style={{ backgroundColor: isLight ? "#f1f5f9" : "#0c1020", padding: "72px 0" }}>
+      <section
+        style={{
+          backgroundColor: isLight ? "#f1f5f9" : "#0c1020",
+          padding: "72px 0",
+        }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-up">
@@ -316,7 +344,12 @@ export default function PaymentSolutionsPage() {
               </h2>
               <p
                 className="text-base mb-6"
-                style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.65)", lineHeight: 1.75 }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.7)"
+                    : "rgba(232, 237, 248, 0.65)",
+                  lineHeight: 1.75,
+                }}
               >
                 Many businesses require more than a standard payment setup.
                 Cybin Enterprises helps structure solutions designed for:
@@ -329,12 +362,21 @@ export default function PaymentSolutionsPage() {
                   "Multi-channel sales",
                   "Regulated industries",
                 ].map((item, index) => (
-                  <div key={`feature-${index}`} className="flex items-center gap-3">
+                  <div
+                    key={`feature-${index}`}
+                    className="flex items-center gap-3"
+                  >
                     <CheckCircle
                       size={16}
                       style={{ color: "#00d4b8", flexShrink: 0 }}
                     />
-                    <span style={{ color: isLight ? "rgba(20,30,60,0.75)" : "rgba(232, 237, 248, 0.75)" }}>
+                    <span
+                      style={{
+                        color: isLight
+                          ? "rgba(20,30,60,0.75)"
+                          : "rgba(232, 237, 248, 0.75)",
+                      }}
+                    >
                       {item}
                     </span>
                   </div>
@@ -352,14 +394,22 @@ export default function PaymentSolutionsPage() {
                 <ShoppingBag size={28} style={{ color: "#00d4b8" }} />
                 <h3
                   className="text-xl font-bold"
-                  style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
+                  style={{
+                    fontFamily: "Sora, sans-serif",
+                    color: isLight ? "#1a2040" : "#e8edf8",
+                  }}
                 >
                   Not sure what you need?
                 </h3>
               </div>
               <p
                 className="text-sm mb-5"
-                style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232, 237, 248, 0.6)", lineHeight: 1.7 }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.6)"
+                    : "rgba(232, 237, 248, 0.6)",
+                  lineHeight: 1.7,
+                }}
               >
                 Our team will assess your specific business model, transaction
                 volume, and industry requirements to recommend the best payment
@@ -380,7 +430,10 @@ export default function PaymentSolutionsPage() {
       <div className="cybin-section-divider" />
 
       {/* Process */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "72px 0" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14 animate-fade-up">
             <span
@@ -435,13 +488,20 @@ export default function PaymentSolutionsPage() {
                   </div>
                   <h3
                     className="text-sm font-bold mb-2"
-                    style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
+                    style={{
+                      fontFamily: "Sora, sans-serif",
+                      color: isLight ? "#1a2040" : "#e8edf8",
+                    }}
                   >
                     {title}
                   </h3>
                   <p
                     className="text-xs leading-relaxed"
-                    style={{ color: isLight ? "rgba(20,30,60,0.55)" : "rgba(232, 237, 248, 0.55)" }}
+                    style={{
+                      color: isLight
+                        ? "rgba(20,30,60,0.55)"
+                        : "rgba(232, 237, 248, 0.55)",
+                    }}
                   >
                     {desc}
                   </p>

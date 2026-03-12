@@ -316,7 +316,10 @@ export default function FaqPage() {
       </section>
 
       {/* FAQ Sections */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "60px 0 80px" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "60px 0 80px" }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {faqSections.map((section, secIdx) => (
             <div key={`section-${secIdx}`} className="mb-14">
@@ -333,7 +336,11 @@ export default function FaqPage() {
               </h2>
               <div style={{ marginTop: 16 }}>
                 {section.faqs.map((faq, faqIdx) => (
-                  <FaqItem key={`faq-${secIdx}-${faqIdx}`} q={faq.q} a={faq.a} />
+                  <FaqItem
+                    key={`faq-${secIdx}-${faqIdx}`}
+                    q={faq.q}
+                    a={faq.a}
+                  />
                 ))}
               </div>
             </div>
@@ -342,7 +349,10 @@ export default function FaqPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "64px 0" }}
+      >
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2
             className="text-3xl font-bold mb-5"

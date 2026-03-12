@@ -7,8 +7,12 @@ export function useThemeColors() {
   return {
     accent: isLight ? "var(--cybin-mint)" : "var(--cybin-mint)",
     accentSecondary: isLight ? "var(--cybin-aurora)" : "var(--cybin-aurora)",
-    textPrimary: isLight ? "var(--cybin-text-primary)" : "var(--cybin-text-primary)",
-    textSecondary: isLight ? "var(--cybin-text-secondary)" : "rgba(232,237,248,0.65)",
+    textPrimary: isLight
+      ? "var(--cybin-text-primary)"
+      : "var(--cybin-text-primary)",
+    textSecondary: isLight
+      ? "var(--cybin-text-secondary)"
+      : "rgba(232,237,248,0.65)",
     textMuted: isLight ? "var(--cybin-text-muted)" : "rgba(232,237,248,0.45)",
     bgPrimary: isLight ? "var(--cybin-surface)" : "#0a0f1e",
     bgSecondary: isLight ? "#F9FAFF" : "#080d1a",
@@ -24,7 +28,7 @@ export function useThemeColors() {
     inputBorder: isLight ? "rgba(0,212,184,0.15)" : "rgba(110,247,212,0.15)",
     inputBorderFocus: isLight ? "rgba(0,212,184,0.4)" : "rgba(110,247,212,0.4)",
     inputText: isLight ? "#0a0f1e" : "#e8edf8",
-    gradient: isLight 
+    gradient: isLight
       ? "linear-gradient(135deg, rgba(0,212,184,0.08), rgba(124,92,191,0.06))"
       : "linear-gradient(135deg, rgba(110,247,212,0.06), rgba(26, 10, 46, 0.5))",
     isLight,

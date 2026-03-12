@@ -64,7 +64,10 @@ export function LegalPageTemplate({
         </div>
       </section>
 
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "60px 0 80px" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "60px 0 80px" }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className="cybin-glass-card p-8 sm:p-10"

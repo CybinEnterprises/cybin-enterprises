@@ -138,13 +138,21 @@ export default function AboutPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232,237,248,0.45)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.6)"
+                    : "rgba(232,237,248,0.45)",
+                }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: isLight ? "rgba(20,30,60,0.3)" : "rgba(232,237,248,0.3)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.3)"
+                    : "rgba(232,237,248,0.3)",
+                }}
               />
               <span className="text-sm" style={{ color: "#00d4b8" }}>
                 About
@@ -162,7 +170,12 @@ export default function AboutPage() {
             </h1>
             <p
               className="text-lg"
-              style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.65)", lineHeight: 1.7 }}
+              style={{
+                color: isLight
+                  ? "rgba(20,30,60,0.7)"
+                  : "rgba(232, 237, 248, 0.65)",
+                lineHeight: 1.7,
+              }}
             >
               Cybin Enterprises helps businesses navigate complex payment
               environments with clarity, structure, and long-term reliability.
@@ -202,7 +215,11 @@ export default function AboutPage() {
             </h2>
             <p
               className="text-base leading-relaxed"
-              style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.7)" }}
+              style={{
+                color: isLight
+                  ? "rgba(20,30,60,0.7)"
+                  : "rgba(232, 237, 248, 0.7)",
+              }}
             >
               {site.about.missionBody}
             </p>

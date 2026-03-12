@@ -247,7 +247,10 @@ export default function PartnersPage() {
       </section>
 
       {/* Partnership Types */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "72px 0" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <h2
@@ -773,7 +776,10 @@ export default function PartnersPage() {
       </section>
 
       {/* Notice at Collection */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "32px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "32px 0" }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className="rounded-xl p-5 text-center"

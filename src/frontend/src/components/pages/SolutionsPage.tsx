@@ -164,7 +164,10 @@ export default function SolutionsPage() {
                     marginBottom: 16,
                   }}
                 >
-                  <Icon size={22} style={{ color: isLight ? "#4F46E5" : "#D4E0F5" }} />
+                  <Icon
+                    size={22}
+                    style={{ color: isLight ? "#4F46E5" : "#D4E0F5" }}
+                  />
                 </div>
                 <h3
                   style={{
@@ -222,7 +225,13 @@ export default function SolutionsPage() {
           >
             Processing millions per month? We build accounts that scale.
           </h2>
-          <p style={{ color: isLight ? "rgba(20,30,60,0.7)" : "#D4E0F5", lineHeight: 1.7, marginBottom: 32 }}>
+          <p
+            style={{
+              color: isLight ? "rgba(20,30,60,0.7)" : "#D4E0F5",
+              lineHeight: 1.7,
+              marginBottom: 32,
+            }}
+          >
             Our enterprise team personally reviews high-volume accounts.
             Multi-MID structuring, international acquiring, and backup
             redundancy \u2014 built for stability at scale.

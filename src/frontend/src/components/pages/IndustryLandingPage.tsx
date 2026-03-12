@@ -1,5 +1,5 @@
-import { useTheme } from "@/contexts/ThemeContext";
 import { JsonLd } from "@/components/JsonLd";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useSeo } from "@/hooks/useSeo";
 import { Link, useParams } from "@/lib/router";
 import { AlertTriangle, CheckCircle, ChevronRight } from "lucide-react";
@@ -74,19 +74,19 @@ export default function IndustryLandingPage() {
         data={{
           "@context": "https://schema.org",
           "@type": "Service",
-          "name": industry.title,
-          "description": industry.metaDesc,
-          "provider": {
+          name: industry.title,
+          description: industry.metaDesc,
+          provider: {
             "@type": "Organization",
-            "name": "Cybin Enterprises",
-            "url": "https://cybinenterprises.com"
+            name: "Cybin Enterprises",
+            url: "https://cybinenterprises.com",
           },
-          "areaServed": "Global",
-          "serviceType": "Payment Processing",
-          "mainEntityOfPage": {
+          areaServed: "Global",
+          serviceType: "Payment Processing",
+          mainEntityOfPage: {
             "@type": "WebPage",
-            "@id": `https://cybinenterprises.com/industries/${industry.slug}`
-          }
+            "@id": `https://cybinenterprises.com/industries/${industry.slug}`,
+          },
         }}
       />
 
@@ -107,7 +107,9 @@ export default function IndustryLandingPage() {
               <Link
                 to="/"
                 className="text-sm text-[#e8edf8]/45 dark:text-[#e8edf8]/45"
-                style={{ color: isLight ? "#64748b" : "rgba(232,237,248,0.45)" }}
+                style={{
+                  color: isLight ? "#64748b" : "rgba(232,237,248,0.45)",
+                }}
               >
                 Home
               </Link>
@@ -118,7 +120,9 @@ export default function IndustryLandingPage() {
               <Link
                 to="/industries"
                 className="text-sm"
-                style={{ color: isLight ? "#64748b" : "rgba(232,237,248,0.45)" }}
+                style={{
+                  color: isLight ? "#64748b" : "rgba(232,237,248,0.45)",
+                }}
               >
                 Industries
               </Link>
@@ -169,7 +173,10 @@ export default function IndustryLandingPage() {
       </section>
 
       {/* Pain Points */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "72px 0" }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <span
@@ -245,7 +252,10 @@ export default function IndustryLandingPage() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "64px 0" }}
+      >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
             Frequently Asked Questions

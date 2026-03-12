@@ -123,7 +123,10 @@ export default function KnowledgePage() {
       </section>
 
       {/* What is Cybin Enterprises */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "64px 0" }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-3xl font-bold mb-6"
@@ -176,7 +179,10 @@ export default function KnowledgePage() {
       </section>
 
       {/* Key Facts */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "64px 0" }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-3xl font-bold mb-10"
@@ -268,7 +274,10 @@ export default function KnowledgePage() {
       </section>
 
       {/* Founders */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "64px 0" }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-3xl font-bold mb-10"
@@ -365,7 +374,10 @@ export default function KnowledgePage() {
       </section>
 
       {/* Services */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "64px 0" }}
+      >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2
             className="text-3xl font-bold mb-6"
@@ -416,7 +428,10 @@ export default function KnowledgePage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
+      <section
+        className="bg-slate-50 dark:bg-cybin-navy py-16"
+        style={{ padding: "64px 0" }}
+      >
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2
             className="text-3xl font-bold mb-5"

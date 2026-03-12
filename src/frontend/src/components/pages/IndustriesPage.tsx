@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/JsonLd";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useSeo } from "@/hooks/useSeo";
 import { Link } from "@/lib/router";
 import {
@@ -17,7 +18,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
 
 const industries = [
   {
@@ -103,7 +103,6 @@ export default function IndustriesPage() {
     return () => observer.disconnect();
   }, []);
 
-
   return (
     <div>
       <JsonLd
@@ -188,13 +187,21 @@ export default function IndustriesPage() {
               <Link
                 to="/"
                 className="text-sm shadow-none"
-                style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232,237,248,0.45)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.6)"
+                    : "rgba(232,237,248,0.45)",
+                }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: isLight ? "rgba(20,30,60,0.3)" : "rgba(232,237,248,0.3)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(20,30,60,0.3)"
+                    : "rgba(232,237,248,0.3)",
+                }}
               />
               <span className="text-sm" style={{ color: "#00d4b8" }}>
                 Industries
@@ -295,13 +302,20 @@ export default function IndustriesPage() {
           >
             <h3
               className="text-xl font-bold mb-3"
-              style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
+              style={{
+                fontFamily: "Sora, sans-serif",
+                color: isLight ? "#1a2040" : "#e8edf8",
+              }}
             >
               Don't see your industry listed?
             </h3>
             <p
               className="text-sm mb-6"
-              style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232, 237, 248, 0.6)" }}
+              style={{
+                color: isLight
+                  ? "rgba(20,30,60,0.6)"
+                  : "rgba(232, 237, 248, 0.6)",
+              }}
             >
               We support{" "}
               <strong style={{ color: isLight ? "#00A381" : "#e8edf8" }}>
@@ -341,7 +355,10 @@ export default function IndustriesPage() {
                 </div>
                 <h3
                   className="text-2xl font-bold mb-4"
-                  style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
+                  style={{
+                    fontFamily: "Sora, sans-serif",
+                    color: isLight ? "#1a2040" : "#e8edf8",
+                  }}
                 >
                   We Work With Merchants Others Won't
                 </h3>
@@ -385,7 +402,10 @@ export default function IndustriesPage() {
                   "High chargeback history addressed with Fraud Deflect",
                   "Structured path toward processing stability",
                 ].map((item, idx) => (
-                  <div key={`qualify-${idx}`} className="flex items-start gap-3">
+                  <div
+                    key={`qualify-${idx}`}
+                    className="flex items-start gap-3"
+                  >
                     <CheckCircle
                       size={16}
                       style={{
@@ -396,7 +416,11 @@ export default function IndustriesPage() {
                     />
                     <p
                       className="text-sm"
-                      style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.7)" }}
+                      style={{
+                        color: isLight
+                          ? "rgba(20,30,60,0.7)"
+                          : "rgba(232, 237, 248, 0.7)",
+                      }}
                     >
                       {item}
                     </p>

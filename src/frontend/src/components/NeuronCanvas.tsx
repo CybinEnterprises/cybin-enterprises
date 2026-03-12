@@ -18,37 +18,42 @@ function parseRgbVariable(varName: string): [number, number, number] {
   const root = document.documentElement;
   const computedStyle = getComputedStyle(root);
   const rgbString = computedStyle.getPropertyValue(varName).trim();
-  
+
   if (!rgbString) {
     // Fallback to defaults
-    return varName.includes('secondary') 
-      ? [99, 102, 241]  // dark secondary
+    return varName.includes("secondary")
+      ? [99, 102, 241] // dark secondary
       : [110, 247, 212]; // dark primary
   }
-  
+
   // Handle rgb(r, g, b) format
   const match = rgbString.match(/(\d+),\s*(\d+),\s*(\d+)/);
   if (match) {
-    return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
-  }
-  
-  // Handle hex format
-  if (rgbString.startsWith('#')) {
-    const hex = rgbString.slice(1);
     return [
-      parseInt(hex.slice(0, 2), 16),
-      parseInt(hex.slice(2, 4), 16),
-      parseInt(hex.slice(4, 6), 16),
+      Number.parseInt(match[1]),
+      Number.parseInt(match[2]),
+      Number.parseInt(match[3]),
     ];
   }
-  
+
+  // Handle hex format
+  if (rgbString.startsWith("#")) {
+    const hex = rgbString.slice(1);
+    return [
+      Number.parseInt(hex.slice(0, 2), 16),
+      Number.parseInt(hex.slice(2, 4), 16),
+      Number.parseInt(hex.slice(4, 6), 16),
+    ];
+  }
+
   // Fallback
-  return varName.includes('secondary') 
-    ? [99, 102, 241] 
-    : [110, 247, 212];
+  return varName.includes("secondary") ? [99, 102, 241] : [110, 247, 212];
 }
 
-export default function NeuronCanvas({ mode: _mode, style }: NeuronCanvasProps) {
+export default function NeuronCanvas({
+  mode: _mode,
+  style,
+}: NeuronCanvasProps) {
   // mode prop is deprecated - theme is now auto-detected from CSS variables
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [themeColors, setThemeColors] = useState<{
@@ -66,15 +71,17 @@ export default function NeuronCanvas({ mode: _mode, style }: NeuronCanvasProps) 
   // Detect theme from CSS variables
   useEffect(() => {
     const updateColors = () => {
-      const dotColor = parseRgbVariable('--neuron-color');
-      const lineColor = parseRgbVariable('--neuron-secondary');
-      
+      const dotColor = parseRgbVariable("--neuron-color");
+      const lineColor = parseRgbVariable("--neuron-secondary");
+
       // Get opacity from CSS
       const root = document.documentElement;
       const computedStyle = getComputedStyle(root);
-      const opacityStr = computedStyle.getPropertyValue('--neuron-opacity').trim();
-      const opacity = opacityStr ? parseFloat(opacityStr) : 0.4;
-      
+      const opacityStr = computedStyle
+        .getPropertyValue("--neuron-opacity")
+        .trim();
+      const opacity = opacityStr ? Number.parseFloat(opacityStr) : 0.4;
+
       setThemeColors({
         dotColor,
         lineColor,
@@ -87,17 +94,17 @@ export default function NeuronCanvas({ mode: _mode, style }: NeuronCanvasProps) 
 
     // Listen for theme changes
     const observer = new MutationObserver(updateColors);
-    observer.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ['data-theme'] 
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
     });
 
     // Also listen for load events (fonts may affect this)
-    window.addEventListener('load', updateColors);
+    window.addEventListener("load", updateColors);
 
     return () => {
       observer.disconnect();
-      window.removeEventListener('load', updateColors);
+      window.removeEventListener("load", updateColors);
     };
   }, []);
 
@@ -157,7 +164,9 @@ export default function NeuronCanvas({ mode: _mode, style }: NeuronCanvasProps) 
       }
 
       for (const n of nodes) {
-        const pulse = dotAlpha * (0.6 + 0.4 * Math.sin(t * n.pulseSpeed * 60 + n.pulseOffset));
+        const pulse =
+          dotAlpha *
+          (0.6 + 0.4 * Math.sin(t * n.pulseSpeed * 60 + n.pulseOffset));
         ctx.fillStyle = `rgba(${dotColor[0]},${dotColor[1]},${dotColor[2]},${pulse})`;
         ctx.beginPath();
         ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);

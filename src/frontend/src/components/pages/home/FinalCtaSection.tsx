@@ -1,5 +1,5 @@
-import { useTheme } from "@/contexts/ThemeContext";
 import NeuronCanvas from "@/components/NeuronCanvas";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Link } from "@/lib/router";
 import { ChevronRight } from "lucide-react";
 import React from "react";

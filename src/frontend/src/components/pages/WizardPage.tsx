@@ -1,6 +1,6 @@
 import NeuronCanvas from "@/components/NeuronCanvas";
-import { useTheme } from "@/contexts/ThemeContext";
 import TickerBar from "@/components/TickerBar";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Link, useSearchParams } from "@/lib/router";
 import {
   CheckCircle,
@@ -621,13 +621,13 @@ export default function WizardPage() {
                   sub: "Multi-processor access gives you more options.",
                 },
               ].map(({ icon: Icon, title, sub }, i) => (
-                <div 
-                  key={`wizard-benefit-${i}`} 
+                <div
+                  key={`wizard-benefit-${i}`}
                   className="animate-fade-up"
-                  style={{ 
-                    display: "flex", 
+                  style={{
+                    display: "flex",
                     gap: 14,
-                    animationDelay: `${i * 100}ms`
+                    animationDelay: `${i * 100}ms`,
                   }}
                 >
                   <div
@@ -635,7 +635,8 @@ export default function WizardPage() {
                       width: 36,
                       height: 36,
                       borderRadius: 9,
-                      background: "linear-gradient(135deg, rgba(0, 255, 209, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%)",
+                      background:
+                        "linear-gradient(135deg, rgba(0, 255, 209, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%)",
                       border: "1px solid rgba(0, 255, 209, 0.2)",
                       display: "flex",
                       alignItems: "center",
@@ -643,10 +644,7 @@ export default function WizardPage() {
                       flexShrink: 0,
                     }}
                   >
-                    <Icon
-                      size={16}
-                      style={{ color: "#00ffd1" }}
-                    />
+                    <Icon size={16} style={{ color: "#00ffd1" }} />
                   </div>
                   <div>
                     <p
