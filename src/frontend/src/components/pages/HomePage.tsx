@@ -409,23 +409,6 @@ export default function HomePage() {
                 }}
               >
                 <PaymentAnimation mode={isLight ? "light" : "dark"} />
-                      background: "linear-gradient(135deg, #00d4b8 0%, #0891b2 100%)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <span style={{ fontSize: 24 }}>✓</span>
-                  </div>
-                  <div>
-                    <p style={{ fontWeight: 700, color: colors.textPrimary, fontSize: "1.1rem" }}>
-                      100+ Industries
-                    </p>
-                    <p style={{ color: colors.textSecondary, fontSize: "0.875rem" }}>
-                      All businesses approved
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
