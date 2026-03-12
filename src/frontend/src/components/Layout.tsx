@@ -80,6 +80,7 @@ function ThemeToggle() {
       aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
       title={isLight ? "Switch to dark mode" : "Switch to light mode"}
       data-ocid="nav.theme.toggle"
+      className="theme-toggle-btn"
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -87,12 +88,8 @@ function ThemeToggle() {
         width: 34,
         height: 34,
         borderRadius: "8px",
-        border: isLight
-          ? "1px solid rgba(0,0,0,0.12)"
-          : "1px solid rgba(255,255,255,0.1)",
-        backgroundColor: isLight
-          ? "rgba(0,0,0,0.06)"
-          : "rgba(255,255,255,0.04)",
+        border: `1px solid ${isLight ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.1)"}`,
+        backgroundColor: isLight ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.04)",
         color: isLight ? "#1a2040" : "rgba(232,237,248,0.6)",
         cursor: "pointer",
         flexShrink: 0,
@@ -197,7 +194,7 @@ export default function Layout({ children }: LayoutProps) {
   const activeNavBg = isLight
     ? "rgba(0,122,106,0.1)"
     : "rgba(110,247,212, 0.08)";
-  const footerBg = isLight ? "#EEF0FA" : "#080614";
+  const footerBg = isLight ? "#f8fafc" : "#080614";
   const footerText = isLight
     ? "rgba(20,30,60,0.55)"
     : "rgba(232, 237, 248, 0.55)";
@@ -216,7 +213,7 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div
       className="min-h-screen flex flex-col"
-      style={{ backgroundColor: isLight ? "#f8fafc" : "#0a0f1e" }}
+      style={{ backgroundColor: isLight ? "var(--cybin-navy)" : "var(--cybin-navy)" }}
     >
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 60 }}>
         <TickerBar />
@@ -283,8 +280,7 @@ export default function Layout({ children }: LayoutProps) {
                 src={logoImg}
                 alt="Cybin Enterprises"
                 loading="eager"
-                // @ts-ignore fetchpriority is a valid HTML attribute
-                fetchpriority="high"
+                fetchPriority="high"
                 style={{
                   width: `${logoCfg.containerHeight}px`,
                   height: `${logoCfg.containerHeight}px`,
@@ -484,7 +480,7 @@ export default function Layout({ children }: LayoutProps) {
             className="lg:hidden"
             style={{
               backgroundColor: isLight
-                ? "rgba(248,249,252,0.99)"
+                ? "rgba(255, 255, 255, 0.98)"
                 : "rgba(10, 15, 30, 0.98)",
               borderTop: `1px solid ${isLight ? "rgba(0,0,0,0.08)" : "rgba(99,102,241,0.15)"}`,
             }}

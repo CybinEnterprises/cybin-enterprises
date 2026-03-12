@@ -365,7 +365,7 @@ export default function BlogPostPage() {
                 <div className="space-y-6">
                   {post.faqs.map((faq, faqIdx) => (
                     <div
-                      key={faq.question}
+                      key={`faq-${faqIdx}`}
                       className="pb-6"
                       style={{
                         borderBottom:

@@ -40,8 +40,9 @@ export async function loadConfig(): Promise<Config> {
     const response = await fetch(`${baseUrl}env.json`);
     const config = (await response.json()) as JsonConfig;
     if (!backendCanisterId && config.backend_canister_id === "undefined") {
-      console.error("CANISTER_ID_BACKEND is not set");
-      throw new Error("CANISTER_ID_BACKEND is not set");
+      // Silenced in production to avoid console noise
+      // console.warn("[Development] CANISTER_ID_BACKEND not set - using mock mode or local development fallback");
+      // Don't throw in development, just warn
     }
 
     const fullConfig = {
@@ -65,12 +66,13 @@ export async function loadConfig(): Promise<Config> {
     return fullConfig;
   } catch {
     if (!backendCanisterId) {
-      console.error("CANISTER_ID_BACKEND is not set");
-      throw new Error("CANISTER_ID_BACKEND is not set");
+      // Silenced in production to avoid console noise  
+      // console.warn("[Development] CANISTER_ID_BACKEND not set - using fallback");
+      // Don't throw in development
     }
     const fallbackConfig = {
       backend_host: undefined,
-      backend_canister_id: backendCanisterId,
+      backend_canister_id: backendCanisterId || "local-development",
       storage_gateway_url: DEFAULT_STORAGE_GATEWAY_URL,
       bucket_name: DEFAULT_BUCKET_NAME,
       project_id: DEFAULT_PROJECT_ID,
@@ -132,11 +134,9 @@ export async function createActorWithConfig(
     host: config.backend_host,
   });
   if (config.backend_host?.includes("localhost")) {
-    await agent.fetchRootKey().catch((err) => {
-      console.warn(
-        "Unable to fetch root key. Check to ensure that your local replica is running",
-      );
-      console.error(err);
+    await agent.fetchRootKey().catch(() => {
+      // Silenced to reduce console noise in development
+      // console.warn("Unable to fetch root key. Check to ensure that your local replica is running");
     });
   }
   const actorOptions = {

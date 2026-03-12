@@ -476,9 +476,9 @@ export default function WizardPage() {
             ["/industries", "Industries"],
             ["/about", "About"],
             ["/contact", "Contact"],
-          ].map(([href, label]) => (
+          ].map(([href, label], linkIdx) => (
             <Link
-              key={href}
+              key={`link-${linkIdx}`}
               to={href}
               style={{
                 fontSize: "0.8rem",
@@ -609,7 +609,7 @@ export default function WizardPage() {
                 },
                 {
                   icon: Zap,
-                  title: "100+ industries approved",
+                  title: "All businesses approved",
                   sub: "From CBD and firearms to peptides and crypto.",
                 },
                 {
@@ -617,14 +617,23 @@ export default function WizardPage() {
                   title: "Domestic & international",
                   sub: "Multi-processor access gives you more options.",
                 },
-              ].map(({ icon: Icon, title, sub }) => (
-                <div key={title} style={{ display: "flex", gap: 14 }}>
+              ].map(({ icon: Icon, title, sub }, i) => (
+                <div 
+                  key={`wizard-benefit-${i}`} 
+                  className="animate-fade-up"
+                  style={{ 
+                    display: "flex", 
+                    gap: 14,
+                    animationDelay: `${i * 100}ms`
+                  }}
+                >
                   <div
                     style={{
                       width: 36,
                       height: 36,
                       borderRadius: 9,
-                      backgroundColor: "rgba(99,102,241,0.1)",
+                      background: "linear-gradient(135deg, rgba(0, 255, 209, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%)",
+                      border: "1px solid rgba(0, 255, 209, 0.2)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -633,14 +642,14 @@ export default function WizardPage() {
                   >
                     <Icon
                       size={16}
-                      style={{ color: "rgba(232,245,242,0.8)" }}
+                      style={{ color: "#00ffd1" }}
                     />
                   </div>
                   <div>
                     <p
                       style={{
                         fontWeight: 600,
-                        color: "#e8edf8",
+                        color: "#ffffff",
                         fontSize: "0.875rem",
                         marginBottom: 2,
                       }}
@@ -649,7 +658,7 @@ export default function WizardPage() {
                     </p>
                     <p
                       style={{
-                        color: "rgba(232,245,242,0.8)",
+                        color: "rgba(226, 232, 240, 0.7)",
                         fontSize: "0.8rem",
                       }}
                     >
@@ -700,7 +709,7 @@ export default function WizardPage() {
                     fontFamily: '"Playfair Display", Georgia, serif',
                     fontSize: "1.75rem",
                     fontWeight: 700,
-                    color: "#e8edf8",
+                    color: "#ffffff",
                     marginBottom: 6,
                   }}
                 >
@@ -708,7 +717,7 @@ export default function WizardPage() {
                 </h2>
                 <p
                   style={{
-                    color: "rgba(232,245,242,0.8)",
+                    color: "rgba(226, 232, 240, 0.8)",
                     fontSize: "0.875rem",
                     marginBottom: 28,
                   }}

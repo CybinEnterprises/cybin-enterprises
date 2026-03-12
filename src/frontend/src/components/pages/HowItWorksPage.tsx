@@ -132,7 +132,7 @@ export default function HowItWorksPage() {
         const isDark = i % 2 === 0;
         return (
           <section
-            key={step.number}
+            key={`step-${i}`}
             style={{
               backgroundColor: isDark
                 ? isLight
@@ -234,8 +234,8 @@ export default function HowItWorksPage() {
                     What happens at this stage
                   </p>
                   <div className="space-y-3">
-                    {step.details.map((detail) => (
-                      <div key={detail} className="flex gap-3">
+                    {step.details.map((detail, dIdx) => (
+                      <div key={`detail-${dIdx}`} className="flex gap-3">
                         <CheckCircle
                           size={15}
                           style={{
@@ -293,9 +293,9 @@ export default function HowItWorksPage() {
                 title: "Direct Contact",
                 desc: "You get a direct point of contact at Cybin \u2014 not a ticketing system.",
               },
-            ].map(({ icon: Icon, title, desc }) => (
+            ].map(({ icon: Icon, title, desc }, i) => (
               <div
-                key={title}
+                key={`benefit-${i}`}
                 style={{
                   padding: 32,
                   borderRadius: 16,

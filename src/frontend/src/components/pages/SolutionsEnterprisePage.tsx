@@ -146,9 +146,9 @@ export default function SolutionsEnterprisePage() {
                 title: "Direct Point of Contact",
                 desc: "A named contact at Cybin Enterprises who knows your account. Not a ticketing system. Not a shared inbox.",
               },
-            ].map(({ icon: Icon, title, desc }) => (
+            ].map(({ icon: Icon, title, desc }, i) => (
               <div
-                key={title}
+                key={`benefit-${i}`}
                 style={{
                   padding: 28,
                   borderRadius: 14,
@@ -237,8 +237,8 @@ export default function SolutionsEnterprisePage() {
                 "Operating across multiple jurisdictions or internationally",
                 "Requiring backup processor redundancy for business continuity",
                 "High-volume recurring billing or subscription models",
-              ].map((item) => (
-                <div key={item} className="flex gap-3 mb-3">
+              ].map((item, itemIdx) => (
+                <div key={`item-${itemIdx}`} className="flex gap-3 mb-3">
                   <CheckCircle
                     size={16}
                     style={{ color: "#00d4b8", flexShrink: 0, marginTop: 2 }}

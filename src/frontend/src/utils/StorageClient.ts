@@ -34,9 +34,7 @@ async function withRetry<T>(operation: () => Promise<T>): Promise<T> {
       // On the final attempt or non-retriable error, throw the error
       if (attempt === MAX_RETRIES || !shouldRetry) {
         if (!shouldRetry && attempt < MAX_RETRIES) {
-          console.warn(
-            `Non-retriable error encountered: ${lastError.message}. Not retrying.`,
-          );
+          // Silenced to reduce console noise in production
         }
         throw error;
       }
@@ -47,9 +45,8 @@ async function withRetry<T>(operation: () => Promise<T>): Promise<T> {
         MAX_DELAY_MS,
       );
 
-      console.warn(
-        `Request failed (attempt ${attempt + 1}/${MAX_RETRIES + 1}): ${lastError.message}. Retrying in ${Math.round(delay)}ms...`,
-      );
+      // Silenced to reduce console noise in production
+      // console.warn(`Request failed (attempt ${attempt + 1}/${MAX_RETRIES + 1}): ${lastError.message}. Retrying in ${Math.round(delay)}ms...`);
 
       await new Promise((resolve) => setTimeout(resolve, delay));
     }
@@ -489,7 +486,8 @@ export class StorageClient {
     });
     const respone = result.response.body;
     if (isV3ResponseBody(respone)) {
-      console.log("Certificate:", respone.certificate);
+      // Silenced to reduce console noise
+      // console.log("Certificate:", respone.certificate);
       return respone.certificate;
     }
     throw new Error("Expected v3 response body");

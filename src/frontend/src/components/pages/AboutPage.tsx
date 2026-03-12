@@ -34,6 +34,22 @@ export default function AboutPage() {
   const { style: shaneStyle, config: shaneCfg } = useLiveImageSettings("shane");
   const site = useLiveSiteSettings();
 
+  // Theme-aware colors
+  const colors = {
+    accent: isLight ? "var(--cybin-mint)" : "var(--cybin-mint)",
+    textPrimary: isLight ? "var(--cybin-text-primary)" : "var(--cybin-text-primary)",
+    textSecondary: isLight ? "var(--cybin-text-secondary)" : "rgba(232,237,248,0.65)",
+    textMuted: isLight ? "var(--cybin-text-muted)" : "rgba(232,237,248,0.45)",
+    bgPrimary: isLight ? "var(--cybin-surface)" : "#0a0f1e",
+    bgSecondary: isLight ? "#F9FAFF" : "#080d1a",
+    bgTertiary: isLight ? "#f0f3fa" : "#080d1a",
+    border: isLight ? "var(--cybin-border)" : "rgba(110,247,212,0.08)",
+    accentBorder: isLight ? "rgba(0,212,184,0.2)" : "rgba(110,247,212,0.12)",
+    gradient: isLight 
+      ? "linear-gradient(135deg, rgba(0,212,184,0.08), rgba(124,92,191,0.06))"
+      : "linear-gradient(135deg, rgba(110,247,212,0.06), rgba(26, 10, 46, 0.5))",
+  };
+
   useSeo({
     title:
       "About Cybin Enterprises | Mel Kotchey & Shane Suehr | High-Risk Payments",
@@ -129,7 +145,7 @@ export default function AboutPage() {
         className="page-hero-bg"
         style={{
           padding: "80px 0 60px",
-          borderBottom: "1px solid rgba(110,247,212,0.08)",
+          borderBottom: `1px solid ${colors.border}`,
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -138,15 +154,15 @@ export default function AboutPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{ color: "rgba(232,237,248,0.45)" }}
+                style={{ color: colors.textMuted }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: "rgba(232,237,248,0.3)" }}
+                style={{ color: colors.textMuted }}
               />
-              <span className="text-sm" style={{ color: "#00d4b8" }}>
+              <span className="text-sm" style={{ color: colors.accent }}>
                 About
               </span>
             </div>
@@ -154,15 +170,15 @@ export default function AboutPage() {
               className="text-4xl sm:text-5xl font-bold mb-5"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: "#e8edf8",
+                color: colors.textPrimary,
                 lineHeight: 1.15,
               }}
             >
-              About <span style={{ color: "#00d4b8" }}>Cybin Enterprises</span>
+              About <span style={{ color: colors.accent }}>Cybin Enterprises</span>
             </h1>
             <p
               className="text-lg"
-              style={{ color: "rgba(232, 237, 248, 0.65)", lineHeight: 1.7 }}
+              style={{ color: colors.textSecondary, lineHeight: 1.7 }}
             >
               Cybin Enterprises helps businesses navigate complex payment
               environments with clarity, structure, and long-term reliability.
@@ -174,7 +190,7 @@ export default function AboutPage() {
       {/* Mission */}
       <section
         style={{
-          backgroundColor: isLight ? "#F9FAFF" : "#0a0f1e",
+          backgroundColor: colors.bgSecondary,
           padding: "72px 0",
         }}
       >
@@ -182,27 +198,26 @@ export default function AboutPage() {
           <div
             className="animate-fade-up p-10 rounded-2xl text-center max-w-3xl mx-auto"
             style={{
-              background:
-                "linear-gradient(135deg, rgba(110,247,212, 0.06), rgba(26, 10, 46, 0.5))",
-              border: "1px solid rgba(110,247,212, 0.12)",
+              background: colors.gradient,
+              border: `1px solid ${colors.accentBorder}`,
             }}
           >
             <Star
               size={32}
-              style={{ color: "#00d4b8", margin: "0 auto 16px" }}
+              style={{ color: colors.accent, margin: "0 auto 16px" }}
             />
             <h2
               className="text-2xl font-bold mb-4"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: "#e8edf8",
+                color: colors.textPrimary,
               }}
             >
               {site.about.missionTitle}
             </h2>
             <p
               className="text-base leading-relaxed"
-              style={{ color: "rgba(232, 237, 248, 0.7)" }}
+              style={{ color: colors.textSecondary }}
             >
               {site.about.missionBody}
             </p>
@@ -219,7 +234,7 @@ export default function AboutPage() {
       <section
         data-ocid="about.founders.section"
         style={{
-          backgroundColor: isLight ? "#f0f3fa" : "#080d1a",
+          backgroundColor: colors.bgTertiary,
           padding: "120px 0 100px",
           position: "relative",
           overflow: "hidden",
@@ -231,8 +246,9 @@ export default function AboutPage() {
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage:
-              "linear-gradient(rgba(110,247,212,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(110,247,212,0.025) 1px, transparent 1px)",
+            backgroundImage: isLight
+              ? "linear-gradient(rgba(0,212,184,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,184,0.03) 1px, transparent 1px)"
+              : "linear-gradient(rgba(110,247,212,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(110,247,212,0.025) 1px, transparent 1px)",
             backgroundSize: "64px 64px",
             pointerEvents: "none",
             zIndex: 0,

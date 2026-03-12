@@ -449,7 +449,8 @@ export function createActor(canisterId: string, _uploadFile: (file: ExternalBlob
         ...options.agentOptions
     });
     if (options.agent && options.agentOptions) {
-        console.warn("Detected both agent and agentOptions passed to createActor. Ignoring agentOptions and proceeding with the provided agent.");
+        // Silenced to reduce console noise
+        // console.warn("Detected both agent and agentOptions passed to createActor. Ignoring agentOptions and proceeding with the provided agent.");
     }
     const actor = Actor.createActor<_SERVICE>(idlFactory, {
         agent,

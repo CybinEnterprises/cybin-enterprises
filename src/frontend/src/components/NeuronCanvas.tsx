@@ -26,20 +26,23 @@ export default function NeuronCanvas({
     const resizeObs = new ResizeObserver(resize);
     resizeObs.observe(canvas);
 
-    const nodeCount = 35;
+    const nodeCount = mode === "dark" ? 35 : 60;
     const nodes = Array.from({ length: nodeCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
       pulseOffset: Math.random() * Math.PI * 2,
       pulseSpeed: 0.02 + Math.random() * 0.02,
     }));
 
-    const dotColor = mode === "dark" ? [110, 247, 212] : [79, 70, 229];
-    const lineColor = mode === "dark" ? [99, 102, 241] : [0, 163, 129];
-    const baseDotAlpha = mode === "dark" ? 0.4 : 0.12;
-    const baseLineAlpha = mode === "dark" ? 0.15 : 0.07;
+    // Light mode: use mint/cyan for high visibility on light backgrounds
+    const dotColor = mode === "dark" ? [110, 247, 212] : [6, 182, 212]; // Cyan-500
+    const lineColor = mode === "dark" ? [99, 102, 241] : [59, 130, 246]; // Blue-500
+    const baseDotAlpha = mode === "dark" ? 0.5 : 0.7;
+    const baseLineAlpha = mode === "dark" ? 0.2 : 0.45;
+    const dotRadius = mode === "dark" ? 2 : 4;
+    const lineWidth = mode === "dark" ? 0.8 : 1.5;
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -60,7 +63,7 @@ export default function NeuronCanvas({
           if (dist < 140) {
             const alpha = baseLineAlpha * (1 - dist / 140);
             ctx.strokeStyle = `rgba(${lineColor[0]},${lineColor[1]},${lineColor[2]},${alpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = lineWidth;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -75,7 +78,7 @@ export default function NeuronCanvas({
           (0.6 + 0.4 * Math.sin(t * n.pulseSpeed * 60 + n.pulseOffset));
         ctx.fillStyle = `rgba(${dotColor[0]},${dotColor[1]},${dotColor[2]},${pulse})`;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, dotRadius, 0, Math.PI * 2);
         ctx.fill();
       }
 
