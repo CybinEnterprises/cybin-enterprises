@@ -83,13 +83,12 @@ export default function HowItWorksPage() {
       {/* Hero */}
       <section
         style={{
-          background: "#0a0f1e",
           position: "relative",
           overflow: "hidden",
           padding: "100px 0 80px",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h1
             style={{
@@ -146,7 +145,7 @@ export default function HowItWorksPage() {
               overflow: isDark ? "visible" : "hidden",
             }}
           >
-            {!isDark && !isLight && <NeuronCanvas mode="dark" />}
+            <NeuronCanvas mode={isLight ? "light" : "dark"} />
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <div
                 className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? "" : ""}`}
@@ -268,13 +267,12 @@ export default function HowItWorksPage() {
       {/* Trust signals */}
       <section
         style={{
-          background: "#0a0f1e",
           padding: "80px 0",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[

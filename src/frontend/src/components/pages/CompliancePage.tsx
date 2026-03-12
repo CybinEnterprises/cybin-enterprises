@@ -283,7 +283,7 @@ export default function CompliancePage() {
       </section>
 
       {/* Compliance Pillars */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "72px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <h2
@@ -454,7 +454,7 @@ export default function CompliancePage() {
       </section>
 
       {/* Legal Notice */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "40px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "40px 0" }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className="rounded-xl p-6"
@@ -505,7 +505,7 @@ export default function CompliancePage() {
       </section>
 
       {/* CTA */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "40px 0 72px" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "40px 0 72px" }}>
         <div className="max-w-3xl mx-auto px-4 text-center animate-fade-up">
           <h2
             className="text-2xl font-bold mb-4"

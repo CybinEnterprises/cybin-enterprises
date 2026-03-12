@@ -72,20 +72,19 @@ export default function SolutionsPage() {
       {/* Hero */}
       <section
         style={{
-          background: "#0a0f1e",
           position: "relative",
           overflow: "hidden",
           padding: "100px 0 80px",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <h1
             style={{
               fontFamily: '"Playfair Display", Georgia, serif',
               fontSize: "clamp(2rem, 5vw, 3.25rem)",
               fontWeight: 700,
-              color: "#E8EDF8",
+              color: isLight ? "#1a2040" : "#E8EDF8",
               lineHeight: 1.2,
               marginBottom: 20,
             }}
@@ -96,7 +95,7 @@ export default function SolutionsPage() {
           <p
             style={{
               fontSize: "1.1rem",
-              color: "#D4E0F5",
+              color: isLight ? "rgba(20,30,60,0.7)" : "#D4E0F5",
               lineHeight: 1.7,
               maxWidth: 580,
               margin: "0 auto 32px",
@@ -165,7 +164,7 @@ export default function SolutionsPage() {
                     marginBottom: 16,
                   }}
                 >
-                  <Icon size={22} style={{ color: "#D4E0F5" }} />
+                  <Icon size={22} style={{ color: isLight ? "#4F46E5" : "#D4E0F5" }} />
                 </div>
                 <h3
                   style={{
@@ -205,26 +204,25 @@ export default function SolutionsPage() {
       {/* Enterprise callout */}
       <section
         style={{
-          background: "#0a0f1e",
           padding: "80px 0",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div className="max-w-3xl mx-auto px-4 text-center relative z-10">
           <h2
             style={{
               fontFamily: '"Playfair Display", Georgia, serif',
               fontSize: "2rem",
               fontWeight: 700,
-              color: "#E8EDF8",
+              color: isLight ? "#1a2040" : "#E8EDF8",
               marginBottom: 16,
             }}
           >
             Processing millions per month? We build accounts that scale.
           </h2>
-          <p style={{ color: "#D4E0F5", lineHeight: 1.7, marginBottom: 32 }}>
+          <p style={{ color: isLight ? "rgba(20,30,60,0.7)" : "#D4E0F5", lineHeight: 1.7, marginBottom: 32 }}>
             Our enterprise team personally reviews high-volume accounts.
             Multi-MID structuring, international acquiring, and backup
             redundancy \u2014 built for stability at scale.

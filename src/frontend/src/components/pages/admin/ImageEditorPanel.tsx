@@ -28,9 +28,9 @@ import {
   Save,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import logoPhoto from "/assets/cybin-logo.png";
-import melPhoto from "/assets/mel-headshot.jpeg";
-import shanePhoto from "/assets/uploads/IMG_2988-1.jpeg";
+const logoPhoto = "/assets/cybin-logo.png";
+const melPhoto = "/assets/mel-headshot.jpeg";
+const shanePhoto = "/assets/uploads/IMG_2988-1.jpeg";
 
 // ─── Image registry ────────────────────────────────────────────────────────────
 
@@ -1113,7 +1113,6 @@ function ImageEditor({
                 overflow: "hidden",
                 borderRadius: "8px",
                 border: `1px solid ${meta.accentColor}30`,
-                background: "#0a0f1e",
               }}
             >
               <img
@@ -1611,7 +1610,6 @@ export default function ImageEditorPanel() {
                 borderRadius: img.key === "logo" ? "6px" : "50%",
                 overflow: "hidden",
                 flexShrink: 0,
-                background: "#0a0f1e",
                 border: `1px solid ${img.accentColor}30`,
               }}
             >

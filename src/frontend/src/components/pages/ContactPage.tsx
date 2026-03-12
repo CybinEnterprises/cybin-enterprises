@@ -1,7 +1,6 @@
 import { JsonLd } from "@/components/JsonLd";
 import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
 import { useSeo } from "@/hooks/useSeo";
-import { useThemeColors } from "@/hooks/useThemeColors";
 import { Link } from "@/lib/router";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -14,6 +13,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useActor } from "../../hooks/useActor";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const businessTypes = [
   "Research Peptides",
@@ -30,6 +30,8 @@ const businessTypes = [
 ];
 
 export default function ContactPage() {
+  const { resolved } = useTheme();
+  const isLight = resolved === "light";
   useSeo({
     title: "Contact Cybin Enterprises | High-Risk Merchant Account Help",
     description:
@@ -39,7 +41,6 @@ export default function ContactPage() {
 
   const site = useLiveSiteSettings();
   const { actor } = useActor();
-  const colors = useThemeColors();
 
   const [form, setForm] = useState({
     name: "",
@@ -114,7 +115,7 @@ export default function ContactPage() {
         className="page-hero-bg"
         style={{
           padding: "80px 0 60px",
-          borderBottom: `1px solid ${colors.border}`,
+          borderBottom: "1px solid rgba(110,247,212,0.08)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -123,15 +124,15 @@ export default function ContactPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{ color: colors.textMuted }}
+                style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232,237,248,0.45)" }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: colors.textMuted }}
+                style={{ color: isLight ? "rgba(20,30,60,0.3)" : "rgba(232,237,248,0.3)" }}
               />
-              <span className="text-sm" style={{ color: colors.accent }}>
+              <span className="text-sm" style={{ color: "#00d4b8" }}>
                 Contact
               </span>
             </div>
@@ -139,16 +140,16 @@ export default function ContactPage() {
               className="text-4xl sm:text-5xl font-bold mb-5"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: colors.textPrimary,
+                color: isLight ? "#1a2040" : "#e8edf8",
                 lineHeight: 1.15,
               }}
             >
               Contact{" "}
-              <span style={{ color: colors.accent }}>Cybin Enterprises</span>
+              <span style={{ color: "#00d4b8" }}>Cybin Enterprises</span>
             </h1>
             <p
               className="text-lg"
-              style={{ color: colors.textSecondary, lineHeight: 1.7 }}
+              style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.65)", lineHeight: 1.7 }}
             >
               Have questions or ready to begin? We're here to help.
             </p>
@@ -157,7 +158,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Content */}
-      <section style={{ backgroundColor: colors.bgPrimary, padding: "72px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Form */}
@@ -165,7 +166,7 @@ export default function ContactPage() {
               <div className="cybin-glass-card p-8">
                 <h2
                   className="text-2xl font-bold mb-6"
-                  style={{ fontFamily: "Sora, sans-serif", color: colors.textPrimary }}
+                  style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
                 >
                   Send Us a Message
                 </h2>
@@ -246,7 +247,7 @@ export default function ContactPage() {
                       <label
                         htmlFor="contact-name"
                         className="block text-sm font-medium mb-2"
-                        style={{ color: "rgba(232,237,248,0.7)" }}
+                        style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232,237,248,0.7)" }}
                       >
                         Full Name *
                       </label>
@@ -262,9 +263,9 @@ export default function ContactPage() {
                         data-ocid="contact.name.input"
                         className="w-full px-4 py-3 rounded-lg text-sm transition-all outline-none"
                         style={{
-                          backgroundColor: "rgba(22, 30, 58, 0.8)",
-                          border: "1px solid rgba(110,247,212, 0.15)",
-                          color: "#e8edf8",
+                          backgroundColor: isLight ? "#ffffff" : "rgba(22, 30, 58, 0.8)",
+                          border: isLight ? "1px solid rgba(0,0,0,0.12)" : "1px solid rgba(110,247,212, 0.15)",
+                          color: isLight ? "#1a2040" : "#e8edf8",
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = "rgba(110,247,212, 0.4)";
@@ -283,7 +284,7 @@ export default function ContactPage() {
                       <label
                         htmlFor="contact-email"
                         className="block text-sm font-medium mb-2"
-                        style={{ color: "rgba(232,237,248,0.7)" }}
+                        style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232,237,248,0.7)" }}
                       >
                         Email Address *
                       </label>
@@ -299,9 +300,9 @@ export default function ContactPage() {
                         data-ocid="contact.email.input"
                         className="w-full px-4 py-3 rounded-lg text-sm transition-all outline-none"
                         style={{
-                          backgroundColor: "rgba(22, 30, 58, 0.8)",
-                          border: "1px solid rgba(110,247,212, 0.15)",
-                          color: "#e8edf8",
+                          backgroundColor: isLight ? "#ffffff" : "rgba(22, 30, 58, 0.8)",
+                          border: isLight ? "1px solid rgba(0,0,0,0.12)" : "1px solid rgba(110,247,212, 0.15)",
+                          color: isLight ? "#1a2040" : "#e8edf8",
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = "rgba(110,247,212, 0.4)";
@@ -322,7 +323,7 @@ export default function ContactPage() {
                       <label
                         htmlFor="contact-phone"
                         className="block text-sm font-medium mb-2"
-                        style={{ color: "rgba(232,237,248,0.7)" }}
+                        style={{ color: isLight ? "#475569" : "rgba(232,237,248,0.7)" }}
                       >
                         Phone Number
                       </label>
@@ -337,9 +338,9 @@ export default function ContactPage() {
                         data-ocid="contact.phone.input"
                         className="w-full px-4 py-3 rounded-lg text-sm transition-all outline-none"
                         style={{
-                          backgroundColor: "rgba(22, 30, 58, 0.8)",
-                          border: "1px solid rgba(110,247,212, 0.15)",
-                          color: "#e8edf8",
+                          backgroundColor: isLight ? "#ffffff" : "rgba(22, 30, 58, 0.8)",
+                          border: isLight ? "1px solid #e2e8f0" : "1px solid rgba(110,247,212, 0.15)",
+                          color: isLight ? "#1a2040" : "#e8edf8",
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = "rgba(110,247,212, 0.4)";
@@ -358,7 +359,7 @@ export default function ContactPage() {
                       <label
                         htmlFor="contact-businessType"
                         className="block text-sm font-medium mb-2"
-                        style={{ color: "rgba(232,237,248,0.7)" }}
+                        style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232,237,248,0.7)" }}
                       >
                         Business Type *
                       </label>
@@ -371,11 +372,11 @@ export default function ContactPage() {
                         data-ocid="contact.business_type.select"
                         className="w-full px-4 py-3 rounded-lg text-sm transition-all outline-none cursor-pointer"
                         style={{
-                          backgroundColor: "rgba(22, 30, 58, 0.8)",
-                          border: "1px solid rgba(110,247,212, 0.15)",
+                          backgroundColor: isLight ? "#ffffff" : "rgba(22, 30, 58, 0.8)",
+                          border: isLight ? "1px solid rgba(0,0,0,0.12)" : "1px solid rgba(110,247,212, 0.15)",
                           color: form.businessType
-                            ? "#e8edf8"
-                            : "rgba(232,237,248,0.35)",
+                            ? (isLight ? "#1a2040" : "#e8edf8")
+                            : (isLight ? "rgba(20,30,60,0.35)" : "rgba(232,237,248,0.35)"),
                           appearance: "none",
                         }}
                         onFocus={(e) => {
@@ -389,7 +390,7 @@ export default function ContactPage() {
                         <option
                           value=""
                           disabled
-                          style={{ backgroundColor: "#0a0f1e" }}
+                          className="bg-slate-50 dark:bg-cybin-navy"
                         >
                           Select your industry
                         </option>
@@ -429,9 +430,9 @@ export default function ContactPage() {
                       data-ocid="contact.message.textarea"
                       className="w-full px-4 py-3 rounded-lg text-sm transition-all outline-none resize-none"
                       style={{
-                        backgroundColor: "rgba(22, 30, 58, 0.8)",
-                        border: "1px solid rgba(110,247,212, 0.15)",
-                        color: "#e8edf8",
+                        backgroundColor: isLight ? "#ffffff" : "rgba(22, 30, 58, 0.8)",
+                        border: isLight ? "1px solid rgba(0,0,0,0.12)" : "1px solid rgba(110,247,212, 0.15)",
+                        color: isLight ? "#1a2040" : "#e8edf8",
                       }}
                       onFocus={(e) => {
                         e.target.style.borderColor = "rgba(110,247,212, 0.4)";
@@ -484,7 +485,7 @@ export default function ContactPage() {
               <div className="cybin-glass-card p-6">
                 <h3
                   className="font-bold mb-4"
-                  style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
+                  style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
                 >
                   Get in Touch
                 </h3>
@@ -506,12 +507,12 @@ export default function ContactPage() {
                       <a
                         href={`mailto:${site.contact.email}`}
                         className="text-sm transition-colors"
-                        style={{ color: "#e8edf8" }}
+                        style={{ color: isLight ? "#00A381" : "#e8edf8" }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.color = "#00d4b8";
+                          e.currentTarget.style.color = isLight ? "#008a6d" : "#00d4b8";
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.color = "#e8edf8";
+                          e.currentTarget.style.color = isLight ? "#00A381" : "#e8edf8";
                         }}
                       >
                         {site.contact.email}
@@ -568,12 +569,12 @@ export default function ContactPage() {
                       <a
                         href={`tel:${site.contact.phone2.replace(/\D/g, "")}`}
                         className="text-sm transition-colors"
-                        style={{ color: "#e8edf8" }}
+                        style={{ color: isLight ? "#1a2040" : "#e8edf8" }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.color = "#00d4b8";
+                          e.currentTarget.style.color = isLight ? "#00A381" : "#00d4b8";
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.color = "#e8edf8";
+                          e.currentTarget.style.color = isLight ? "#1a2040" : "#e8edf8";
                         }}
                       >
                         {site.contact.phone2Label}: {site.contact.phone2}
@@ -593,7 +594,7 @@ export default function ContactPage() {
               >
                 <h3
                   className="font-bold mb-3"
-                  style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
+                  style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
                 >
                   Ready to Start?
                 </h3>

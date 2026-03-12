@@ -16,7 +16,8 @@ import {
   Store,
   TrendingUp,
 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const industries = [
   {
@@ -72,6 +73,8 @@ const industries = [
 ];
 
 export default function IndustriesPage() {
+  const { resolved } = useTheme();
+  const isLight = resolved === "light";
   useSeo({
     title:
       "High-Risk Industries Payment Processing | CBD, Nutraceuticals, Telemedicine | Cybin Enterprises",
@@ -99,6 +102,7 @@ export default function IndustriesPage() {
     }
     return () => observer.disconnect();
   }, []);
+
 
   return (
     <div>
@@ -183,34 +187,24 @@ export default function IndustriesPage() {
             <div className="flex items-center gap-2 mb-4">
               <Link
                 to="/"
-                className="text-sm"
-                style={{ color: "rgba(232,237,248,0.45)" }}
+                className="text-sm shadow-none"
+                style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232,237,248,0.45)" }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: "rgba(232,237,248,0.3)" }}
+                style={{ color: isLight ? "rgba(20,30,60,0.3)" : "rgba(232,237,248,0.3)" }}
               />
               <span className="text-sm" style={{ color: "#00d4b8" }}>
                 Industries
               </span>
             </div>
-            <h1
-              className="text-4xl sm:text-5xl font-bold mb-5"
-              style={{
-                fontFamily: "Sora, system-ui, sans-serif",
-                color: "#e8edf8",
-                lineHeight: 1.15,
-              }}
-            >
+            <h1 className="text-4xl sm:text-5xl font-bold mb-5 font-display text-slate-900 dark:text-white leading-[1.15]">
               If They Said No,{" "}
-              <span style={{ color: "#00d4b8" }}>We Say Yes</span>
+              <span className="text-cybin-mint">We Say Yes</span>
             </h1>
-            <p
-              className="text-lg"
-              style={{ color: "rgba(232, 237, 248, 0.65)", lineHeight: 1.7 }}
-            >
+            <p className="text-lg text-slate-600 dark:text-white/65 leading-relaxed">
               Cybin Enterprises works with businesses across every industry —
               including those labeled high-risk, hard-to-place, or previously
               declined.
@@ -222,7 +216,7 @@ export default function IndustriesPage() {
       {/* Legal Disclaimer Banner */}
       <section
         data-ocid="industries.disclaimer.section"
-        style={{ backgroundColor: "#0a0f1e", padding: "28px 0 0" }}
+        className="bg-slate-50 dark:bg-cybin-navy pt-7"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
@@ -243,10 +237,7 @@ export default function IndustriesPage() {
               >
                 Important Legal Notice
               </p>
-              <p
-                className="text-xs leading-relaxed"
-                style={{ color: "rgba(232,237,248,0.6)" }}
-              >
+              <p className="text-xs leading-relaxed text-slate-500 dark:text-[#e8edf8]/60">
                 Cybin Enterprises is a payment services intermediary — not a
                 registered broker-dealer, investment adviser, money transmitter,
                 or financial institution. We do not provide investment advice.
@@ -266,7 +257,7 @@ export default function IndustriesPage() {
       </section>
 
       {/* Industry Grid */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "72px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
             {industries.map(({ icon: Icon, title, desc }, i) => (
@@ -284,16 +275,10 @@ export default function IndustriesPage() {
                 >
                   <Icon size={22} style={{ color: "#00d4b8" }} />
                 </div>
-                <h3
-                  className="text-base font-bold mb-2"
-                  style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
-                >
+                <h3 className="text-base font-bold mb-2 font-display text-slate-900 dark:text-[#e8edf8]">
                   {title}
                 </h3>
-                <p
-                  className="text-sm leading-relaxed"
-                  style={{ color: "rgba(232, 237, 248, 0.6)" }}
-                >
+                <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   {desc}
                 </p>
               </div>
@@ -310,16 +295,16 @@ export default function IndustriesPage() {
           >
             <h3
               className="text-xl font-bold mb-3"
-              style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
+              style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
             >
               Don't see your industry listed?
             </h3>
             <p
               className="text-sm mb-6"
-              style={{ color: "rgba(232, 237, 248, 0.6)" }}
+              style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232, 237, 248, 0.6)" }}
             >
               We support{" "}
-              <strong style={{ color: "#e8edf8" }}>
+              <strong style={{ color: isLight ? "#00A381" : "#e8edf8" }}>
                 every category. Contact us and we'll find your solution
               </strong>
               . If your business operates within the law, we can review your
@@ -356,7 +341,7 @@ export default function IndustriesPage() {
                 </div>
                 <h3
                   className="text-2xl font-bold mb-4"
-                  style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
+                  style={{ fontFamily: "Sora, sans-serif", color: isLight ? "#1a2040" : "#e8edf8" }}
                 >
                   We Work With Merchants Others Won't
                 </h3>
@@ -411,7 +396,7 @@ export default function IndustriesPage() {
                     />
                     <p
                       className="text-sm"
-                      style={{ color: "rgba(232, 237, 248, 0.7)" }}
+                      style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.7)" }}
                     >
                       {item}
                     </p>

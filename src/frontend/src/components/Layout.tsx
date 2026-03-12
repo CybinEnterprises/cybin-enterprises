@@ -15,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import logoImg from "/assets/cybin-logo.png";
+
 import TickerBar from "./TickerBar";
 
 interface CookieCategories {
@@ -122,6 +122,7 @@ export default function Layout({ children }: LayoutProps) {
   const site = useLiveSiteSettings();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
+  const logoImg = isLight ? "/assets/cybin-logo-light.png" : "/assets/cybin-logo-dark.png";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -718,7 +719,7 @@ export default function Layout({ children }: LayoutProps) {
                   { label: "Enterprise", href: "/solutions/enterprise" },
                   {
                     label: "International Processing",
-                    href: "/payment-solutions",
+                    href: "/payment-solutions?tab=intl",
                   },
                   { label: "Apply Now", href: "/apply" },
                   { label: "Enterprise Review", href: "/apply/enterprise" },

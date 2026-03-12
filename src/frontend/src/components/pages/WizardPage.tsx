@@ -1,4 +1,5 @@
 import NeuronCanvas from "@/components/NeuronCanvas";
+import { useTheme } from "@/contexts/ThemeContext";
 import TickerBar from "@/components/TickerBar";
 import { Link, useSearchParams } from "@/lib/router";
 import {
@@ -313,6 +314,8 @@ function EnterpriseBanner() {
 
 export default function WizardPage() {
   const [searchParams] = useSearchParams();
+  const { resolved } = useTheme();
+  const isLight = resolved === "light";
   const { actor } = useActor();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -525,7 +528,7 @@ export default function WizardPage() {
             padding: "48px 40px",
           }}
         >
-          <NeuronCanvas mode="dark" />
+          <NeuronCanvas mode={isLight ? "light" : "dark"} />
           <div style={{ position: "relative", zIndex: 1 }}>
             {/* Free pill */}
             <div

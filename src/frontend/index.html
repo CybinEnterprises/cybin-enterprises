@@ -9,7 +9,6 @@
     <!-- Security headers via meta equivalents -->
     <!-- NOTE FOR DEV TEAM: CSP and HSTS must be configured at the server/CDN level (nginx, Cloudflare, etc.) — they cannot be set via meta tags -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
     <meta name="csrf-protection" content="same-origin" />
@@ -22,12 +21,10 @@
     <meta name="author" content="Cybin Enterprises" />
     <link rel="canonical" href="https://cybinenterprises.com/" />
     <link rel="apple-touch-icon" href="/assets/cybin-logo.png" />
-    <!-- Font preloads for LCP performance -->
-    <link rel="preload" href="/assets/fonts/Sora.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/assets/fonts/CabinetGrotesk.woff2" as="font" type="font/woff2" crossorigin />
-    <!-- Preconnect for Google Fonts -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Preconnect -->
     <link rel="preconnect" href="https://cybinenterprises.com" />
     <!-- Open Graph -->

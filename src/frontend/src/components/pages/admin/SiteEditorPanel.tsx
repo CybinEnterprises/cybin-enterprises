@@ -52,9 +52,9 @@ import {
   useRef,
   useState,
 } from "react";
-import logoPhoto from "/assets/cybin-logo.png";
-import melPhoto from "/assets/mel-headshot.jpeg";
-import shanePhoto from "/assets/uploads/IMG_2988-1.jpeg";
+const logoPhoto = "/assets/cybin-logo.png";
+const melPhoto = "/assets/mel-headshot.jpeg";
+const shanePhoto = "/assets/uploads/IMG_2988-1.jpeg";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

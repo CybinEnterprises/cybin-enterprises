@@ -218,7 +218,7 @@ export default function FraudDeflectPage() {
       </section>
 
       {/* How It Works */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "72px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <span

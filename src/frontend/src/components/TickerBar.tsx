@@ -1,5 +1,6 @@
 import { Clock, Globe, Lock, Shield, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const messages = [
   {
@@ -13,6 +14,8 @@ const messages = [
 ];
 
 export default function TickerBar() {
+  const { resolved } = useTheme();
+  const isLight = resolved === "light";
   const [current, setCurrent] = useState(0);
   const [animKey, setAnimKey] = useState(0);
 
@@ -30,13 +33,16 @@ export default function TickerBar() {
   return (
     <div
       style={{
-        background: "linear-gradient(90deg, #080614, #110F22)",
+        background: isLight 
+          ? "linear-gradient(90deg, #f0f2f5, #e0e5ed)" 
+          : "linear-gradient(90deg, #080614, #110F22)",
         height: "38px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         overflow: "hidden",
         flexShrink: 0,
+        borderBottom: isLight ? "1px solid rgba(0,0,0,0.05)" : "none"
       }}
     >
       <div
@@ -51,7 +57,11 @@ export default function TickerBar() {
         }}
       >
         <Icon size={13} style={{ color: "#00d4b8", flexShrink: 0 }} />
-        <span style={{ color: "#E8F5F2", letterSpacing: "0.01em" }}>
+        <span style={{ 
+          color: isLight ? "#1a2040" : "#E8F5F2", 
+          letterSpacing: "0.01em",
+          fontWeight: isLight ? 500 : 400
+        }}>
           {msg.text}
         </span>
       </div>

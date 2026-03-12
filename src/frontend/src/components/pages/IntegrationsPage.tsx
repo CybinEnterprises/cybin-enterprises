@@ -194,7 +194,7 @@ export default function IntegrationsPage() {
       </section>
 
       {/* Integration Categories Grid */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "72px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <h2
@@ -339,7 +339,7 @@ export default function IntegrationsPage() {
       </section>
 
       {/* Custom Integration CTA */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "72px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "72px 0" }}>
         <div className="max-w-3xl mx-auto px-4 text-center animate-fade-up">
           <div
             className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6"

@@ -29,13 +29,12 @@ export default function SolutionsEnterprisePage() {
       {/* Hero */}
       <section
         style={{
-          background: "#0a0f1e",
           position: "relative",
           overflow: "hidden",
           padding: "100px 0 80px",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold mb-8"

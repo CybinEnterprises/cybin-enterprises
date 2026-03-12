@@ -159,7 +159,7 @@ function PostForm({
             }}
           >
             {BLOG_CATEGORIES.map((c) => (
-              <option key={c} value={c} style={{ backgroundColor: "#0a0f1e" }}>
+              <option key={c} value={c} className="bg-slate-50 dark:bg-cybin-navy">
                 {c}
               </option>
             ))}

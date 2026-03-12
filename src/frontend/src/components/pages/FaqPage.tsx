@@ -316,7 +316,7 @@ export default function FaqPage() {
       </section>
 
       {/* FAQ Sections */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "60px 0 80px" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "60px 0 80px" }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {faqSections.map((section, secIdx) => (
             <div key={`section-${secIdx}`} className="mb-14">
@@ -342,7 +342,7 @@ export default function FaqPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "64px 0" }}>
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16" style={{ padding: "64px 0" }}>
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2
             className="text-3xl font-bold mb-5"

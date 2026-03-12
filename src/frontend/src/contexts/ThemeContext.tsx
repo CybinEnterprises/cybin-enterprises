@@ -50,14 +50,42 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mode, setModeState] = useState<ThemeMode>(detectDefaultTheme);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", mode);
+    const root = window.document.documentElement;
+
+    // Apply data-theme for legacy compatibility
+    root.setAttribute("data-theme", mode);
+
+    // Apply tailwind 'dark' class
+    if (mode === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+
     try {
       localStorage.setItem(STORAGE_KEY, mode);
     } catch {}
   }, [mode]);
 
+  useEffect(() => {
+    // Listen for OS preference changes
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      // Only auto-switch if the user hasn't manually set a preference locally
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        setModeState(e.matches ? "dark" : "light");
+      }
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
   const setMode = useCallback((m: ThemeMode) => {
     setModeState(m);
+    // When manually setting mode, save to localStorage
+    try {
+      localStorage.setItem(STORAGE_KEY, m);
+    } catch {}
   }, []);
 
   const toggle = useCallback(() => {

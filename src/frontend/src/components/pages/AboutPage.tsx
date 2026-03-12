@@ -6,8 +6,8 @@ import { useSeo } from "@/hooks/useSeo";
 import { Link } from "@/lib/router";
 import { Award, ChevronRight, Star } from "lucide-react";
 import { useEffect } from "react";
-import melPhoto from "/assets/mel-headshot.jpeg";
-import shanePhoto from "/assets/uploads/IMG_2988-1.jpeg";
+const melPhoto = "/assets/mel-headshot.jpeg";
+const shanePhoto = "/assets/uploads/IMG_2988-1.jpeg";
 
 const melAchievements = [
   "Most Influential Businesswomen recognition",
@@ -33,22 +33,6 @@ export default function AboutPage() {
   const { style: melStyle, config: melCfg } = useLiveImageSettings("mel");
   const { style: shaneStyle, config: shaneCfg } = useLiveImageSettings("shane");
   const site = useLiveSiteSettings();
-
-  // Theme-aware colors
-  const colors = {
-    accent: isLight ? "var(--cybin-mint)" : "var(--cybin-mint)",
-    textPrimary: isLight ? "var(--cybin-text-primary)" : "var(--cybin-text-primary)",
-    textSecondary: isLight ? "var(--cybin-text-secondary)" : "rgba(232,237,248,0.65)",
-    textMuted: isLight ? "var(--cybin-text-muted)" : "rgba(232,237,248,0.45)",
-    bgPrimary: isLight ? "var(--cybin-surface)" : "#0a0f1e",
-    bgSecondary: isLight ? "#F9FAFF" : "#080d1a",
-    bgTertiary: isLight ? "#f0f3fa" : "#080d1a",
-    border: isLight ? "var(--cybin-border)" : "rgba(110,247,212,0.08)",
-    accentBorder: isLight ? "rgba(0,212,184,0.2)" : "rgba(110,247,212,0.12)",
-    gradient: isLight 
-      ? "linear-gradient(135deg, rgba(0,212,184,0.08), rgba(124,92,191,0.06))"
-      : "linear-gradient(135deg, rgba(110,247,212,0.06), rgba(26, 10, 46, 0.5))",
-  };
 
   useSeo({
     title:
@@ -145,7 +129,7 @@ export default function AboutPage() {
         className="page-hero-bg"
         style={{
           padding: "80px 0 60px",
-          borderBottom: `1px solid ${colors.border}`,
+          borderBottom: "1px solid rgba(110,247,212,0.08)",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -154,15 +138,15 @@ export default function AboutPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{ color: colors.textMuted }}
+                style={{ color: isLight ? "rgba(20,30,60,0.6)" : "rgba(232,237,248,0.45)" }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: colors.textMuted }}
+                style={{ color: isLight ? "rgba(20,30,60,0.3)" : "rgba(232,237,248,0.3)" }}
               />
-              <span className="text-sm" style={{ color: colors.accent }}>
+              <span className="text-sm" style={{ color: "#00d4b8" }}>
                 About
               </span>
             </div>
@@ -170,15 +154,15 @@ export default function AboutPage() {
               className="text-4xl sm:text-5xl font-bold mb-5"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: colors.textPrimary,
+                color: isLight ? "#1a2040" : "#e8edf8",
                 lineHeight: 1.15,
               }}
             >
-              About <span style={{ color: colors.accent }}>Cybin Enterprises</span>
+              About <span style={{ color: "#00d4b8" }}>Cybin Enterprises</span>
             </h1>
             <p
               className="text-lg"
-              style={{ color: colors.textSecondary, lineHeight: 1.7 }}
+              style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.65)", lineHeight: 1.7 }}
             >
               Cybin Enterprises helps businesses navigate complex payment
               environments with clarity, structure, and long-term reliability.
@@ -190,7 +174,7 @@ export default function AboutPage() {
       {/* Mission */}
       <section
         style={{
-          backgroundColor: colors.bgSecondary,
+          backgroundColor: isLight ? "#F9FAFF" : "#0a0f1e",
           padding: "72px 0",
         }}
       >
@@ -198,26 +182,27 @@ export default function AboutPage() {
           <div
             className="animate-fade-up p-10 rounded-2xl text-center max-w-3xl mx-auto"
             style={{
-              background: colors.gradient,
-              border: `1px solid ${colors.accentBorder}`,
+              background:
+                "linear-gradient(135deg, rgba(110,247,212, 0.06), rgba(26, 10, 46, 0.5))",
+              border: "1px solid rgba(110,247,212, 0.12)",
             }}
           >
             <Star
               size={32}
-              style={{ color: colors.accent, margin: "0 auto 16px" }}
+              style={{ color: "#00d4b8", margin: "0 auto 16px" }}
             />
             <h2
               className="text-2xl font-bold mb-4"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: colors.textPrimary,
+                color: isLight ? "#1a2040" : "#e8edf8",
               }}
             >
               {site.about.missionTitle}
             </h2>
             <p
               className="text-base leading-relaxed"
-              style={{ color: colors.textSecondary }}
+              style={{ color: isLight ? "rgba(20,30,60,0.7)" : "rgba(232, 237, 248, 0.7)" }}
             >
               {site.about.missionBody}
             </p>
@@ -234,7 +219,7 @@ export default function AboutPage() {
       <section
         data-ocid="about.founders.section"
         style={{
-          backgroundColor: colors.bgTertiary,
+          backgroundColor: isLight ? "#f0f3fa" : "#080d1a",
           padding: "120px 0 100px",
           position: "relative",
           overflow: "hidden",
@@ -246,9 +231,8 @@ export default function AboutPage() {
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage: isLight
-              ? "linear-gradient(rgba(0,212,184,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,184,0.03) 1px, transparent 1px)"
-              : "linear-gradient(rgba(110,247,212,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(110,247,212,0.025) 1px, transparent 1px)",
+            backgroundImage:
+              "linear-gradient(rgba(110,247,212,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(110,247,212,0.025) 1px, transparent 1px)",
             backgroundSize: "64px 64px",
             pointerEvents: "none",
             zIndex: 0,
