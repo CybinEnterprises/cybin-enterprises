@@ -254,13 +254,13 @@ export default function PeptidesPage() {
               </p>
               <div className="space-y-3 mb-8">
                 {[
-                  "Standard processors reject applications citing \u2018pharmaceutical\u2019 classification without reviewing actual compliance status",
-                  "FDA guidance on peptides is evolving \u2014 processors interpret uncertainty as automatic risk",
+                  "Standard processors reject applications citing 'pharmaceutical' classification without reviewing actual compliance status",
+                  "FDA guidance on peptides is evolving — processors interpret uncertainty as automatic risk",
                   "Product labeling flagged regardless of actual compliance posture",
                   "Chargeback rates in the supplements space trigger early account reviews",
-                ].map((pain) => (
+                ].map((pain, pIdx) => (
                   <div
-                    key={pain}
+                    key={`pain-a-${pIdx}`}
                     className="flex gap-3"
                     style={{
                       padding: "12px 16px",
@@ -353,8 +353,8 @@ export default function PeptidesPage() {
                   title: "Domestic & International",
                   desc: "Multi-processor access for broader reach",
                 },
-              ].map(({ icon: Icon, title, desc }) => (
-                <div key={title} className="flex gap-4 mb-5">
+              ].map(({ icon: Icon, title, desc }, fIdx) => (
+                <div key={`feature-${fIdx}`} className="flex gap-4 mb-5">
                   <div
                     style={{
                       width: 36,
@@ -465,8 +465,8 @@ export default function PeptidesPage() {
                   title: "High-AOV Sellers",
                   desc: "Businesses with larger average order values common in the research supply industry",
                 },
-              ].map(({ title, desc }) => (
-                <div key={title} className="flex gap-4 mb-5">
+              ].map(({ title, desc }, sIdx) => (
+                <div key={`seller-${sIdx}`} className="flex gap-4 mb-5">
                   <CheckCircle
                     size={16}
                     style={{ color: "#00d4b8", flexShrink: 0, marginTop: 3 }}
@@ -546,9 +546,9 @@ export default function PeptidesPage() {
                   "International orders common in research community trigger cross-border risk flags",
                   "High average order values create chargeback exposure most processors avoid",
                   "Most processors won\u2019t onboard this category at all",
-                ].map((pain) => (
+                ].map((pain, painIdx) => (
                   <div
-                    key={pain}
+                    key={`pain-b-${painIdx}`}
                     className="flex gap-3"
                     style={{
                       padding: "12px 16px",
@@ -672,8 +672,8 @@ export default function PeptidesPage() {
             </p>
           </div>
           <div className="space-y-3">
-            {faqs.map((faq) => (
-              <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+            {faqs.map((faq, index) => (
+              <FAQItem key={`faq-${index}`} q={faq.q} a={faq.a} />
             ))}
           </div>
         </div>

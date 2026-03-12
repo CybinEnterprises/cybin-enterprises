@@ -126,7 +126,7 @@ export default function SolutionsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {solutions.map(({ icon: Icon, title, desc, cta, href }, i) => (
               <div
-                key={title}
+                key={`solution-${i}`}
                 className={`animate-fade-rise animate-delay-${(i % 5) * 80}`}
                 style={{
                   padding: 32,

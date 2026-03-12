@@ -79,16 +79,16 @@ export function LegalPageTemplate({
 
             <div className="space-y-8">
               {sections.map(({ title: sTitle, content }, i) => (
-                <div key={sTitle}>
+                <div key={`section-${i}`}>
                   <h2
                     className="text-lg font-bold mb-3"
                     style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
                   >
                     {i + 1}. {sTitle}
                   </h2>
-                  {content.map((para) => (
+                  {content.map((para, pIdx) => (
                     <p
-                      key={para.slice(0, 40)}
+                      key={`para-${pIdx}`}
                       className="text-sm mb-2"
                       style={{ color: "rgba(232,237,248,0.6)" }}
                     >

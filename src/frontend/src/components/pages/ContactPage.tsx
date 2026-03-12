@@ -1,6 +1,7 @@
 import { JsonLd } from "@/components/JsonLd";
 import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
 import { useSeo } from "@/hooks/useSeo";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { Link } from "@/lib/router";
 import { useMutation } from "@tanstack/react-query";
 import {
@@ -38,6 +39,7 @@ export default function ContactPage() {
 
   const site = useLiveSiteSettings();
   const { actor } = useActor();
+  const colors = useThemeColors();
 
   const [form, setForm] = useState({
     name: "",
@@ -112,7 +114,7 @@ export default function ContactPage() {
         className="page-hero-bg"
         style={{
           padding: "80px 0 60px",
-          borderBottom: "1px solid rgba(110,247,212,0.08)",
+          borderBottom: `1px solid ${colors.border}`,
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -121,15 +123,15 @@ export default function ContactPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{ color: "rgba(232,237,248,0.45)" }}
+                style={{ color: colors.textMuted }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: "rgba(232,237,248,0.3)" }}
+                style={{ color: colors.textMuted }}
               />
-              <span className="text-sm" style={{ color: "#00d4b8" }}>
+              <span className="text-sm" style={{ color: colors.accent }}>
                 Contact
               </span>
             </div>
@@ -137,16 +139,16 @@ export default function ContactPage() {
               className="text-4xl sm:text-5xl font-bold mb-5"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: "#e8edf8",
+                color: colors.textPrimary,
                 lineHeight: 1.15,
               }}
             >
               Contact{" "}
-              <span style={{ color: "#00d4b8" }}>Cybin Enterprises</span>
+              <span style={{ color: colors.accent }}>Cybin Enterprises</span>
             </h1>
             <p
               className="text-lg"
-              style={{ color: "rgba(232, 237, 248, 0.65)", lineHeight: 1.7 }}
+              style={{ color: colors.textSecondary, lineHeight: 1.7 }}
             >
               Have questions or ready to begin? We're here to help.
             </p>
@@ -155,7 +157,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Content */}
-      <section style={{ backgroundColor: "#0a0f1e", padding: "72px 0" }}>
+      <section style={{ backgroundColor: colors.bgPrimary, padding: "72px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             {/* Form */}
@@ -163,7 +165,7 @@ export default function ContactPage() {
               <div className="cybin-glass-card p-8">
                 <h2
                   className="text-2xl font-bold mb-6"
-                  style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
+                  style={{ fontFamily: "Sora, sans-serif", color: colors.textPrimary }}
                 >
                   Send Us a Message
                 </h2>

@@ -318,8 +318,8 @@ export default function FaqPage() {
       {/* FAQ Sections */}
       <section style={{ backgroundColor: "#0a0f1e", padding: "60px 0 80px" }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {faqSections.map((section) => (
-            <div key={section.section} className="mb-14">
+          {faqSections.map((section, secIdx) => (
+            <div key={`section-${secIdx}`} className="mb-14">
               <h2
                 className="text-2xl font-bold mb-2"
                 style={{
@@ -332,8 +332,8 @@ export default function FaqPage() {
                 {section.section}
               </h2>
               <div style={{ marginTop: 16 }}>
-                {section.faqs.map((faq) => (
-                  <FaqItem key={faq.q} q={faq.q} a={faq.a} />
+                {section.faqs.map((faq, faqIdx) => (
+                  <FaqItem key={`faq-${secIdx}-${faqIdx}`} q={faq.q} a={faq.a} />
                 ))}
               </div>
             </div>

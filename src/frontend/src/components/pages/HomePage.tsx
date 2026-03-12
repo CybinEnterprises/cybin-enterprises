@@ -5,8 +5,13 @@ import { useSeo } from "@/hooks/useSeo";
 import { Link } from "@/lib/router";
 import {
   AlertTriangle,
+  ArrowRight,
+  Building2,
   CheckCircle,
   ChevronRight,
+  ChevronLeft,
+  Clock,
+  CreditCard,
   FileX,
   Globe,
   Landmark,
@@ -14,9 +19,11 @@ import {
   Lock,
   Scale,
   Shield,
+  Sparkles,
   XCircle,
   Zap,
 } from "lucide-react";
+import { useState, useEffect } from "react";
 
 // Comprehensive industry list
 const ALL_INDUSTRIES = [
@@ -196,8 +203,8 @@ const industryTiles = [
     href: "/industries/travel-timeshare",
     icon: "✈️",
   },
-  { label: "Peptides", href: "/industries/peptides", icon: "🔬" },
-  { label: "View All", href: "/industries", icon: "→" },
+  { label: "All businesses", href: "/industries", hrtitle: "All businesses approved", icon: "🔬" },
+  { label: "View All", href: "/industries?view=all", icon: "→" },
 ];
 
 const testimonials = [
@@ -206,7 +213,7 @@ const testimonials = [
     problem:
       "We were processing $280K/month when our processor terminated us without warning, citing chargeback ratios that never exceeded 0.8%.",
     outcome:
-      "Cybin had us approved with a new processor in 9 days. Rates were competitive and we haven’t had an issue since.",
+      "Cybin had us approved with a new processor in 72 hours. Rates were competitive and we haven’t had an issue since.",
     attribution: "Michael T., Ohio",
   },
   {
@@ -232,32 +239,49 @@ export default function HomePage() {
   const { resolved } = useTheme();
   const isLight = resolved === "light";
 
+  // Process animation state
+  const [activeStep, setActiveStep] = useState(1);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Auto-advance logic
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    const timer = setInterval(() => {
+      setActiveStep(prev => prev >= 4 ? 1 : prev + 1);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying]);
+
   useSeo({
     canonical: "https://cybinenterprises.com/",
     title:
       "High-Risk Merchant Accounts | Payment Solutions for Every Industry | Cybin Enterprises",
     description:
-      "Cybin Enterprises structures high-risk merchant accounts for businesses in 100+ industries — from CBD and firearms to peptides and enterprise e-commerce. Free account review, no commitment.",
+      "Cybin Enterprises structures high-risk merchant accounts for all businesses — from CBD and firearms to peptides and enterprise e-commerce. Free account review, no commitment.",
   });
 
-  const accentColor = isLight ? "#7c5cbf" : "#00d4b8";
-  const textPrimary = isLight ? "#0a0f1e" : "#E8EDF8";
-  const textSecondary = isLight
-    ? "rgba(10,22,40,0.65)"
-    : "rgba(232,245,242,0.8)";
-  const bgPrimary = isLight ? "#ffffff" : "#0a0f1e";
-  const bgSecondary = isLight ? "#F0F4FF" : "#110F22";
-  const cardBg = isLight ? "rgba(240,244,255,0.8)" : "rgba(255,255,255,0.03)";
-  const cardBorder = isLight
-    ? "rgba(99,102,241,0.12)"
-    : "rgba(255,255,255,0.07)";
+  // Consistent theme colors - Bioluminescent Tech Design System
+  const colors = {
+    accent: isLight ? "var(--lm-accent-cyan)" : "var(--dm-accent-cyan)",
+    accentSecondary: isLight ? "var(--lm-accent-indigo)" : "var(--dm-accent-violet)",
+    textPrimary: isLight ? "var(--lm-text-primary)" : "var(--dm-text-primary)",
+    textSecondary: isLight ? "var(--lm-text-secondary)" : "var(--dm-text-secondary)",
+    textMuted: isLight ? "var(--lm-text-muted)" : "var(--dm-text-muted)",
+    bgPrimary: isLight ? "var(--lm-bg-surface)" : "var(--dm-bg-deep)",
+    bgSecondary: isLight ? "var(--lm-bg-elevated)" : "var(--dm-bg-surface)",
+    cardBg: isLight ? "var(--lm-bg-surface)" : "rgba(255,255,255,0.03)",
+    cardBorder: isLight ? "var(--lm-border)" : "rgba(255,255,255,0.07)",
+    tagBg: isLight ? "rgba(0, 212, 184, 0.1)" : "rgba(99,102,241,0.12)",
+    tagBorder: isLight ? "rgba(0, 212, 184, 0.25)" : "rgba(99,102,241,0.3)",
+    tagText: isLight ? "var(--lm-accent-cyan)" : "rgba(232,245,242,0.8)",
+  };
 
   return (
     <div>
       {/* ── Hero ───────────────────────────────────────────── */}
       <section
         style={{
-          background: "#0a0f1e",
+          background: colors.bgPrimary,
           position: "relative",
           overflow: "hidden",
           minHeight: "100vh",
@@ -266,214 +290,126 @@ export default function HomePage() {
           justifyContent: "center",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "radial-gradient(ellipse 80% 60% at 30% 50%, rgba(99,102,241,0.1) 0%, transparent 60%)",
+            background: isLight
+              ? `radial-gradient(ellipse 70% 50% at 20% 40%, rgba(0, 212, 184, 0.25) 0%, transparent 50%),
+                 radial-gradient(ellipse 60% 40% at 80% 60%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
+                 radial-gradient(ellipse 50% 30% at 50% 80%, rgba(124, 92, 191, 0.15) 0%, transparent 50%)`
+              : "radial-gradient(ellipse 80% 60% at 30% 50%, rgba(99,102,241,0.1) 0%, transparent 60%)",
             pointerEvents: "none",
+            mixBlendMode: isLight ? "multiply" : "normal",
           }}
         />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+          {/* Top Trust Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-8 mb-12 animate-fade-up">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold" style={{ color: colors.accent }}>Millions</span>
+              <span className="text-sm" style={{ color: colors.textSecondary }}>processed monthly</span>
+            </div>
+            <div className="w-px h-6" style={{ backgroundColor: colors.cardBorder }} />
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold" style={{ color: colors.accent }}>High</span>
+              <span className="text-sm" style={{ color: colors.textSecondary }}>approval rate</span>
+            </div>
+            <div className="w-px h-6" style={{ backgroundColor: colors.cardBorder }} />
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-bold" style={{ color: colors.accent }}>48-72hrs</span>
+              <span className="text-sm" style={{ color: colors.textSecondary }}>avg. setup time</span>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left column */}
             <div>
+              {/* Pain Point Hook */}
               <div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold mb-8"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold mb-8 animate-fade-up"
                 style={{
-                  backgroundColor: "rgba(99,102,241,0.12)",
-                  border: "1px solid rgba(99,102,241,0.3)",
-                  color: "rgba(232,245,242,0.8)",
+                  background: isLight 
+                    ? "linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%)"
+                    : "linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%)",
+                  border: `1px solid ${isLight ? "rgba(245, 158, 11, 0.3)" : "rgba(245, 158, 11, 0.4)"}`,
+                  color: isLight ? "#d97706" : "#f59e0b",
+                  animationDelay: "0ms"
                 }}
               >
-                <span
-                  style={{
-                    width: 7,
-                    height: 7,
-                    borderRadius: "50%",
-                    backgroundColor: "#00d4b8",
-                    display: "inline-block",
-                    animation: "pulse 2s infinite",
-                  }}
-                />
-                High-Risk Payment Specialists
+                <AlertTriangle size={14} />
+                Your processor terminated you without warning?
               </div>
+              
               <h1
+                className="animate-fade-up"
                 style={{
                   fontFamily: '"Playfair Display", Georgia, serif',
                   fontSize: "clamp(2.25rem, 5vw, 3.5rem)",
                   fontWeight: 700,
-                  color: "#E8EDF8",
+                  color: colors.textPrimary,
                   lineHeight: 1.15,
                   marginBottom: 24,
+                  animationDelay: "150ms"
                 }}
               >
-                Your processor shut you down.{" "}
-                <span style={{ color: "#00d4b8" }}>We get you approved.</span>
+                We've helped <span style={{ color: colors.accent }}>businesses like yours</span> get back online in 48-72 hours
               </h1>
               <p
+                className="animate-fade-up"
                 style={{
                   fontSize: "1.1rem",
-                  color: "rgba(232,245,242,0.8)",
+                  color: colors.textSecondary,
                   lineHeight: 1.7,
                   marginBottom: 32,
                   maxWidth: 520,
+                  animationDelay: "300ms"
                 }}
               >
-                Cybin Enterprises structures domestic and international merchant
-                accounts for high-risk businesses — from startups processing
-                their first transaction to enterprises handling millions
-                monthly.
+                From CBD to firearms, peptides to crypto — when banks say no, we build the solution that keeps you processing. No more sudden shutdowns, no more lost revenue.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+              <div className="flex flex-col sm:flex-row gap-4 mb-6 animate-fade-up" style={{ animationDelay: "450ms" }}>
                 <Link
                   to="/apply"
                   data-ocid="hero.primary.button"
                   className="cybin-btn-blue"
                 >
-                  Get a Free Account Review <ChevronRight size={15} />
+                  Get Back Online Fast <ChevronRight size={15} />
                 </Link>
                 <Link
                   to="/industries"
                   data-ocid="hero.secondary.button"
                   className="cybin-btn-ghost-white"
                 >
-                  See All Industries
+                  See Success Stories
                 </Link>
               </div>
               <div
-                className="flex items-center gap-2"
-                style={{ color: "rgba(232,245,242,0.45)", fontSize: "0.78rem" }}
+                className="flex items-center gap-2 animate-fade-up"
+                style={{ 
+                  color: colors.textMuted, 
+                  fontSize: "0.78rem",
+                  animationDelay: "600ms"
+                }}
               >
-                <Lock size={12} style={{ color: "#00d4b8" }} />
-                No commitment. Secure. Reviewed within 24 hours.
+                <CheckCircle size={12} style={{ color: colors.accent }} />
+                <span>Businesses rescued • Fast approval • No setup fees</span>
               </div>
             </div>
-            {/* Right column — abstract tech visual */}
-            <div className="hidden lg:flex items-center justify-center">
+            {/* Right column — Trust Indicators */}
+            <div className="hidden lg:flex flex-col items-center justify-center gap-8">
+              {/* Trust Badge 1 */}
               <div
+                className="animate-fade-up"
                 style={{
                   position: "relative",
                   width: 400,
                   height: 400,
                 }}
               >
-                {/* Outer ring */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(99,102,241,0.15)",
-                    animation: "spin 20s linear infinite",
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 24,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(99,102,241,0.2)",
-                    animation: "spin 15s linear infinite reverse",
-                  }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 48,
-                    borderRadius: "50%",
-                    border: "1px solid rgba(99,102,241,0.3)",
-                  }}
-                />
-                {/* Center glow */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 140,
-                      height: 140,
-                      borderRadius: "50%",
-                      background:
-                        "radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: 80,
-                        height: 80,
-                        borderRadius: "50%",
-                        background: "linear-gradient(135deg, #7c5cbf, #00d4b8)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0 0 40px rgba(99,102,241,0.5)",
-                      }}
-                    >
-                      <Shield size={36} style={{ color: "white" }} />
-                    </div>
-                  </div>
-                </div>
-                {/* Orbiting dots */}
-                {[0, 60, 120, 180, 240, 300].map((deg, i) => (
-                  <div
-                    key={deg}
-                    style={{
-                      position: "absolute",
-                      width: 10,
-                      height: 10,
-                      borderRadius: "50%",
-                      backgroundColor: i % 2 === 0 ? "#7c5cbf" : "#00d4b8",
-                      top: `calc(50% + ${176 * Math.sin((deg * Math.PI) / 180)}px - 5px)`,
-                      left: `calc(50% + ${176 * Math.cos((deg * Math.PI) / 180)}px - 5px)`,
-                      boxShadow: `0 0 12px ${i % 2 === 0 ? "rgba(99,102,241,0.8)" : "rgba(52,211,153,0.8)"}`,
-                    }}
-                  />
-                ))}
+                <PaymentAnimation mode={isLight ? "light" : "dark"} />
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Trust bar */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 10,
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-            backgroundColor: "rgba(15,32,64,0.5)",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div
-              className="flex flex-wrap justify-center gap-6 text-xs"
-              style={{ color: "rgba(232,245,242,0.45)" }}
-            >
-              {[
-                "Access to multiple acquiring banks & processors",
-                "100+ industries served",
-                "Domestic & international accounts",
-                "Free to apply — no obligation",
-              ].map((item, i) => (
-                <span key={item} className="flex items-center gap-2">
-                  {i > 0 && (
-                    <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
-                  )}
-                  {item}
-                </span>
-              ))}
             </div>
           </div>
         </div>
@@ -490,7 +426,7 @@ export default function HomePage() {
           <div className="text-center">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: accentColor }}
+              style={{ color: colors.accent }}
             >
               Industries
             </span>
@@ -499,16 +435,16 @@ export default function HomePage() {
                 fontFamily: '"Playfair Display", Georgia, serif',
                 fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
                 fontWeight: 700,
-                color: textPrimary,
+                color: colors.textPrimary,
                 marginTop: 12,
                 marginBottom: 12,
               }}
             >
               If Banks Said No,{" "}
-              <span style={{ color: accentColor }}>We Say Yes</span>
+              <span style={{ color: colors.accent }}>We Say Yes</span>
             </h2>
             <p
-              style={{ color: textSecondary, maxWidth: 600, margin: "0 auto" }}
+              style={{ color: colors.textSecondary, maxWidth: 600, margin: "0 auto" }}
             >
               Cybin Enterprises works with businesses across every industry —
               including those labeled high-risk, hard-to-place, or previously
@@ -523,8 +459,8 @@ export default function HomePage() {
             overflow: "hidden",
             position: "relative",
             padding: "12px 0",
-            borderTop: `1px solid ${cardBorder}`,
-            borderBottom: `1px solid ${cardBorder}`,
+            borderTop: `1px solid ${colors.cardBorder}`,
+            borderBottom: `1px solid ${colors.cardBorder}`,
           }}
         >
           <div
@@ -568,11 +504,11 @@ export default function HomePage() {
                     ? "rgba(99,102,241,0.06)"
                     : "rgba(99,102,241,0.08)",
                   border: `1px solid ${isLight ? "rgba(99,102,241,0.15)" : "rgba(99,102,241,0.2)"}`,
-                  color: textSecondary,
+                  color: colors.textSecondary,
                   whiteSpace: "nowrap",
                 }}
               >
-                <span style={{ color: accentColor, fontSize: 8 }}>◆</span>
+                <span style={{ color: colors.accent, fontSize: 8 }}>◆</span>
                 {label}
               </div>
             ))}
@@ -581,12 +517,12 @@ export default function HomePage() {
       </section>
 
       {/* ── Pain Points ──────────────────────────────────────── */}
-      <section style={{ backgroundColor: bgPrimary, padding: "80px 0" }}>
+      <section style={{ backgroundColor: colors.bgPrimary, padding: "80px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: accentColor }}
+              style={{ color: colors.accent }}
             >
               Common Situations
             </span>
@@ -595,7 +531,7 @@ export default function HomePage() {
                 fontFamily: '"Playfair Display", Georgia, serif',
                 fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
                 fontWeight: 700,
-                color: textPrimary,
+                color: colors.textPrimary,
                 marginTop: 12,
                 marginBottom: 12,
               }}
@@ -606,13 +542,13 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {painPoints.map(({ icon: Icon, headline, copy }, i) => (
               <div
-                key={headline}
+                key={`pain-point-${i}`}
                 className={`animate-fade-rise${i > 0 ? ` animate-delay-${i * 80}` : ""}`}
                 style={{
                   padding: 28,
                   borderRadius: 16,
                   backgroundColor: isLight ? "#F0F4FF" : "#110F22",
-                  border: `1px solid ${cardBorder}`,
+                  border: `1px solid ${colors.cardBorder}`,
                   transition: "border-color 0.2s, box-shadow 0.2s",
                 }}
                 onMouseEnter={(e) => {
@@ -623,7 +559,7 @@ export default function HomePage() {
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLDivElement).style.borderColor =
-                    cardBorder;
+                    colors.cardBorder;
                   (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
                 }}
               >
@@ -639,14 +575,14 @@ export default function HomePage() {
                     marginBottom: 16,
                   }}
                 >
-                  <Icon size={18} style={{ color: "rgba(232,245,242,0.8)" }} />
+                  <Icon size={18} style={{ color: colors.textSecondary }} />
                 </div>
                 <h3
                   style={{
                     fontFamily: '"Playfair Display", Georgia, serif',
                     fontSize: "1.15rem",
                     fontWeight: 700,
-                    color: textPrimary,
+                    color: colors.textPrimary,
                     marginBottom: 10,
                   }}
                 >
@@ -654,7 +590,7 @@ export default function HomePage() {
                 </h3>
                 <p
                   style={{
-                    color: textSecondary,
+                    color: colors.textSecondary,
                     fontSize: "0.875rem",
                     lineHeight: 1.7,
                   }}
@@ -670,7 +606,7 @@ export default function HomePage() {
       {/* ── How It Works ─────────────────────────────────────── */}
       <section
         style={{
-          backgroundColor: bgSecondary,
+          backgroundColor: colors.bgSecondary,
           padding: "80px 0",
           position: "relative",
           overflow: "hidden",
@@ -681,7 +617,7 @@ export default function HomePage() {
           <div className="text-center mb-12">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: accentColor }}
+              style={{ color: colors.accent }}
             >
               Process
             </span>
@@ -690,82 +626,111 @@ export default function HomePage() {
                 fontFamily: '"Playfair Display", Georgia, serif',
                 fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
                 fontWeight: 700,
-                color: textPrimary,
+                color: colors.textPrimary,
                 marginTop: 12,
               }}
             >
               How We Get You Approved
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            {/* Connecting line (desktop) */}
-            <div
-              className="hidden lg:block absolute top-8 left-0 right-0 h-px"
-              style={{
-                background:
-                  "linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent)",
-              }}
-            />
-            {steps.map(({ n, headline, copy }, i) => (
-              <div
-                key={n}
-                className={`animate-fade-rise${i > 0 ? ` animate-delay-${i * 80}` : ""}`}
+          {/* Smooth Process Animation */}
+          <div className="max-w-4xl mx-auto">
+            {/* Navigation Dots */}
+            <div className="flex justify-center gap-2 mb-8">
+              {[1, 2, 3, 4].map((step) => (
+                <button
+                  key={step}
+                  onClick={() => {
+                    setActiveStep(step);
+                    setIsAutoPlaying(false);
+                  }}
+                  className="w-2 h-2 rounded-full transition-all duration-300"
+                  style={{
+                    background: activeStep === step 
+                      ? colors.accent 
+                      : colors.cardBorder,
+                    width: activeStep === step ? "24px" : "8px",
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Steps */}
+            <div className="relative">
+              {steps.map(({ n, headline, copy }, i) => (
+                <div
+                  key={`step-${i}`}
+                  className={`transition-all duration-500 ${
+                    activeStep === i + 1 ? "opacity-100" : "opacity-0 absolute inset-0"
+                  }`}
+                >
+                  <div className="flex flex-col items-center text-center">
+                    {/* Step Number with pulse animation */}
+                    <div
+                      className="w-16 h-16 rounded-full flex items-center justify-center mb-6 transition-all duration-500"
+                      style={{
+                        background: isLight
+                          ? "linear-gradient(135deg, #00d4b8 0%, #0891b2 100%)"
+                          : "linear-gradient(135deg, #00ffd1 0%, #7c3aed 100%)",
+                        boxShadow: isLight
+                          ? "0 4px 15px rgba(0, 212, 184, 0.3)"
+                          : "0 4px 15px rgba(0, 255, 209, 0.25)",
+                        border: `3px solid ${isLight ? "#ffffff" : "#0a0f1e"}`,
+                        transform: activeStep === i + 1 ? "scale(1)" : "scale(0.8)",
+                      }}
+                    >
+                      <span className="text-white font-bold text-2xl">{n}</span>
+                    </div>
+
+                    <h3
+                      className="font-bold mb-3 text-lg transition-all duration-500"
+                      style={{ 
+                        color: colors.textPrimary,
+                        transform: activeStep === i + 1 ? "translateY(0)" : "translateY(20px)",
+                        opacity: activeStep === i + 1 ? 1 : 0
+                      }}
+                    >
+                      {headline}
+                    </h3>
+                    <p
+                      className="text-base leading-relaxed max-w-md transition-all duration-500"
+                      style={{ 
+                        color: colors.textSecondary,
+                        transform: activeStep === i + 1 ? "translateY(0)" : "translateY(20px)",
+                        opacity: activeStep === i + 1 ? 1 : 0
+                      }}
+                    >
+                      {copy}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Auto-play Controls */}
+            <div className="flex justify-center mt-8 gap-4">
+              <button
+                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300"
                 style={{
-                  padding: 24,
-                  borderRadius: 14,
-                  backgroundColor: cardBg,
-                  border: `1px solid ${cardBorder}`,
-                  position: "relative",
+                  background: isLight 
+                    ? "rgba(0, 212, 184, 0.1)" 
+                    : "rgba(0, 255, 209, 0.1)",
+                  border: `1px solid ${isLight ? "rgba(0, 212, 184, 0.3)" : "rgba(0, 255, 209, 0.3)"}`,
+                  color: colors.accent,
                 }}
               >
-                <div
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: "50%",
-                    background: "linear-gradient(135deg, #7c5cbf, #00d4b8)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 800,
-                    color: "white",
-                    fontSize: "0.875rem",
-                    marginBottom: 16,
-                    position: "relative",
-                    zIndex: 1,
-                    boxShadow: "0 0 16px rgba(99,102,241,0.35)",
-                  }}
-                >
-                  {n}
-                </div>
-                <h3
-                  style={{
-                    fontWeight: 700,
-                    color: textPrimary,
-                    marginBottom: 8,
-                    fontSize: "1rem",
-                  }}
-                >
-                  {headline}
-                </h3>
-                <p
-                  style={{
-                    color: textSecondary,
-                    fontSize: "0.85rem",
-                    lineHeight: 1.7,
-                  }}
-                >
-                  {copy}
-                </p>
-              </div>
-            ))}
+                {isAutoPlaying ? <Clock size={16} /> : <ChevronRight size={16} />}
+                {isAutoPlaying ? "Pause" : "Play"}
+              </button>
+            </div>
           </div>
           <div className="text-center mt-10">
             <Link
               to="/how-it-works"
               data-ocid="howitworks.link.button"
               style={{
-                color: accentColor,
+                color: colors.accent,
                 fontSize: "0.9rem",
                 fontWeight: 600,
               }}
@@ -777,12 +742,12 @@ export default function HomePage() {
       </section>
 
       {/* ── Industry Grid ──────────────────────────────────── */}
-      <section style={{ backgroundColor: bgPrimary, padding: "80px 0" }}>
+      <section style={{ backgroundColor: colors.bgPrimary, padding: "80px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: accentColor }}
+              style={{ color: colors.accent }}
             >
               Common Industries
             </span>
@@ -791,7 +756,7 @@ export default function HomePage() {
                 fontFamily: '"Playfair Display", Georgia, serif',
                 fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
                 fontWeight: 700,
-                color: textPrimary,
+                color: colors.textPrimary,
                 marginTop: 12,
               }}
             >
@@ -799,9 +764,9 @@ export default function HomePage() {
             </h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-            {industryTiles.map(({ label, href, icon }) => (
+            {industryTiles.map(({ label, href, icon }, i) => (
               <Link
-                key={href}
+                key={`industry-tile-${i}`}
                 to={href}
                 data-ocid={`industries.item.${label === "View All" ? "link" : "1"}`}
                 style={{
@@ -811,8 +776,8 @@ export default function HomePage() {
                   gap: 8,
                   padding: "20px 12px",
                   borderRadius: 12,
-                  backgroundColor: cardBg,
-                  border: `1px solid ${cardBorder}`,
+                  backgroundColor: colors.cardBg,
+                  border: `1px solid ${colors.cardBorder}`,
                   textDecoration: "none",
                   transition:
                     "transform 0.2s, border-color 0.2s, box-shadow 0.2s",
@@ -829,7 +794,7 @@ export default function HomePage() {
                   (e.currentTarget as HTMLAnchorElement).style.transform =
                     "scale(1)";
                   (e.currentTarget as HTMLAnchorElement).style.borderColor =
-                    cardBorder;
+                    colors.cardBorder;
                   (e.currentTarget as HTMLAnchorElement).style.boxShadow =
                     "none";
                 }}
@@ -839,7 +804,7 @@ export default function HomePage() {
                   style={{
                     fontSize: "0.75rem",
                     fontWeight: 600,
-                    color: textPrimary,
+                    color: colors.textPrimary,
                     textAlign: "center",
                     lineHeight: 1.3,
                   }}
@@ -853,9 +818,9 @@ export default function HomePage() {
             <Link
               to="/industries"
               data-ocid="industries.all.link"
-              style={{ color: accentColor, fontWeight: 600 }}
+              style={{ color: colors.accent, fontWeight: 600 }}
             >
-              View All 100+ Industries →
+              View All Industries →
             </Link>
           </p>
         </div>
@@ -864,19 +829,23 @@ export default function HomePage() {
       {/* ── Enterprise Callout ───────────────────────────────── */}
       <section
         style={{
-          background: "#0a0f1e",
+          background: isLight ? "var(--lm-bg-elevated)" : "var(--dm-bg-deep)",
           padding: "80px 0",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(99,102,241,0.08) 0%, transparent 70%)",
+            background: isLight
+              ? `radial-gradient(ellipse 70% 60% at 50% 50%, rgba(8, 145, 178, 0.15) 0%, transparent 50%),
+                 radial-gradient(ellipse 50% 40% at 30% 70%, rgba(79, 70, 229, 0.12) 0%, transparent 50%),
+                 radial-gradient(ellipse 40% 30% at 70% 30%, rgba(124, 58, 237, 0.1) 0%, transparent 50%)`
+              : `radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 255, 209, 0.08) 0%, transparent 70%),
+                 radial-gradient(ellipse 50% 40% at 30% 70%, rgba(124, 58, 237, 0.06) 0%, transparent 50%)`,
             pointerEvents: "none",
           }}
         />
@@ -886,18 +855,18 @@ export default function HomePage() {
               fontFamily: '"Playfair Display", Georgia, serif',
               fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
               fontWeight: 700,
-              color: "#E8EDF8",
+              color: colors.textPrimary,
               marginBottom: 20,
             }}
           >
             Processing millions per month?{" "}
-            <span style={{ color: "#00d4b8" }}>
+            <span style={{ color: colors.accent }}>
               We build accounts that scale.
             </span>
           </h2>
           <p
             style={{
-              color: "rgba(232,245,242,0.8)",
+              color: colors.textSecondary,
               lineHeight: 1.75,
               marginBottom: 32,
               fontSize: "1rem",
@@ -919,7 +888,7 @@ export default function HomePage() {
             style={{
               marginTop: 12,
               fontSize: "0.8rem",
-              color: "rgba(232,245,242,0.45)",
+              color: colors.textMuted,
             }}
           >
             High-volume accounts receive dedicated review and a direct point of
@@ -929,12 +898,12 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ─────────────────────────────────────── */}
-      <section style={{ backgroundColor: bgPrimary, padding: "80px 0" }}>
+      <section style={{ backgroundColor: colors.bgPrimary, padding: "80px 0" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{ color: accentColor }}
+              style={{ color: colors.accent }}
             >
               Results
             </span>
@@ -943,7 +912,7 @@ export default function HomePage() {
                 fontFamily: '"Playfair Display", Georgia, serif',
                 fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
                 fontWeight: 700,
-                color: textPrimary,
+                color: colors.textPrimary,
                 marginTop: 12,
               }}
             >
@@ -956,8 +925,8 @@ export default function HomePage() {
               style={{
                 padding: 28,
                 borderRadius: 16,
-                backgroundColor: cardBg,
-                border: "1px solid rgba(201,168,76,0.2)",
+                background: isLight ? "var(--lm-bg-card)" : "var(--dm-bg-card)",
+                border: `2px solid ${isLight ? "var(--lm-border-medium)" : "var(--dm-border-medium)"}`,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -969,19 +938,19 @@ export default function HomePage() {
                 style={{
                   fontSize: "2.5rem",
                   fontWeight: 800,
-                  color: "#C9A84C",
+                  color: colors.accent,
                   fontFamily: '"Playfair Display", Georgia, serif',
                   marginBottom: 8,
                 }}
               >
                 $240M+
               </p>
-              <p style={{ color: textSecondary, fontSize: "0.9rem" }}>
+              <p style={{ color: colors.textSecondary, fontSize: "0.9rem" }}>
                 processed across our merchant network
               </p>
               <p
                 style={{
-                  color: textSecondary,
+                  color: colors.textSecondary,
                   fontSize: "0.75rem",
                   marginTop: 8,
                   fontStyle: "italic",
@@ -991,36 +960,38 @@ export default function HomePage() {
               </p>
             </div>
 
-            {testimonials.map(({ tag, problem, outcome, attribution }) => (
+            {testimonials.map(({ tag, problem, outcome, attribution }, i) => (
               <div
-                key={tag}
+                key={`testimonial-${i}`}
                 style={{
                   padding: 28,
                   borderRadius: 16,
-                  backgroundColor: cardBg,
-                  border: `1px solid ${cardBorder}`,
+                  background: isLight ? "var(--lm-bg-card)" : "var(--dm-bg-card)",
+                  border: `2px solid ${isLight ? "var(--lm-border-medium)" : "var(--dm-border-medium)"}`,
                 }}
               >
                 <span
                   style={{
                     display: "inline-block",
-                    fontSize: "0.65rem",
+                    fontSize: "0.75rem",
                     fontWeight: 800,
                     letterSpacing: "0.12em",
-                    color: "#C9A84C",
+                    color: colors.accentSecondary,
                     textTransform: "uppercase",
                     marginBottom: 12,
                     padding: "4px 10px",
                     borderRadius: 6,
-                    backgroundColor: "rgba(201,168,76,0.1)",
-                    border: "1px solid rgba(201,168,76,0.25)",
+                    background: isLight 
+                      ? "linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(8, 145, 178, 0.1) 100%)" 
+                      : "linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(0, 255, 209, 0.1) 100%)",
+                    border: `1px solid ${isLight ? "rgba(79, 70, 229, 0.3)" : "rgba(124, 58, 237, 0.3)"}`,
                   }}
                 >
                   {tag}
                 </span>
                 <p
                   style={{
-                    color: textSecondary,
+                    color: colors.textSecondary,
                     fontSize: "0.875rem",
                     lineHeight: 1.65,
                     marginBottom: 12,
@@ -1031,7 +1002,7 @@ export default function HomePage() {
                 </p>
                 <p
                   style={{
-                    color: textPrimary,
+                    color: colors.textPrimary,
                     fontSize: "0.875rem",
                     lineHeight: 1.65,
                     marginBottom: 16,
@@ -1041,7 +1012,7 @@ export default function HomePage() {
                 </p>
                 <p
                   style={{
-                    color: accentColor,
+                    color: colors.accent,
                     fontSize: "0.8rem",
                     fontWeight: 600,
                   }}
@@ -1056,8 +1027,8 @@ export default function HomePage() {
               style={{
                 padding: 28,
                 borderRadius: 16,
-                backgroundColor: cardBg,
-                border: "1px solid rgba(201,168,76,0.2)",
+                backgroundColor: colors.cardBg,
+                border: `1px solid ${isLight ? "rgba(201,168,76,0.3)" : "rgba(201,168,76,0.2)"}`,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
@@ -1069,19 +1040,19 @@ export default function HomePage() {
                 style={{
                   fontSize: "2.5rem",
                   fontWeight: 800,
-                  color: "#C9A84C",
+                  color: isLight ? "#b5943d" : "#C9A84C",
                   fontFamily: '"Playfair Display", Georgia, serif',
                   marginBottom: 8,
                 }}
               >
                 7 Days
               </p>
-              <p style={{ color: textSecondary, fontSize: "0.9rem" }}>
+              <p style={{ color: colors.textSecondary, fontSize: "0.9rem" }}>
                 average approval timeline
               </p>
               <p
                 style={{
-                  color: textSecondary,
+                  color: colors.textSecondary,
                   fontSize: "0.75rem",
                   marginTop: 8,
                   fontStyle: "italic",
@@ -1097,26 +1068,26 @@ export default function HomePage() {
       {/* ── Final CTA ────────────────────────────────────────── */}
       <section
         style={{
-          background: "#0a0f1e",
+          background: isLight ? "var(--lm-bg-elevated)" : "var(--dm-bg-deep)",
           padding: "80px 0",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        <NeuronCanvas mode="dark" />
+        <NeuronCanvas mode={isLight ? "light" : "dark"} />
         <div className="relative z-10 max-w-2xl mx-auto px-4 text-center">
           <h2
             style={{
               fontFamily: '"Playfair Display", Georgia, serif',
               fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
               fontWeight: 700,
-              color: "#E8EDF8",
+              color: colors.textPrimary,
               marginBottom: 16,
             }}
           >
-            Ready to Get <span style={{ color: "#00d4b8" }}>Approved?</span>
+            Ready to Get <span style={{ color: colors.accent }}>Approved?</span>
           </h2>
-          <p style={{ color: "rgba(232,245,242,0.8)", marginBottom: 32 }}>
+          <p style={{ color: colors.textSecondary, marginBottom: 32 }}>
             Free review, no commitment. A real person reviews your situation
             within 24 hours.
           </p>

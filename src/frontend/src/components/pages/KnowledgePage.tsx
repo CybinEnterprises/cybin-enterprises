@@ -397,9 +397,9 @@ export default function KnowledgePage() {
               "Fraud Deflect — early dispute alert system (Ethoca + Verifi networks)",
               "Pre-approval consultation and documentation preparation",
               "Long-term account stability monitoring and support",
-            ].map((item) => (
+            ].map((item, itemIdx) => (
               <li
-                key={item}
+                key={`item-${itemIdx}`}
                 style={{
                   display: "flex",
                   alignItems: "flex-start",

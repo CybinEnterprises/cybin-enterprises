@@ -271,7 +271,7 @@ export default function IndustriesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
             {industries.map(({ icon: Icon, title, desc }, i) => (
               <div
-                key={title}
+                key={`industry-${i}`}
                 className="animate-fade-up cybin-glass-card p-6"
                 style={{ transitionDelay: `${i * 60}ms` }}
               >
@@ -399,8 +399,8 @@ export default function IndustriesPage() {
                   "Prior declines from other processors don't apply here",
                   "High chargeback history addressed with Fraud Deflect",
                   "Structured path toward processing stability",
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-3">
+                ].map((item, idx) => (
+                  <div key={`qualify-${idx}`} className="flex items-start gap-3">
                     <CheckCircle
                       size={16}
                       style={{
