@@ -1,4 +1,5 @@
 import NeuronCanvas from "@/components/NeuronCanvas";
+import PaymentAnimation from "@/components/PaymentAnimation";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
 import { useSeo } from "@/hooks/useSeo";
