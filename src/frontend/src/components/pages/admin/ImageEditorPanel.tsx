@@ -70,8 +70,8 @@ const IMAGES: ImageMeta[] = [
     description: "Header & Footer logo",
     src: logoPhoto,
     accentColor: "#ffc832",
-    naturalWidth: 400,
-    naturalHeight: 400,
+    naturalWidth: 661,
+    naturalHeight: 377,
   },
 ];
 

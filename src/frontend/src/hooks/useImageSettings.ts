@@ -57,14 +57,14 @@ export const IMAGE_DEFAULTS: Record<ImageKey, ImageConfig> = {
     posY: 50,
     scale: 1.0,
     originY: "center",
-    containerHeight: 80,
+    containerHeight: 44,
     fit: "contain",
   },
 };
 
 const STORAGE_KEY = "cybin-image-settings";
 // Bump this version whenever defaults change — clears stale localStorage cache
-const SETTINGS_VERSION = "v5";
+const SETTINGS_VERSION = "v6";
 const VERSION_KEY = "cybin-image-settings-version";
 const EVENT_NAME = "cybin-image-settings-changed";
 

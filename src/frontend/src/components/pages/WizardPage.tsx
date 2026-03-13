@@ -461,17 +461,8 @@ export default function WizardPage() {
           <img
             src="/assets/cybin-logo.png"
             alt="Cybin Enterprises"
-            style={{ width: 36, height: 36, objectFit: "contain" }}
+            style={{ height: 32, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)" }}
           />
-          <span
-            style={{
-              fontWeight: 700,
-              color: "rgba(232,237,248,0.9)",
-              fontSize: "0.9rem",
-            }}
-          >
-            Cybin Enterprises
-          </span>
         </Link>
         <nav className="hidden md:flex items-center gap-4">
           {[
