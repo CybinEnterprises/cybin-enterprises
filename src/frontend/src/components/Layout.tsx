@@ -186,8 +186,8 @@ export default function Layout({ children }: LayoutProps) {
       ? "#ffffff"
       : "#ffffff"
     : scrolled
-      ? "rgba(13,11,26,0.97)"
-      : "rgba(13,11,26,0.92)";
+      ? "#0d0b1a"
+      : "#0d0b1a";
   const navLinkColor = isLight
     ? "rgba(20,30,60,0.7)"
     : "rgba(232, 237, 248, 0.75)";
@@ -254,8 +254,6 @@ export default function Layout({ children }: LayoutProps) {
         className="fixed top-[38px] left-0 right-0 z-50 transition-all duration-300"
         style={{
           backgroundColor: headerBg,
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
           borderBottom: scrolled
             ? `1px solid ${isLight ? "rgba(0,0,0,0.1)" : "rgba(99,102,241,0.2)"}`
             : "1px solid transparent",
