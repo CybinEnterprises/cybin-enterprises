@@ -119,6 +119,7 @@ function ThemeToggle() {
   );
 }
 
+// Force recompile for logo cache fix - ${Date.now()}
 export default function Layout({ children }: LayoutProps) {
   const { style: logoStyle, config: logoCfg } = useLiveImageSettings("logo");
   const site = useLiveSiteSettings();
