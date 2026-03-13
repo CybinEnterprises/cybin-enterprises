@@ -316,6 +316,7 @@ export default function WizardPage() {
   const [searchParams] = useSearchParams();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
+  const logoImg = isLight ? "/assets/cybin-logo.png" : "/assets/cybin-logo-dark.png";
   const logoBg = isLight ? "#ffffff" : "#000000";
   const { actor } = useActor();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -460,7 +461,7 @@ export default function WizardPage() {
           }}
         >
           <img
-            src="/assets/cybin-logo.png"
+            src={logoImg}
             alt="Cybin Enterprises"
             style={{
               width: 36,
