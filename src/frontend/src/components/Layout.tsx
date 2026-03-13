@@ -124,7 +124,7 @@ export default function Layout({ children }: LayoutProps) {
   const site = useLiveSiteSettings();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
-  const logoImg = "/assets/cybin-logo.png";
+  const logoImg = isLight ? "/assets/cybin-logo-light.png" : "/assets/cybin-logo-dark.png";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -198,7 +198,7 @@ export default function Layout({ children }: LayoutProps) {
     ? "rgba(0,122,106,0.1)"
     : "rgba(110,247,212, 0.08)";
   const footerBg = isLight ? "#f8fafc" : "#080614";
-  const logoBg = "transparent";
+  const logoBg = isLight ? "transparent" : "transparent";
   const footerText = isLight
     ? "rgba(20,30,60,0.55)"
     : "rgba(232, 237, 248, 0.55)";
