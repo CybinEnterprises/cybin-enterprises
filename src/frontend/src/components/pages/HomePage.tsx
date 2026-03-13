@@ -4,7 +4,7 @@ import { EnterpriseCalloutSection } from "./home/EnterpriseCalloutSection";
 import { FinalCtaSection } from "./home/FinalCtaSection";
 import { HeroSection } from "./home/HeroSection";
 import { HowItWorksSection } from "./home/HowItWorksSection";
-import { IndustryGridSection } from "./home/IndustryGridSection";
+import { IndustryGridSection } from "./home/IndustryGrid";
 import { IndustryTicker } from "./home/IndustryTicker";
 import { PainPointsSection } from "./home/PainPointsSection";
 import { TestimonialsSection } from "./home/TestimonialsSection";

@@ -3,20 +3,25 @@ import TickerBar from "@/components/TickerBar";
 import { useTheme } from "@/contexts/ThemeContext";
 import { Link, useSearchParams } from "@/lib/router";
 import {
+  AlertTriangle,
+  ArrowRight,
   CheckCircle,
   ChevronRight,
   Clock,
+  FileText,
   Globe,
   Lock,
   Shield,
+  Sparkles,
+  Upload,
   Zap,
 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useActor } from "../../hooks/useActor";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
-type NewStep = 1 | 2 | 3 | "reviewing" | "success";
+type NewStep = 1 | 2 | 3 | 4 | "reviewing" | "success";
 
 const ALL_INDUSTRIES = [
   "Research Peptides",
@@ -132,114 +137,53 @@ const ALL_INDUSTRIES = [
 
 const fieldBase: React.CSSProperties = {
   width: "100%",
-  padding: "13px 16px",
+  padding: "14px 16px",
   borderRadius: 10,
   border: "1px solid rgba(255,255,255,0.1)",
   backgroundColor: "rgba(255,255,255,0.05)",
   color: "#e8edf8",
-  fontSize: "0.9rem",
+  fontSize: "0.95rem",
   fontFamily: '"DM Sans", "Cabinet Grotesk", sans-serif',
   outline: "none",
-  transition: "border-color 0.2s, background-color 0.2s, box-shadow 0.2s",
+  transition: "all 0.2s ease",
   boxSizing: "border-box" as const,
 };
 
-function applyFocusStyle(el: HTMLInputElement | HTMLSelectElement) {
-  el.style.borderColor = "rgba(77,163,255,0.6)";
-  el.style.backgroundColor = "rgba(110,247,212,0.05)";
-  el.style.boxShadow = "0 0 0 3px rgba(110,247,212,0.15)";
+function applyFocusStyle(el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
+  el.style.borderColor = "rgba(0,212,184,0.6)";
+  el.style.backgroundColor = "rgba(0,212,184,0.08)";
+  el.style.boxShadow = "0 0 0 3px rgba(0,212,184,0.15)";
 }
-function removeFocusStyle(el: HTMLInputElement | HTMLSelectElement) {
+function removeFocusStyle(el: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) {
   el.style.borderColor = "rgba(255,255,255,0.1)";
   el.style.backgroundColor = "rgba(255,255,255,0.05)";
   el.style.boxShadow = "none";
 }
 
-function FieldLabel({
-  label,
-  completed,
-}: { label: string; completed?: boolean }) {
+function FieldLabel({ label, required, completed }: { label: string; required?: boolean; completed?: boolean }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: 6,
-      }}
-    >
-      <span
-        style={{
-          fontSize: "0.82rem",
-          fontWeight: 600,
-          color: "rgba(232,240,255,0.7)",
-          textTransform: "uppercase",
-          letterSpacing: "0.06em",
-        }}
-      >
-        {label}
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+      <span style={{ fontSize: "0.85rem", fontWeight: 600, color: "rgba(232,240,255,0.8)", letterSpacing: "0.02em" }}>
+        {label} {required && <span style={{ color: "#00d4b8" }}>•</span>}
       </span>
-      {completed && (
-        <CheckCircle
-          size={14}
-          style={{ color: "#00d4b8", animation: "scaleIn 0.3s ease" }}
-        />
-      )}
+      {completed && <CheckCircle size={16} style={{ color: "#00d4b8" }} />}
     </div>
   );
 }
 
 // ─── Progress Bar ───────────────────────────────────────────────────────────────
 
-function ProgressBar({ pct }: { pct: number }) {
+function ProgressBar({ pct, step, total }: { pct: number; step: number; total: number }) {
   return (
-    <div data-ocid="apply.progress.panel" style={{ marginBottom: 28 }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 8,
-        }}
-      >
-        <span
-          style={{
-            fontSize: "0.65rem",
-            fontWeight: 700,
-            color: "rgba(232,240,255,0.45)",
-            textTransform: "uppercase",
-            letterSpacing: "0.1em",
-          }}
-        >
-          Application Progress
+    <div data-ocid="apply.progress.panel" style={{ marginBottom: 32 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+        <span style={{ fontSize: "0.7rem", fontWeight: 600, color: "rgba(232,240,255,0.5)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+          Step {step} of {total}
         </span>
-        <span
-          style={{
-            fontSize: "0.8rem",
-            fontWeight: 700,
-            color: "rgba(232,245,242,0.8)",
-          }}
-        >
-          {pct}%
-        </span>
+        <span style={{ fontSize: "0.75rem", fontWeight: 700, color: "#00d4b8" }}>{pct}%</span>
       </div>
-      <div
-        style={{
-          height: 6,
-          borderRadius: 3,
-          backgroundColor: "rgba(255,255,255,0.08)",
-        }}
-      >
-        <div
-          style={{
-            height: "100%",
-            borderRadius: 3,
-            background: "linear-gradient(90deg, #00d4b8, #00b89e)",
-            width: `${pct}%`,
-            transition: "width 0.6s cubic-bezier(0.4,0,0.2,1)",
-            boxShadow: "0 0 8px rgba(110,247,212,0.4)",
-          }}
-        />
+      <div style={{ height: 4, borderRadius: 2, backgroundColor: "rgba(255,255,255,0.08)" }}>
+        <div style={{ height: "100%", borderRadius: 2, background: "linear-gradient(90deg, #00d4b8, #00b89e)", width: `${pct}%`, transition: "width 0.5s cubic-bezier(0.4,0,0.2,1)" }} />
       </div>
     </div>
   );
@@ -249,22 +193,9 @@ function ProgressBar({ pct }: { pct: number }) {
 
 function StepCompletedTag({ label }: { label: string }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "6px 12px",
-        borderRadius: 8,
-        backgroundColor: "rgba(52,211,153,0.1)",
-        border: "1px solid rgba(52,211,153,0.25)",
-        marginBottom: 8,
-      }}
-    >
-      <CheckCircle size={13} style={{ color: "#00d4b8" }} />
-      <span style={{ fontSize: "0.78rem", color: "#00d4b8", fontWeight: 600 }}>
-        {label} — complete
-      </span>
+    <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 14px", borderRadius: 8, backgroundColor: "rgba(0,212,184,0.1)", border: "1px solid rgba(0,212,184,0.2)", marginBottom: 12 }}>
+      <CheckCircle size={14} style={{ color: "#00d4b8" }} />
+      <span style={{ fontSize: "0.8rem", color: "#00d4b8", fontWeight: 600 }}>{label}</span>
     </div>
   );
 }
@@ -273,38 +204,11 @@ function StepCompletedTag({ label }: { label: string }) {
 
 function EnterpriseBanner() {
   return (
-    <div
-      data-ocid="apply.enterprise.banner"
-      style={{
-        padding: "14px 16px",
-        borderRadius: 10,
-        backgroundColor: "rgba(201,168,76,0.12)",
-        border: "1px solid rgba(201,168,76,0.35)",
-        display: "flex",
-        gap: 10,
-        alignItems: "flex-start",
-        marginTop: 12,
-        animation: "fadeRise 0.3s ease",
-      }}
-    >
-      <Zap
-        size={16}
-        style={{ color: "#C9A84C", flexShrink: 0, marginTop: 1 }}
-      />
+    <div data-ocid="apply.enterprise.banner" style={{ padding: "16px 18px", borderRadius: 10, backgroundColor: "rgba(201,168,76,0.1)", border: "1px solid rgba(201,168,76,0.3)", display: "flex", gap: 12, alignItems: "flex-start", marginTop: 16, animation: "fadeRise 0.3s ease" }}>
+      <Zap size={18} style={{ color: "#C9A84C", flexShrink: 0, marginTop: 2 }} />
       <div>
-        <p
-          style={{
-            fontSize: "0.85rem",
-            fontWeight: 700,
-            color: "#C9A84C",
-            marginBottom: 2,
-          }}
-        >
-          High-Volume Account Eligible
-        </p>
-        <p style={{ fontSize: "0.78rem", color: "rgba(201,168,76,0.8)" }}>
-          Our enterprise team will personally review your account.
-        </p>
+        <p style={{ fontSize: "0.9rem", fontWeight: 700, color: "#C9A84C", marginBottom: 2 }}>Enterprise Account Eligible</p>
+        <p style={{ fontSize: "0.8rem", color: "rgba(201,168,76,0.8)" }}>Our executive team will personally review your account.</p>
       </div>
     </div>
   );
@@ -325,27 +229,40 @@ export default function WizardPage() {
   const tierParam = searchParams.get("tier");
   const [isEnterprise, setIsEnterprise] = useState(tierParam === "enterprise");
 
-  // New simplified 3-step state
+  // Steps
   const [step, setStep] = useState<NewStep>(1);
   const [step1Complete, setStep1Complete] = useState(false);
   const [step2Complete, setStep2Complete] = useState(false);
+  const [step3Complete, setStep3Complete] = useState(false);
 
-  // Step 1 fields
+  // Step 1: Situation
   const [industry, setIndustry] = useState("");
   const [volume, setVolume] = useState("");
   const [issue, setIssue] = useState("");
 
-  // Step 2 fields
+  // Step 2: Business
   const [businessName, setBusinessName] = useState("");
   const [website, setWebsite] = useState("");
   const [businessAge, setBusinessAge] = useState("");
 
-  // Step 3 fields
+  // Step 3: Contact
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  // Field completion states
+  // Step 4: Full Application (only if they choose this)
+  const [ein, setEin] = useState("");
+  const [businessType, setBusinessType] = useState("");
+  const [businessAddress, setBusinessAddress] = useState("");
+  const [businessCity, setBusinessCity] = useState("");
+  const [businessState, setBusinessState] = useState("");
+  const [businessZip, setBusinessZip] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [routingNumber, setRoutingNumber] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [additionalNotes, setAdditionalNotes] = useState("");
+
+  // Completion states
   const [industryDone, setIndustryDone] = useState(false);
   const [volumeDone, setVolumeDone] = useState(false);
   const [issueDone, setIssueDone] = useState(false);
@@ -354,77 +271,49 @@ export default function WizardPage() {
   const [nameDone, setNameDone] = useState(false);
   const [phoneDone, setPhoneDone] = useState(false);
 
-  // Enterprise check
+  // Enterprise detection
   useEffect(() => {
-    if (volume === "1M–5M" || volume === "5M+") {
-      setIsEnterprise(true);
-    } else if (volume) {
-      setIsEnterprise(false);
-    }
+    if (volume === "1M–5M" || volume === "5M+") setIsEnterprise(true);
+    else if (volume) setIsEnterprise(false);
   }, [volume]);
 
+  // Validation
   const step1Valid = industry !== "" && volume !== "" && issue !== "";
   const step2Valid = businessName.trim() !== "";
-  const step3Valid =
-    name.trim() !== "" && email.trim() !== "" && phone.trim() !== "";
+  const step3Valid = name.trim() !== "" && email.trim() !== "" && phone.trim() !== "";
+  const step4Valid = businessType !== "" && businessAddress !== "" && businessCity !== "" && 
+                     businessState !== "" && businessZip !== "" && bankName !== "" && 
+                     routingNumber !== "" && accountNumber !== "";
 
-  // Progress percentage
-  const progress =
-    step === 1
-      ? 15
-      : step === 2
-        ? 40
-        : step === 3
-          ? 70
-          : step === "reviewing"
-            ? 90
-            : 100;
+  // Progress
+  const totalSteps = 4;
+  const progress = step === 1 ? 12 : step === 2 ? 30 : step === 3 ? 55 : step === 4 ? 88 : step === "reviewing" ? 96 : 100;
 
   const handleSubmit = useCallback(async () => {
     if (!actor) {
-      setSubmitError("Service unavailable. Please try again shortly.");
+      setSubmitError("Service unavailable. Please try again.");
       return;
     }
     setSubmitError(null);
     setIsSubmitting(true);
     setStep("reviewing");
-
-    await new Promise((r) => setTimeout(r, 2000)); // deliberate 2s "reviewing" delay
-
+    await new Promise((r) => setTimeout(r, 2000));
     try {
-      await actor.submitWizardApplication(
-        industry,
-        issue,
-        name,
-        email,
-        phone,
-        businessName,
-        "", // fein not collected
-        false, // feinVerified
-      );
+      await actor.submitWizardApplication(industry, issue, name, email, phone, businessName, ein, false);
       setStep("success");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
-      setSubmitError(
-        "Something went wrong. Please try again or contact us directly.",
-      );
-      setStep(3);
+      setSubmitError("Something went wrong. Please try again.");
+      setStep(4);
     } finally {
       setIsSubmitting(false);
     }
-  }, [actor, industry, issue, name, email, phone, businessName]);
+  }, [actor, industry, issue, name, email, phone, businessName, ein]);
 
-  const advanceStep1 = () => {
-    setStep1Complete(true);
-    setStep(2);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const advanceStep2 = () => {
-    setStep2Complete(true);
-    setStep(3);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const advanceStep1 = () => { setStep1Complete(true); setStep(2); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const advanceStep2 = () => { setStep2Complete(true); setStep(3); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const advanceToFull = () => { setStep3Complete(true); setStep(4); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const goBackToSimple = () => { setStep(3); };
 
   return (
     <div style={{ minHeight: "100vh", backgroundColor: "#0a0f1e" }}>
@@ -434,499 +323,134 @@ export default function WizardPage() {
       </div>
 
       {/* Header */}
-      <header
-        style={{
-          position: "fixed",
-          top: 38,
-          left: 0,
-          right: 0,
-          zIndex: 50,
-          backgroundColor: "rgba(10,22,40,0.97)",
-          backdropFilter: "blur(20px)",
-          borderBottom: "1px solid rgba(255,255,255,0.06)",
-          height: 64,
-          display: "flex",
-          alignItems: "center",
-          padding: "0 24px",
-          justifyContent: "space-between",
-        }}
-      >
-        <Link
-          to="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            textDecoration: "none",
-          }}
-        >
-          <img
-            src={logoImg}
-            alt="Cybin Enterprises"
-            style={{
-              width: 36,
-              height: 36,
-              objectFit: "contain",
-              background: logoBg,
-              borderRadius: "4px",
-            }}
-          />
-          <span
-            style={{
-              fontWeight: 700,
-              color: "rgba(232,237,248,0.9)",
-              fontSize: "0.9rem",
-            }}
-          >
-            Cybin Enterprises
-          </span>
+      <header style={{ position: "fixed", top: 38, left: 0, right: 0, zIndex: 50, backgroundColor: "rgba(10,22,40,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.06)", height: 64, display: "flex", alignItems: "center", padding: "0 24px", justifyContent: "space-between" }}>
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+          <img src={logoImg} alt="Cybin Enterprises" style={{ width: 36, height: 36, objectFit: "contain", background: logoBg, borderRadius: "4px" }} />
+          <span style={{ fontWeight: 700, color: "rgba(232,237,248,0.9)", fontSize: "0.9rem" }}>Cybin Enterprises</span>
         </Link>
-        <nav className="hidden md:flex items-center gap-4">
-          {[
-            ["/#solutions", "Solutions"],
-            ["/industries", "Industries"],
-            ["/about", "About"],
-            ["/contact", "Contact"],
-          ].map(([href, label], linkIdx) => (
-            <Link
-              key={`link-${linkIdx}`}
-              to={href}
-              style={{
-                fontSize: "0.8rem",
-                color: "rgba(232,237,248,0.55)",
-                textDecoration: "none",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color =
-                  "rgba(232,237,248,0.9)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.color =
-                  "rgba(232,237,248,0.55)";
-              }}
-            >
-              {label}
-            </Link>
+        <nav className="hidden md:flex items-center gap-5">
+          {[["/#solutions", "Solutions"], ["/industries", "Industries"], ["/about", "About"], ["/contact", "Contact"]].map(([href, label], linkIdx) => (
+            <Link key={`link-${linkIdx}`} to={href} style={{ fontSize: "0.8rem", color: "rgba(232,237,248,0.6)", textDecoration: "none", transition: "color 0.2s" }}>{label}</Link>
           ))}
         </nav>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <Lock size={13} style={{ color: "#00d4b8" }} />
-          <span style={{ fontSize: "0.75rem", color: "rgba(52,211,153,0.8)" }}>
-            Secure Application
-          </span>
+          <span style={{ fontSize: "0.75rem", color: "rgba(0,212,184,0.8)" }}>Secure</span>
         </div>
       </header>
 
-      {/* Main layout */}
+      {/* Main Layout */}
       <div style={{ paddingTop: 102, minHeight: "100vh", display: "flex" }}>
-        {/* Left Trust Column */}
-        <div
-          data-ocid="apply.trust.panel"
-          className="hidden lg:flex"
-          style={{
-            width: "46%",
-            flexShrink: 0,
-            position: "sticky",
-            top: 102,
-            alignSelf: "flex-start",
-            height: "calc(100vh - 102px)",
-            backgroundColor: "#0a0f1e",
-            borderRight: "1px solid rgba(255,255,255,0.06)",
-            overflow: "hidden",
-            padding: "48px 40px",
-          }}
-        >
+        {/* Left Panel - Trust */}
+        <div data-ocid="apply.trust.panel" className="hidden lg:flex" style={{ width: "46%", flexShrink: 0, position: "sticky", top: 102, alignSelf: "flex-start", height: "calc(100vh - 102px)", backgroundColor: "#0a0f1e", borderRight: "1px solid rgba(255,255,255,0.06)", overflow: "hidden", padding: "48px 40px" }}>
           <NeuronCanvas mode={isLight ? "light" : "dark"} />
           <div style={{ position: "relative", zIndex: 1 }}>
-            {/* Free pill */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "6px 14px",
-                borderRadius: 100,
-                backgroundColor: "rgba(99,102,241,0.12)",
-                border: "1px solid rgba(99,102,241,0.3)",
-                marginBottom: 28,
-              }}
-            >
-              <span
-                style={{
-                  width: 7,
-                  height: 7,
-                  borderRadius: "50%",
-                  backgroundColor: "#00d4b8",
-                  display: "inline-block",
-                }}
-              />
-              <span
-                style={{
-                  fontSize: "0.78rem",
-                  color: "rgba(232,245,242,0.8)",
-                  fontWeight: 600,
-                }}
-              >
-                Free · No Commitment
-              </span>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "8px 14px", borderRadius: 100, backgroundColor: "rgba(0,212,184,0.1)", border: "1px solid rgba(0,212,184,0.2)", marginBottom: 28 }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#00d4b8" }} />
+              <span style={{ fontSize: "0.75rem", color: "#00d4b8", fontWeight: 600 }}>Free Assessment</span>
             </div>
-
-            <h1
-              style={{
-                fontFamily: '"Playfair Display", Georgia, serif',
-                fontSize: "1.9rem",
-                fontWeight: 700,
-                color: "#e8edf8",
-                lineHeight: 1.25,
-                marginBottom: 16,
-              }}
-            >
-              Your processor shut you down.{" "}
-              <span style={{ color: "#00d4b8" }}>We get you approved.</span>
+            <h1 style={{ fontFamily: '"Sora", system-ui, sans-serif', fontSize: "2rem", fontWeight: 700, color: "#e8edf8", lineHeight: 1.2, marginBottom: 16 }}>
+              Your processor shut you down. <span style={{ color: "#00d4b8" }}>We get you approved.</span>
             </h1>
-
-            <p
-              style={{
-                color: "rgba(232,245,242,0.8)",
-                lineHeight: 1.7,
-                fontSize: "0.92rem",
-                marginBottom: 32,
-              }}
-            >
-              Tell us your situation. We’ll structure the right account across
-              our processor network — and you’ll see your options before
-              anything gets submitted.
+            <p style={{ color: "rgba(232,245,242,0.7)", lineHeight: 1.7, fontSize: "0.9rem", marginBottom: 32 }}>
+              Tell us your situation. We'll structure the right account across our processor network — and you'll see your options before anything gets submitted.
             </p>
-
-            {/* Trust rows */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 18,
-                marginBottom: 32,
-              }}
-            >
-              {[
-                {
-                  icon: Shield,
-                  title: "Your data is protected",
-                  sub: "256-bit encryption. Never shared without your consent.",
-                },
-                {
-                  icon: Clock,
-                  title: "Reviewed within 24 hours",
-                  sub: "By a real person. Not an automated system.",
-                },
-                {
-                  icon: Zap,
-                  title: "All businesses approved",
-                  sub: "From CBD and firearms to peptides and crypto.",
-                },
-                {
-                  icon: Globe,
-                  title: "Domestic & international",
-                  sub: "Multi-processor access gives you more options.",
-                },
-              ].map(({ icon: Icon, title, sub }, i) => (
-                <div
-                  key={`wizard-benefit-${i}`}
-                  className="animate-fade-up"
-                  style={{
-                    display: "flex",
-                    gap: 14,
-                    animationDelay: `${i * 100}ms`,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: 9,
-                      background:
-                        "linear-gradient(135deg, rgba(0, 255, 209, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%)",
-                      border: "1px solid rgba(0, 255, 209, 0.2)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={16} style={{ color: "#00ffd1" }} />
+            <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 32 }}>
+              {[{ icon: Shield, title: "Your data is protected", sub: "256-bit encryption. Never shared without consent." }, { icon: Clock, title: "Reviewed within 24 hours", sub: "By a real person. Not an automated system." }, { icon: Zap, title: "All businesses approved", sub: "From CBD and firearms to peptides and crypto." }, { icon: Globe, title: "Domestic & international", sub: "Multi-processor access gives you more options." }].map(({ icon: Icon, title, sub }, i) => (
+                <div key={`wizard-benefit-${i}`} style={{ display: "flex", gap: 14 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 8, background: "linear-gradient(135deg, rgba(0,212,184,0.15) 0%, rgba(124,92,191,0.15) 100%)", border: "1px solid rgba(0,212,184,0.2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Icon size={16} style={{ color: "#00d4b8" }} />
                   </div>
                   <div>
-                    <p
-                      style={{
-                        fontWeight: 600,
-                        color: "#ffffff",
-                        fontSize: "0.875rem",
-                        marginBottom: 2,
-                      }}
-                    >
-                      {title}
-                    </p>
-                    <p
-                      style={{
-                        color: "rgba(226, 232, 240, 0.7)",
-                        fontSize: "0.8rem",
-                      }}
-                    >
-                      {sub}
-                    </p>
+                    <p style={{ fontWeight: 600, color: "#ffffff", fontSize: "0.875rem", marginBottom: 2 }}>{title}</p>
+                    <p style={{ color: "rgba(226, 232, 240, 0.6)", fontSize: "0.8rem" }}>{sub}</p>
                   </div>
                 </div>
               ))}
             </div>
-
-            <div
-              style={{
-                height: 1,
-                background: "rgba(255,255,255,0.06)",
-                marginBottom: 20,
-              }}
-            />
-
-            <p
-              style={{
-                color: "rgba(232,245,242,0.45)",
-                fontSize: "0.8rem",
-                lineHeight: 1.65,
-              }}
-            >
-              Cybin Enterprises represents multiple acquiring processors. Your
-              submission is reviewed across our full network to find the
-              best-fit solution for your industry and volume.
+            <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: 16 }} />
+            <p style={{ color: "rgba(232,245,242,0.4)", fontSize: "0.75rem", lineHeight: 1.6 }}>
+              Cybin Enterprises represents multiple acquiring processors. Your submission is reviewed across our full network to find the best-fit solution.
             </p>
           </div>
         </div>
 
-        {/* Right Form Column */}
+        {/* Right Panel - Form */}
         <div style={{ flex: 1, padding: "48px 40px 80px", minWidth: 0 }}>
-          <div style={{ maxWidth: 540, margin: "0 auto" }}>
-            {/* Progress Bar */}
-            <ProgressBar pct={progress} />
+          <div style={{ maxWidth: 520, margin: "0 auto" }}>
+            <ProgressBar pct={progress} step={typeof step === 'number' ? step : 5} total={totalSteps} />
+            {step1Complete && <StepCompletedTag label="Situation" />}
+            {step2Complete && <StepCompletedTag label="Business" />}
+            {step3Complete && <StepCompletedTag label="Contact" />}
 
-            {/* Step completion tags */}
-            {step1Complete && <StepCompletedTag label="Your Situation" />}
-            {step2Complete && <StepCompletedTag label="Your Business" />}
-
-            {/* ─── STEP 1 ─── */}
+            {/* STEP 1: Situation */}
             {step === 1 && (
               <div>
-                <h2
-                  style={{
-                    fontFamily: '"Playfair Display", Georgia, serif',
-                    fontSize: "1.75rem",
-                    fontWeight: 700,
-                    color: "#ffffff",
-                    marginBottom: 6,
-                  }}
-                >
-                  Tell us your situation
-                </h2>
-                <p
-                  style={{
-                    color: "rgba(226, 232, 240, 0.8)",
-                    fontSize: "0.875rem",
-                    marginBottom: 28,
-                  }}
-                >
-                  This takes about 90 seconds. No commitment required.
-                </p>
-
-                {/* Industry */}
-                <div style={{ marginBottom: 20 }}>
-                  <FieldLabel
-                    label="What industry are you in?"
-                    completed={industryDone}
-                  />
-                  <select
-                    data-ocid="apply.step1.industry.select"
-                    value={industry}
-                    onChange={(e) => {
-                      setIndustry(e.target.value);
-                      setIndustryDone(e.target.value !== "");
-                    }}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    onBlur={(e) => removeFocusStyle(e.target)}
-                    style={{ ...fieldBase, appearance: "none" as const }}
-                  >
+                <h2 style={{ fontFamily: '"Sora", system-ui, sans-serif', fontSize: "1.75rem", fontWeight: 700, color: "#ffffff", marginBottom: 8 }}>Tell us your situation</h2>
+                <p style={{ color: "rgba(226, 232, 240, 0.7)", fontSize: "0.9rem", marginBottom: 28 }}>This takes less than 2 minutes. No commitment.</p>
+                
+                <div style={{ marginBottom: 22 }}>
+                  <FieldLabel label="What industry are you in?" completed={industryDone} />
+                  <select value={industry} onChange={(e) => { setIndustry(e.target.value); setIndustryDone(e.target.value !== ""); }} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} style={{ ...fieldBase, appearance: "none" as const }}>
                     <option value="">Select your industry</option>
-                    {ALL_INDUSTRIES.map((ind) => (
-                      <option key={ind} value={ind}>
-                        {ind}
-                      </option>
-                    ))}
+                    {ALL_INDUSTRIES.map((ind) => <option key={ind} value={ind}>{ind}</option>)}
                   </select>
-                  <p
-                    style={{
-                      marginTop: 6,
-                      fontSize: "0.75rem",
-                      color: "rgba(232,245,242,0.45)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 4,
-                    }}
-                  >
-                    <Lock size={11} style={{ color: "#00d4b8" }} />
-                    Your info is encrypted and never shared without your
-                    consent.
-                  </p>
                 </div>
 
-                {/* Volume */}
-                <div style={{ marginBottom: 20 }}>
-                  <FieldLabel
-                    label="Approximate monthly processing volume"
-                    completed={volumeDone}
-                  />
-                  <select
-                    data-ocid="apply.step1.volume.select"
-                    value={volume}
-                    onChange={(e) => {
-                      setVolume(e.target.value);
-                      setVolumeDone(e.target.value !== "");
-                    }}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    onBlur={(e) => removeFocusStyle(e.target)}
-                    style={{ ...fieldBase, appearance: "none" as const }}
-                  >
-                    <option value="">Select volume range</option>
-                    <option value="Under $10K">Under $10K</option>
-                    <option value="$10K–$50K">$10K–$50K</option>
-                    <option value="$50K–$250K">$50K–$250K</option>
-                    <option value="$250K–$1M">$250K–$1M</option>
-                    <option value="1M–5M">$1M–$5M</option>
-                    <option value="5M+">$5M+</option>
+                <div style={{ marginBottom: 22 }}>
+                  <FieldLabel label="Monthly processing volume" completed={volumeDone} />
+                  <select value={volume} onChange={(e) => { setVolume(e.target.value); setVolumeDone(e.target.value !== ""); }} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} style={{ ...fieldBase, appearance: "none" as const }}>
+                    <option value="">Select volume</option>
+                    <option value="Under $10K">Under $10K/mo</option>
+                    <option value="$10K–$50K">$10K – $50K/mo</option>
+                    <option value="$50K–$250K">$50K – $250K/mo</option>
+                    <option value="$250K–$1M">$250K – $1M/mo</option>
+                    <option value="1M–5M">$1M – $5M/mo</option>
+                    <option value="5M+">$5M+/mo</option>
                   </select>
                   {isEnterprise && <EnterpriseBanner />}
                 </div>
 
-                {/* Issue */}
                 <div style={{ marginBottom: 28 }}>
-                  <FieldLabel
-                    label="What's the primary issue you're facing?"
-                    completed={issueDone}
-                  />
-                  <select
-                    data-ocid="apply.step1.issue.select"
-                    value={issue}
-                    onChange={(e) => {
-                      setIssue(e.target.value);
-                      setIssueDone(e.target.value !== "");
-                    }}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    onBlur={(e) => removeFocusStyle(e.target)}
-                    style={{ ...fieldBase, appearance: "none" as const }}
-                  >
+                  <FieldLabel label="What's the primary issue?" completed={issueDone} />
+                  <select value={issue} onChange={(e) => { setIssue(e.target.value); setIssueDone(e.target.value !== ""); }} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} style={{ ...fieldBase, appearance: "none" as const }}>
                     <option value="">Select your situation</option>
-                    <option>My account was terminated or suspended</option>
-                    <option>I was rejected by Stripe, PayPal, or Square</option>
-                    <option>My reserves are too high</option>
-                    <option>Chargebacks are threatening my account</option>
-                    <option>I need international processing</option>
-                    <option>
-                      I’m launching a new business in a high-risk vertical
-                    </option>
-                    <option>I need higher volume capacity</option>
+                    <option>Account was terminated or suspended</option>
+                    <option>Rejected by Stripe, PayPal, or Square</option>
+                    <option>Reserves too high</option>
+                    <option>Chargebacks threatening account</option>
+                    <option>Need international processing</option>
+                    <option>Launching new high-risk business</option>
+                    <option>Need higher volume capacity</option>
                     <option>Other</option>
-                    <option>Not sure yet</option>
                   </select>
                 </div>
 
-                <button
-                  type="button"
-                  data-ocid="apply.step1.continue.button"
-                  disabled={!step1Valid}
-                  onClick={advanceStep1}
-                  className="cybin-btn-blue"
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    opacity: step1Valid ? 1 : 0.4,
-                    cursor: step1Valid ? "pointer" : "not-allowed",
-                  }}
-                >
-                  Continue <ChevronRight size={15} />
+                <button disabled={!step1Valid} onClick={advanceStep1} className="cybin-btn-blue" style={{ width: "100%", justifyContent: "center", opacity: step1Valid ? 1 : 0.4, cursor: step1Valid ? "pointer" : "not-allowed" }}>
+                  Continue <ArrowRight size={16} />
                 </button>
               </div>
             )}
 
-            {/* ─── STEP 2 ─── */}
+            {/* STEP 2: Business */}
             {step === 2 && (
               <div>
-                <h2
-                  style={{
-                    fontFamily: '"Playfair Display", Georgia, serif',
-                    fontSize: "1.75rem",
-                    fontWeight: 700,
-                    color: "#e8edf8",
-                    marginBottom: 6,
-                  }}
-                >
-                  About your business
-                </h2>
-                <p
-                  style={{
-                    color: "rgba(232,245,242,0.8)",
-                    fontSize: "0.875rem",
-                    marginBottom: 28,
-                  }}
-                >
-                  A few quick details help us match you to the right processors.
-                </p>
+                <h2 style={{ fontFamily: '"Sora", system-ui, sans-serif', fontSize: "1.75rem", fontWeight: 700, color: "#e8edf8", marginBottom: 8 }}>About your business</h2>
+                <p style={{ color: "rgba(232,245,242,0.7)", fontSize: "0.9rem", marginBottom: 28 }}>Help us match you to the right processors.</p>
 
-                <div style={{ marginBottom: 20 }}>
+                <div style={{ marginBottom: 22 }}>
                   <FieldLabel label="Business name" completed={bnameDone} />
-                  <input
-                    type="text"
-                    data-ocid="apply.step2.business_name.input"
-                    value={businessName}
-                    onChange={(e) => setBusinessName(e.target.value)}
-                    onBlur={(e) => {
-                      setBnameDone(e.target.value.trim() !== "");
-                      removeFocusStyle(e.target);
-                    }}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    placeholder="Legal business name or DBA"
-                    style={fieldBase}
-                  />
-                  <p
-                    style={{
-                      marginTop: 6,
-                      fontSize: "0.75rem",
-                      color: "rgba(232,245,242,0.45)",
-                    }}
-                  >
-                    Legal business name or DBA — used for processor matching
-                    only.
-                  </p>
+                  <input type="text" value={businessName} onChange={(e) => setBusinessName(e.target.value)} onBlur={(e) => { setBnameDone(e.target.value.trim() !== ""); removeFocusStyle(e.target); }} onFocus={(e) => applyFocusStyle(e.target)} placeholder="Legal name or DBA" style={fieldBase} />
                 </div>
 
-                <div style={{ marginBottom: 20 }}>
-                  <FieldLabel label="Website URL (optional)" />
-                  <input
-                    type="text"
-                    data-ocid="apply.step2.website.input"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    onBlur={(e) => removeFocusStyle(e.target)}
-                    placeholder="https://"
-                    style={fieldBase}
-                  />
+                <div style={{ marginBottom: 22 }}>
+                  <FieldLabel label="Website URL" />
+                  <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="https:// (if you have one)" style={fieldBase} />
                 </div>
 
                 <div style={{ marginBottom: 28 }}>
-                  <FieldLabel label="How long have you been in business?" />
-                  <select
-                    data-ocid="apply.step2.age.select"
-                    value={businessAge}
-                    onChange={(e) => setBusinessAge(e.target.value)}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    onBlur={(e) => removeFocusStyle(e.target)}
-                    style={{ ...fieldBase, appearance: "none" as const }}
-                  >
+                  <FieldLabel label="Time in business" />
+                  <select value={businessAge} onChange={(e) => setBusinessAge(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} style={{ ...fieldBase, appearance: "none" as const }}>
                     <option value="">Select</option>
                     <option>Not yet launched</option>
                     <option>Less than 6 months</option>
@@ -938,379 +462,205 @@ export default function WizardPage() {
                 </div>
 
                 <div style={{ display: "flex", gap: 12 }}>
-                  <button
-                    type="button"
-                    data-ocid="apply.step2.back.button"
-                    onClick={() => setStep(1)}
-                    className="cybin-btn-ghost-white"
-                    style={{ flex: 1, justifyContent: "center" }}
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    data-ocid="apply.step2.continue.button"
-                    disabled={!step2Valid}
-                    onClick={advanceStep2}
-                    className="cybin-btn-blue"
-                    style={{
-                      flex: 2,
-                      justifyContent: "center",
-                      opacity: step2Valid ? 1 : 0.4,
-                      cursor: step2Valid ? "pointer" : "not-allowed",
-                    }}
-                  >
-                    Continue <ChevronRight size={15} />
-                  </button>
+                  <button onClick={() => setStep(1)} className="cybin-btn-ghost-white" style={{ flex: 1, justifyContent: "center" }}>Back</button>
+                  <button disabled={!step2Valid} onClick={advanceStep2} className="cybin-btn-blue" style={{ flex: 2, justifyContent: "center", opacity: step2Valid ? 1 : 0.4, cursor: step2Valid ? "pointer" : "not-allowed" }}>Continue <ArrowRight size={16} /></button>
                 </div>
               </div>
             )}
 
-            {/* ─── STEP 3 ─── */}
+            {/* STEP 3: Contact */}
             {step === 3 && (
               <div>
-                <h2
-                  style={{
-                    fontFamily: '"Playfair Display", Georgia, serif',
-                    fontSize: "1.75rem",
-                    fontWeight: 700,
-                    color: "#e8edf8",
-                    marginBottom: 6,
-                  }}
-                >
-                  How should we reach you?
-                </h2>
-                <p
-                  style={{
-                    color: "rgba(232,245,242,0.8)",
-                    fontSize: "0.875rem",
-                    marginBottom: 28,
-                  }}
-                >
-                  A real person will review this and contact you — not an
-                  automated system.
-                </p>
+                <h2 style={{ fontFamily: '"Sora", system-ui, sans-serif', fontSize: "1.75rem", fontWeight: 700, color: "#e8edf8", marginBottom: 8 }}>How should we reach you?</h2>
+                <p style={{ color: "rgba(232,245,242,0.7)", fontSize: "0.9rem", marginBottom: 28 }}>A real person will review your situation.</p>
 
-                <div style={{ marginBottom: 20 }}>
+                <div style={{ marginBottom: 22 }}>
                   <FieldLabel label="Your name" completed={nameDone} />
-                  <input
-                    type="text"
-                    data-ocid="apply.step3.name.input"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    onBlur={(e) => {
-                      setNameDone(e.target.value.trim() !== "");
-                      removeFocusStyle(e.target);
-                    }}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    placeholder="Full name"
-                    style={fieldBase}
-                  />
+                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} onBlur={(e) => { setNameDone(e.target.value.trim() !== ""); removeFocusStyle(e.target); }} onFocus={(e) => applyFocusStyle(e.target)} placeholder="Full name" style={fieldBase} />
                 </div>
 
-                <div style={{ marginBottom: 20 }}>
+                <div style={{ marginBottom: 22 }}>
                   <FieldLabel label="Email address" completed={emailDone} />
-                  <input
-                    type="email"
-                    data-ocid="apply.step3.email.input"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    onBlur={(e) => {
-                      setEmailDone(e.target.value.includes("@"));
-                      removeFocusStyle(e.target);
-                    }}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    placeholder="you@example.com"
-                    style={fieldBase}
-                  />
-                  <p
-                    style={{
-                      marginTop: 6,
-                      fontSize: "0.75rem",
-                      color: "rgba(232,245,242,0.45)",
-                    }}
-                  >
-                    We’ll send your review summary here. Never used for spam.
-                  </p>
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={(e) => { setEmailDone(e.target.value.includes("@")); removeFocusStyle(e.target); }} onFocus={(e) => applyFocusStyle(e.target)} placeholder="you@company.com" style={fieldBase} />
                 </div>
 
                 <div style={{ marginBottom: 24 }}>
                   <FieldLabel label="Phone number" completed={phoneDone} />
-                  <input
-                    type="tel"
-                    data-ocid="apply.step3.phone.input"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    onBlur={(e) => {
-                      setPhoneDone(e.target.value.trim().length > 6);
-                      removeFocusStyle(e.target);
-                    }}
-                    onFocus={(e) => applyFocusStyle(e.target)}
-                    placeholder="(555) 000-0000"
-                    style={fieldBase}
-                  />
-                  <p
-                    style={{
-                      marginTop: 6,
-                      fontSize: "0.75rem",
-                      color: "rgba(232,245,242,0.45)",
-                    }}
-                  >
-                    Best number for a quick follow-up call. All info stays
-                    private.
-                  </p>
+                  <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} onBlur={(e) => { setPhoneDone(e.target.value.trim().length > 6); removeFocusStyle(e.target); }} onFocus={(e) => applyFocusStyle(e.target)} placeholder="(555) 000-0000" style={fieldBase} />
                 </div>
 
-                {/* Privacy box */}
-                <div
-                  style={{
-                    padding: "14px 16px",
-                    borderRadius: 10,
-                    backgroundColor: "rgba(99,102,241,0.06)",
-                    border: "1px solid rgba(99,102,241,0.12)",
-                    display: "flex",
-                    gap: 10,
-                    marginBottom: 24,
-                  }}
-                >
-                  <Lock
-                    size={14}
-                    style={{
-                      color: "rgba(232,245,242,0.8)",
-                      flexShrink: 0,
-                      marginTop: 1,
-                    }}
-                  />
-                  <p
-                    style={{
-                      fontSize: "0.78rem",
-                      color: "rgba(232,240,255,0.55)",
-                      lineHeight: 1.6,
-                    }}
-                  >
-                    Your information is submitted securely and reviewed only by
-                    the Cybin Enterprises team. We never share, sell, or
-                    distribute your details to third parties without your
-                    explicit consent.
-                  </p>
+                {/* Privacy */}
+                <div style={{ padding: "14px 16px", borderRadius: 10, backgroundColor: "rgba(0,212,184,0.05)", border: "1px solid rgba(0,212,184,0.1)", display: "flex", gap: 10, marginBottom: 24 }}>
+                  <Lock size={14} style={{ color: "#00d4b8", flexShrink: 0, marginTop: 2 }} />
+                  <p style={{ fontSize: "0.78rem", color: "rgba(232,245,242,0.6)", lineHeight: 1.5 }}>Your information is secure and reviewed only by our team. We never share or sell your details.</p>
                 </div>
 
                 {submitError && (
-                  <div
-                    data-ocid="apply.error.panel"
-                    style={{
-                      padding: "12px 16px",
-                      borderRadius: 10,
-                      backgroundColor: "rgba(239,68,68,0.1)",
-                      border: "1px solid rgba(239,68,68,0.3)",
-                      marginBottom: 16,
-                    }}
-                  >
-                    <p style={{ color: "#f87171", fontSize: "0.85rem" }}>
-                      {submitError}
-                    </p>
+                  <div style={{ padding: "12px 16px", borderRadius: 10, backgroundColor: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", marginBottom: 16 }}>
+                    <p style={{ color: "#f87171", fontSize: "0.85rem" }}>{submitError}</p>
                   </div>
                 )}
 
-                <div style={{ display: "flex", gap: 12 }}>
-                  <button
-                    type="button"
-                    data-ocid="apply.step3.back.button"
-                    onClick={() => setStep(2)}
-                    className="cybin-btn-ghost-white"
-                    style={{ flex: 1, justifyContent: "center" }}
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    data-ocid="apply.step3.submit.button"
-                    disabled={!step3Valid || isSubmitting}
-                    onClick={handleSubmit}
-                    className="cybin-btn-blue"
-                    style={{
-                      flex: 2,
-                      justifyContent: "center",
-                      opacity: step3Valid && !isSubmitting ? 1 : 0.5,
-                      cursor:
-                        step3Valid && !isSubmitting ? "pointer" : "not-allowed",
-                    }}
-                  >
-                    {isEnterprise
-                      ? "Request My Enterprise Review"
-                      : "Submit My Application"}
-                    <ChevronRight size={15} />
+                {/* OPTION: Full Application */}
+                <div style={{ marginBottom: 20, padding: 24, borderRadius: 14, background: "linear-gradient(135deg, rgba(251,191,36,0.08) 0%, rgba(245,158,11,0.04) 100%)", border: "1px solid rgba(251,191,36,0.2)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                    <Sparkles size={18} style={{ color: "#fbbf24" }} />
+                    <span style={{ fontWeight: 700, color: "#fbbf24", fontSize: "0.95rem" }}>Need faster approval?</span>
+                  </div>
+                  <p style={{ fontSize: "0.82rem", color: "rgba(232,245,242,0.7)", lineHeight: 1.6, marginBottom: 16 }}>
+                    Complete the full underwriting application now and our team can approve you faster with everything needed upfront.
+                  </p>
+                  <button type="button" onClick={advanceToFull} className="cybin-btn-blue" style={{ width: "100%", justifyContent: "center", background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)" }}>
+                    <FileText size={16} /> Complete Full Application <ArrowRight size={16} />
                   </button>
                 </div>
-                <p
-                  style={{
-                    textAlign: "center",
-                    fontSize: "0.72rem",
-                    color: "rgba(232,245,242,0.45)",
-                    marginTop: 10,
-                  }}
-                >
-                  Free · Secure · No commitment required.
-                </p>
+
+                <div style={{ display: "flex", gap: 12 }}>
+                  <button onClick={() => setStep(2)} className="cybin-btn-ghost-white" style={{ flex: 1, justifyContent: "center" }}>Back</button>
+                  <button disabled={!step3Valid || isSubmitting} onClick={handleSubmit} className="cybin-btn-blue" style={{ flex: 2, justifyContent: "center", opacity: step3Valid && !isSubmitting ? 1 : 0.5, cursor: step3Valid && !isSubmitting ? "pointer" : "not-allowed" }}>
+                    {isEnterprise ? "Request Review" : "Submit Application"} <ArrowRight size={16} />
+                  </button>
+                </div>
               </div>
             )}
 
-            {/* ─── REVIEWING STATE ─── */}
+            {/* STEP 4: Full Application */}
+            {step === 4 && (
+              <div>
+                <div style={{ marginBottom: 24, padding: 18, borderRadius: 12, backgroundColor: "rgba(251,191,36,0.08)", border: "1px solid rgba(251,191,36,0.2)", display: "flex", gap: 12, alignItems: "flex-start" }}>
+                  <FileText size={22} style={{ color: "#fbbf24", flexShrink: 0 }} />
+                  <div>
+                    <h3 style={{ fontWeight: 700, color: "#fbbf24", fontSize: "1.05rem", marginBottom: 4 }}>Full Underwriting Application</h3>
+                    <p style={{ fontSize: "0.82rem", color: "rgba(232,245,242,0.7)", lineHeight: 1.5 }}>Complete for faster approval. Required fields marked with •</p>
+                  </div>
+                </div>
+
+                {/* Business Details */}
+                <div style={{ marginBottom: 28 }}>
+                  <h4 style={{ fontSize: "0.7rem", fontWeight: 700, color: "rgba(232,240,255,0.4)", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 16, paddingBottom: 8, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>Business Details</h4>
+                  
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+                    <div>
+                      <FieldLabel label="Legal Business Name" required />
+                      <input type="text" value={businessName} onChange={(e) => setBusinessName(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="As registered" style={fieldBase} />
+                    </div>
+                    <div>
+                      <FieldLabel label="Business Type" required />
+                      <select value={businessType} onChange={(e) => setBusinessType(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} style={{ ...fieldBase, appearance: "none" as const }}>
+                        <option value="">Select</option>
+                        <option>LLC</option>
+                        <option>Corporation</option>
+                        <option>Sole Proprietorship</option>
+                        <option>Partnership</option>
+                        <option>S-Corporation</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: 16 }}>
+                    <FieldLabel label="EIN (Employer ID)" />
+                    <input type="text" value={ein} onChange={(e) => setEin(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="XX-XXXXXXX" style={fieldBase} />
+                  </div>
+
+                  <div style={{ marginBottom: 16 }}>
+                    <FieldLabel label="Business Address" required />
+                    <input type="text" value={businessAddress} onChange={(e) => setBusinessAddress(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="Street address" style={fieldBase} />
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 16 }}>
+                    <div>
+                      <FieldLabel label="City" required />
+                      <input type="text" value={businessCity} onChange={(e) => setBusinessCity(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="City" style={fieldBase} />
+                    </div>
+                    <div>
+                      <FieldLabel label="State" required />
+                      <input type="text" value={businessState} onChange={(e) => setBusinessState(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="ST" style={fieldBase} />
+                    </div>
+                    <div>
+                      <FieldLabel label="ZIP" required />
+                      <input type="text" value={businessZip} onChange={(e) => setBusinessZip(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="12345" style={fieldBase} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Banking */}
+                <div style={{ marginBottom: 28 }}>
+                  <h4 style={{ fontSize: "0.7rem", fontWeight: 700, color: "rgba(232,240,255,0.4)", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 16, paddingBottom: 8, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>Banking Information</h4>
+                  
+                  <div style={{ marginBottom: 16 }}>
+                    <FieldLabel label="Bank Name" required />
+                    <input type="text" value={bankName} onChange={(e) => setBankName(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="Bank name" style={fieldBase} />
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+                    <div>
+                      <FieldLabel label="Routing Number" required />
+                      <input type="text" value={routingNumber} onChange={(e) => setRoutingNumber(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="9 digits" style={fieldBase} />
+                    </div>
+                    <div>
+                      <FieldLabel label="Account Number" required />
+                      <input type="text" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="Account number" style={fieldBase} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional */}
+                <div style={{ marginBottom: 24 }}>
+                  <FieldLabel label="Additional Notes" />
+                  <textarea value={additionalNotes} onChange={(e) => setAdditionalNotes(e.target.value)} onFocus={(e) => applyFocusStyle(e.target)} onBlur={(e) => removeFocusStyle(e.target)} placeholder="Anything else we should know?" rows={3} style={{ ...fieldBase, resize: "vertical" as const }} />
+                </div>
+
+                {/* Docs notice */}
+                <div style={{ padding: 14, borderRadius: 10, backgroundColor: "rgba(0,212,184,0.05)", border: "1px solid rgba(0,212,184,0.1)", marginBottom: 24, display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <Upload size={14} style={{ color: "rgba(0,212,184,0.6)", flexShrink: 0, marginTop: 2 }} />
+                  <p style={{ fontSize: "0.75rem", color: "rgba(232,245,242,0.5)", lineHeight: 1.5 }}>After submission, you may be asked for: Driver's license, business license, bank statements (3 months). We'll guide you through this.</p>
+                </div>
+
+                <div style={{ display: "flex", gap: 12 }}>
+                  <button onClick={() => setStep(3)} className="cybin-btn-ghost-white" style={{ flex: 1, justifyContent: "center" }}>Back</button>
+                  <button disabled={!step4Valid || isSubmitting} onClick={handleSubmit} className="cybin-btn-blue" style={{ flex: 2, justifyContent: "center", opacity: step4Valid && !isSubmitting ? 1 : 0.5, cursor: step4Valid && !isSubmitting ? "pointer" : "not-allowed", background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)" }}>
+                    {isSubmitting ? "Submitting..." : "Submit Full Application"} <ArrowRight size={16} />
+                  </button>
+                </div>
+                <p style={{ textAlign: "center", fontSize: "0.72rem", color: "rgba(232,245,242,0.4)", marginTop: 12 }}>Or <button onClick={goBackToSimple} style={{ background: "none", border: "none", color: "#00d4b8", cursor: "pointer", textDecoration: "underline", fontSize: "0.72rem" }}>submit simplified version</button></p>
+              </div>
+            )}
+
+            {/* REVIEWING */}
             {step === "reviewing" && (
-              <div style={{ textAlign: "center", padding: "60px 0" }}>
-                <div
-                  data-ocid="apply.loading_state"
-                  style={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: "50%",
-                    border: "3px solid rgba(110,247,212,0.2)",
-                    borderTopColor: "#00d4b8",
-                    animation: "spin 1s linear infinite",
-                    margin: "0 auto 24px",
-                  }}
-                />
-                <p
-                  style={{
-                    color: "rgba(232,245,242,0.8)",
-                    fontSize: "0.95rem",
-                    animation: "breathe 2s ease-in-out infinite",
-                  }}
-                >
-                  Reviewing your situation...
-                </p>
+              <div style={{ textAlign: "center", padding: "80px 0" }}>
+                <div style={{ width: 56, height: 56, borderRadius: "50%", border: "3px solid rgba(0,212,184,0.2)", borderTopColor: "#00d4b8", animation: "spin 1s linear infinite", margin: "0 auto 24px" }} />
+                <p style={{ color: "rgba(232,245,242,0.8)", fontSize: "1rem" }}>Reviewing your application...</p>
               </div>
             )}
 
-            {/* ─── SUCCESS STATE ─── */}
+            {/* SUCCESS */}
             {step === "success" && (
-              <div
-                data-ocid="apply.success.panel"
-                style={{ animation: "fadeRise 0.5s ease" }}
-              >
-                {/* Checkmark */}
-                <div style={{ textAlign: "center", marginBottom: 32 }}>
-                  <div
-                    style={{
-                      width: 80,
-                      height: 80,
-                      borderRadius: "50%",
-                      background:
-                        "linear-gradient(135deg, rgba(99,102,241,0.2), rgba(110,247,212,0.2))",
-                      border: "2px solid #00d4b8",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      margin: "0 auto 20px",
-                      animation: "scaleIn 0.4s ease",
-                    }}
-                  >
+              <div style={{ animation: "fadeRise 0.5s ease" }}>
+                <div style={{ textAlign: "center", marginBottom: 36 }}>
+                  <div style={{ width: 80, height: 80, borderRadius: "50%", background: "linear-gradient(135deg, rgba(0,212,184,0.2), rgba(124,92,191,0.2))", border: "2px solid #00d4b8", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
                     <CheckCircle size={36} style={{ color: "#00d4b8" }} />
                   </div>
-                  <h2
-                    style={{
-                      fontFamily: '"Playfair Display", Georgia, serif',
-                      fontSize: "2rem",
-                      fontWeight: 700,
-                      color: "#e8edf8",
-                      marginBottom: 16,
-                    }}
-                  >
-                    {isEnterprise
-                      ? "Enterprise Review Requested"
-                      : "Application Received"}
+                  <h2 style={{ fontFamily: '"Sora", system-ui, sans-serif', fontSize: "1.75rem", fontWeight: 700, color: "#e8edf8", marginBottom: 12 }}>
+                    {isEnterprise ? "Enterprise Review Requested" : "Application Received"}
                   </h2>
-                  <p
-                    style={{
-                      color: "rgba(232,245,242,0.8)",
-                      lineHeight: 1.7,
-                      maxWidth: 420,
-                      margin: "0 auto",
-                    }}
-                  >
-                    {isEnterprise
-                      ? "Our enterprise team will contact you directly — not an automated system — within one business day to discuss your account structure."
-                      : "You’ll hear from us within 24 hours. Not a form letter — a real person who has reviewed your situation and your options."}
+                  <p style={{ color: "rgba(232,245,242,0.7)", lineHeight: 1.6, maxWidth: 380, margin: "0 auto" }}>
+                    {isEnterprise ? "Our executive team will contact you within 1 business day." : "You'll hear from us within 24 hours. A real person — not automation."}
                   </p>
                 </div>
 
-                {/* What Happens Next */}
-                <div
-                  style={{
-                    padding: 28,
-                    borderRadius: 14,
-                    backgroundColor: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                  }}
-                >
-                  <h3
-                    style={{
-                      fontSize: "0.75rem",
-                      fontWeight: 700,
-                      color: "rgba(232,245,242,0.8)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em",
-                      marginBottom: 20,
-                    }}
-                  >
-                    What Happens Next
-                  </h3>
-                  {[
-                    {
-                      time: "Within 24 hours",
-                      desc: "A member of our team reviews your situation personally and reaches out by phone or email.",
-                    },
-                    {
-                      time: "Day 1–2",
-                      desc: "We identify the best-fit processor options from our network for your industry and volume.",
-                    },
-                    {
-                      time: "Day 2–3",
-                      desc: "We walk you through your options. No surprises, no commitments until you’re ready.",
-                    },
-                    {
-                      time: "Day 3–10",
-                      desc: "If you’re ready to proceed, we manage the application and approval process end to end.",
-                    },
-                  ].map(({ time, desc }) => (
-                    <div
-                      key={time}
-                      style={{ display: "flex", gap: 16, marginBottom: 16 }}
-                    >
-                      <span
-                        style={{
-                          fontWeight: 800,
-                          color: "#C9A84C",
-                          fontSize: "0.82rem",
-                          flexShrink: 0,
-                          minWidth: 100,
-                        }}
-                      >
-                        {time}
-                      </span>
-                      <p
-                        style={{
-                          color: "rgba(232,245,242,0.8)",
-                          fontSize: "0.85rem",
-                          lineHeight: 1.6,
-                        }}
-                      >
-                        {desc}
-                      </p>
+                <div style={{ padding: 24, borderRadius: 14, backgroundColor: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <h3 style={{ fontSize: "0.7rem", fontWeight: 700, color: "rgba(232,245,242,0.5)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 16 }}>What Happens Next</h3>
+                  {[{ time: "24 hours", desc: "Personal review by our team" }, { time: "1-2 days", desc: "Processor options identified" }, { time: "2-3 days", desc: "We walk you through options" }, { time: "3-10 days", desc: "We manage approval process" }].map(({ time, desc }) => (
+                    <div key={time} style={{ display: "flex", gap: 16, marginBottom: 12 }}>
+                      <span style={{ fontWeight: 600, color: "#C9A84C", fontSize: "0.8rem", minWidth: 70 }}>{time}</span>
+                      <p style={{ color: "rgba(232,245,242,0.7)", fontSize: "0.85rem" }}>{desc}</p>
                     </div>
                   ))}
                 </div>
 
-                <div style={{ marginTop: 24, textAlign: "center" }}>
-                  <Link
-                    to="/"
-                    style={{
-                      color: "rgba(232,245,242,0.8)",
-                      fontSize: "0.85rem",
-                    }}
-                  >
-                    ← Return to Homepage
-                  </Link>
+                <div style={{ marginTop: 28, textAlign: "center" }}>
+                  <Link to="/" style={{ color: "rgba(232,245,242,0.6)", fontSize: "0.9rem" }}>← Return to Homepage</Link>
                 </div>
               </div>
             )}
@@ -1320,8 +670,6 @@ export default function WizardPage() {
 
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes scaleIn { from { transform: scale(0.7); } to { transform: scale(1); } }
-        @keyframes breathe { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
         @keyframes fadeRise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         select option { background: #0a0f1e; color: #e8edf8; }
       `}</style>

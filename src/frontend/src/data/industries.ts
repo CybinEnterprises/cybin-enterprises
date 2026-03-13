@@ -357,7 +357,7 @@ export const industries: IndustryData[] = [
     ],
   },
   {
-    slug: "research-peptides",
+    slug: "peptides",
     title: "Research Peptides Payment Processing",
     metaTitle:
       "Research Peptides Payment Processing | High-Risk Merchant Accounts | Cybin Enterprises",
@@ -413,19 +413,19 @@ export const industries: IndustryData[] = [
     ],
   },
   {
-    slug: "kratom-ethnobotanicals",
-    title: "Kratom & Ethnobotanicals Payment Processing",
+    slug: "kratom-spores-ethnobotanicals",
+    title: "Kratom, Spores & Ethnobotanicals Payment Processing",
     metaTitle:
-      "Kratom & Ethnobotanicals Payment Processing | High-Risk Merchant Accounts | Cybin Enterprises",
+      "Kratom, Spores & Ethnobotanicals Payment Processing | High-Risk Merchant Accounts | Cybin Enterprises",
     metaDesc:
-      "Secure and stable payment processing solutions for kratom & ethnobotanicals businesses. Cybin Enterprises specializes in high-risk merchant accounts specifically tailored for the kratom & ethnobotanicals sector.",
-    hero: "Payment Processing for Kratom & Ethnobotanicals Businesses",
+      "Secure and stable payment processing solutions for kratom, spores & ethnobotanicals businesses. Cybin Enterprises specializes in high-risk merchant accounts specifically tailored for the kratom, spores & ethnobotanicals sector.",
+    hero: "Payment Processing for Kratom, Spores & Ethnobotanicals Businesses",
     heroSub:
-      "Businesses in the kratom & ethnobotanicals space operate in highly scrutinized environments. Mainstream processors continuously change their acceptable use policies, leaving legitimate businesses vulnerable. Cybin Enterprises structures customized, long-term payment solutions for kratom & ethnobotanicals merchants.",
+      "Businesses in the kratom, spores & ethnobotanicals space operate in highly scrutinized environments. Mainstream processors continuously change their acceptable use policies, leaving legitimate businesses vulnerable. Cybin Enterprises structures customized, long-term payment solutions for kratom, spores & ethnobotanicals merchants.",
     painPoints: [
       {
         title: "Sudden Account Holds & Terminations",
-        body: "The kratom & ethnobotanicals industry experiences a vastly higher rate of unannounced account closures compared to standard retail. Processors often freeze funds indefinitely pending 'risk reviews'. We place you with acquiring partners where your business model is explicitly understood and permitted upfront.",
+        body: "The kratom, spores & ethnobotanicals industry experiences a vastly higher rate of unannounced account closures compared to standard retail. Processors often freeze funds indefinitely pending 'risk reviews'. We place you with acquiring partners where your business model is explicitly understood and permitted upfront.",
       },
       {
         title: "Rolling Reserves Bottlenecking Operations",
@@ -433,7 +433,7 @@ export const industries: IndustryData[] = [
       },
       {
         title: "High Frequency Chargeback Disputes",
-        body: "Due to the nature of kratom & ethnobotanicals, friendly fraud and disputed transactions are statistically elevated. Without dedicated chargeback mitigation workflows, merchant accounts are swiftly revoked. We architect solutions with dispute management layers out of the box.",
+        body: "Due to the nature of kratom, spores & ethnobotanicals, friendly fraud and disputed transactions are statistically elevated. Without dedicated chargeback mitigation workflows, merchant accounts are swiftly revoked. We architect solutions with dispute management layers out of the box.",
       },
     ],
     benefits: [
@@ -445,12 +445,12 @@ export const industries: IndustryData[] = [
     ],
     faq: [
       {
-        q: "Can kratom & ethnobotanicals businesses secure stable payment processing?",
+        q: "Can kratom, spores & ethnobotanicals businesses secure stable payment processing?",
         a: "Yes. As long as your business operates within legal compliance and can document proper fulfillment processes, Cybin Enterprises can structure specialized merchant accounts utilizing our network of high-risk friendly acquiring banks.",
       },
       {
         q: "Why are mainstream processors rejecting my applications?",
-        a: "Most Tier-1 processors utilize algorithmic underwriting designed for low-risk retail. Kratom & Ethnobotanicals falls outside their acceptable risk matrix, triggering automatic rejections regardless of your individual creditworthiness or legitimacy. A specialized acquirer is required.",
+        a: "Most Tier-1 processors utilize algorithmic underwriting designed for low-risk retail. Kratom, Spores & Ethnobotanicals falls outside their acceptable risk matrix, triggering automatic rejections regardless of your individual creditworthiness or legitimacy. A specialized acquirer is required.",
       },
     ],
     related: [
@@ -469,7 +469,7 @@ export const industries: IndustryData[] = [
     ],
   },
   {
-    slug: "telemedicine-digital-health",
+    slug: "telemedicine-healthcare",
     title: "Telemedicine & Digital Health Payment Processing",
     metaTitle:
       "Telemedicine & Digital Health Payment Processing | High-Risk Merchant Accounts | Cybin Enterprises",

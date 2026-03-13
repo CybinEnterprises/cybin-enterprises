@@ -31,6 +31,7 @@ This document covers everything your development team needs to know to deploy, c
 | **Image Settings Hook** | `src/frontend/src/hooks/useImageSettings.ts` |
 | **Site Settings Hook** | `src/frontend/src/hooks/useSiteSettings.ts` |
 | **Backend API** | `src/backend/main.mo` |
+| **Backend Types** | `src/frontend/src/declarations/backend.did.d.ts` |
 | **Admin Panel** | `src/frontend/src/components/pages/AdminPage.tsx` |
 
 ```bash
@@ -499,7 +500,136 @@ pnpm build
 
 ---
 
-## 12. Environment Configuration Reference
+## 12. Backend v2.0.0 - Professional API
+
+The backend has been upgraded to v2.0.0 with enterprise-grade features:
+
+### New Features
+
+| Feature | Description |
+|---------|-------------|
+| **Stable Storage** | Data persists across canister upgrades |
+| **Pagination** | All list queries support `page` and `pageSize` params |
+| **Rate Limiting** | 10 requests/minute per user |
+| **Audit Logging** | Track all create/update/delete operations |
+| **Analytics** | Monthly metrics for submissions, applications, leads |
+| **Status Workflows** | Each entity has status (New/InProgress/Completed) |
+| **Input Validation** | Email, phone, FEIN validation |
+
+### API Response Format
+
+All mutations now return `OperationResult<T>`:
+
+```typescript
+// Success
+{ ok: T }
+
+// Error
+{ err: { ValidationError: "error message" } }
+```
+
+### Helper Functions
+
+```typescript
+import { isOk, getErrorMessage, createPaginationParams } from './backend';
+
+// Check if operation succeeded
+if (isOk(result)) {
+  const data = result.ok;
+}
+
+// Get error message
+const error = getErrorMessage(result);
+
+// Create pagination params
+const params = createPaginationParams(0, 20); // page 0, 20 items per page
+```
+
+### Example: Submitting Contact Form
+
+```typescript
+const result = await actor.submitContactForm(
+  name,
+  email,
+  phone,
+  businessType,
+  message
+);
+
+if (isOk(result)) {
+  console.log('Submission ID:', result.ok);
+} else {
+  console.error('Error:', getErrorMessage(result));
+}
+```
+
+### Example: Paginated Query
+
+```typescript
+const result = await actor.getAllSubmissions(
+  createPaginationParams(0, 10)
+);
+
+if (isOk(result)) {
+  const { data, page } = result.ok;
+  console.log('Total pages:', page.totalPages);
+  console.log('Items:', data);
+}
+```
+
+### Backend API Reference
+
+| Endpoint | Description |
+|----------|-------------|
+| `healthCheck()` | System status |
+| `getAnalytics()` | Monthly metrics |
+| `getDatabaseStats()` | Record counts |
+| `submitContactForm()` | Contact form submission |
+| `submitWizardApplication()` | Intake wizard submission |
+| `submitPartnerLead()` | Partner application |
+| `createBlogPost()` | Create blog post |
+| `publishBlogPost()` | Publish blog post |
+| `getAuditLogs()` | Query audit trail |
+
+---
+
+## 13. Custom Domain Setup - Developer Handoff
+
+When handing off to your development team for custom domain deployment:
+
+### Pre-Deployment Checklist
+
+- [ ] Backend canister deployed to ICP mainnet
+- [ ] Frontend canister deployed to ICP mainnet
+- [ ] Canister IDs saved from deployment
+- [ ] env.json updated with production values
+- [ ] Admin PIN changed from default
+- [ ] Health check verified: `https://[canister].icp0.io/healthCheck`
+
+### DNS Configuration Required
+
+| Record Type | Host | Value | Priority |
+|------------|------|-------|----------|
+| CNAME | @ | [canister-id].icp0.io | - |
+| CNAME | www | [canister-id].icp0.io | - |
+| CNAME | _canister-id | [canister-id] | - |
+| TXT | _canister-id | [canister-id] | - |
+
+### Production Environment (env.json)
+
+```json
+{
+  "backend_canister_id": "XXXXX-xxyyy-zzzz-aaaa-bbbbbbbbbbbb-ic",
+  "frontend_canister_id": "XXXXX-xxyyy-zzzz-aaaa-bbbbbbbbbbbb-ic",
+  "backend_host": "https://icp0.io",
+  "project_id": "your-project-id",
+  "ii_derivation_origin": "https://your-domain.com"
+}
+```
+
+---
+
+## 14. Environment Configuration Reference
 
 ### src/frontend/env.json
 
