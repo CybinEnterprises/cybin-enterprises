@@ -285,7 +285,7 @@ export default function Layout({ children }: LayoutProps) {
             >
               <div
                 style={{
-                  background: logoBg,
+                  background: "transparent",
                   borderRadius: "8px",
                   padding: "8px",
                   display: "inline-block",
