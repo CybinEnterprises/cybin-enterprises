@@ -181,13 +181,14 @@ export default function Layout({ children }: LayoutProps) {
     typeof window !== "undefined" ? window.location.hostname : "";
 
   // Theme-aware color tokens
+  // Using --cybin-navy (#0a0f1e) to match hero section
   const headerBg = isLight
     ? scrolled
       ? "#ffffff"
       : "#ffffff"
     : scrolled
-      ? "#0d0b1a"
-      : "#0d0b1a";
+      ? "#0a0f1e"
+      : "#0a0f1e";
   const navLinkColor = isLight
     ? "rgba(20,30,60,0.7)"
     : "rgba(232, 237, 248, 0.75)";
@@ -257,7 +258,7 @@ export default function Layout({ children }: LayoutProps) {
           borderBottom: scrolled
             ? `1px solid ${isLight ? "rgba(0,0,0,0.1)" : "rgba(99,102,241,0.2)"}`
             : "1px solid transparent",
-          boxShadow: scrolled
+          boxShadow: scrolled || !isLight
             ? isLight
               ? "0 4px 32px rgba(0,0,0,0.08)"
               : "0 4px 32px rgba(0,0,0,0.5)"
