@@ -544,31 +544,6 @@ export function HeroSection() {
               </div>
 
               {/* ─── Floating accent elements ─── */}
-              {/* Glowing orb top-right */}
-              <motion.div
-                animate={{
-                  y: [-6, 6, -6],
-                  boxShadow: [
-                    "0 0 30px rgba(0,212,184,0.2)",
-                    "0 0 50px rgba(0,212,184,0.35)",
-                    "0 0 30px rgba(0,212,184,0.2)",
-                  ],
-                }}
-                transition={{
-                  repeat: Number.POSITIVE_INFINITY,
-                  duration: 4,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  position: "absolute",
-                  top: -12,
-                  right: -12,
-                  width: 28,
-                  height: 28,
-                  borderRadius: "50%",
-                  background: "linear-gradient(135deg, #00d4b8, #7c5cbf)",
-                }}
-              />
               {/* Floating badge bottom-left */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
