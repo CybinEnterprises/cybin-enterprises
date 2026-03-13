@@ -296,8 +296,8 @@ export default function Layout({ children }: LayoutProps) {
                   border: "none",
                   boxShadow: "none",
                   objectFit: "contain",
-                  borderRadius: "8px",
-                  filter: isLight ? "none" : "invert(1) hue-rotate(180deg)",
+                  borderRadius: "0",
+                  filter: isLight ? "none" : "brightness(0) invert(1)",
                   ...logoStyle,
                 }}
               />
@@ -631,7 +631,8 @@ export default function Layout({ children }: LayoutProps) {
                     background: logoBg,
                     border: "none",
                     boxShadow: "none",
-                    filter: isLight ? "none" : "invert(1) hue-rotate(180deg)",
+                    borderRadius: "0",
+                    filter: isLight ? "none" : "brightness(0) invert(1)",
                     ...logoStyle,
                   }}
                 />
