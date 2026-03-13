@@ -199,7 +199,7 @@ export default function Layout({ children }: LayoutProps) {
     ? "rgba(0,122,106,0.1)"
     : "rgba(110,247,212, 0.08)";
   const footerBg = isLight ? "#f8fafc" : "#080614";
-  const logoBg = isLight ? "transparent" : "transparent";
+  const logoBg = isLight ? "rgba(248, 249, 252, 0.94)" : "rgba(13, 11, 26, 0.92)";
   const footerText = isLight
     ? "rgba(20,30,60,0.55)"
     : "rgba(232, 237, 248, 0.55)";
@@ -283,23 +283,32 @@ export default function Layout({ children }: LayoutProps) {
                 outline: "none",
               }}
             >
-              <img
-                src={logoImg}
-                alt="Cybin Enterprises"
-                loading="eager"
-                fetchPriority="high"
+              <div
                 style={{
-                  width: `${logoCfg.containerHeight * 1.5}px`,
-                  height: `${logoCfg.containerHeight * 1.5}px`,
-                  display: "block",
-                  flexShrink: 0,
-                  border: "none",
-                  boxShadow: "none",
-                  objectFit: "contain",
+                  background: logoBg,
                   borderRadius: "8px",
-                  ...logoStyle,
+                  padding: "8px",
+                  display: "inline-block",
                 }}
-              />
+              >
+                <img
+                  src={logoImg}
+                  alt="Cybin Enterprises"
+                  loading="eager"
+                  fetchPriority="high"
+                  style={{
+                    width: `${logoCfg.containerHeight * 1.5}px`,
+                    height: `${logoCfg.containerHeight * 1.5}px`,
+                    display: "block",
+                    flexShrink: 0,
+                    border: "none",
+                    boxShadow: "none",
+                    objectFit: "contain",
+                    borderRadius: "4px",
+                    ...logoStyle,
+                  }}
+                />
+              </div>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
