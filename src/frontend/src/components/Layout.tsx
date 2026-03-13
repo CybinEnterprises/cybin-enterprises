@@ -199,7 +199,7 @@ export default function Layout({ children }: LayoutProps) {
     ? "rgba(0,122,106,0.1)"
     : "rgba(110,247,212, 0.08)";
   const footerBg = isLight ? "#f8fafc" : "#080614";
-  const logoBg = isLight ? "transparent" : "transparent";
+  const logoBg = isLight ? "#ffffff" : "#000000";
   const footerText = isLight
     ? "rgba(20,30,60,0.55)"
     : "rgba(232, 237, 248, 0.55)";
@@ -293,7 +293,7 @@ export default function Layout({ children }: LayoutProps) {
                   height: `${logoCfg.containerHeight * 1.5}px`,
                   display: "block",
                   flexShrink: 0,
-                  background: "transparent",
+                  background: logoBg,
                   border: "none",
                   boxShadow: "none",
                   objectFit: "contain",
