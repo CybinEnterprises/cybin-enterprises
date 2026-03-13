@@ -289,8 +289,8 @@ export default function Layout({ children }: LayoutProps) {
                 loading="eager"
                 fetchPriority="high"
                 style={{
-                  width: `${logoCfg.containerHeight}px`,
-                  height: `${logoCfg.containerHeight}px`,
+                  width: `${logoCfg.containerHeight * 1.5}px`,
+                  height: `${logoCfg.containerHeight * 1.5}px`,
                   display: "block",
                   flexShrink: 0,
                   background: "transparent",
@@ -624,8 +624,8 @@ export default function Layout({ children }: LayoutProps) {
                   src={logoImg}
                   alt="Cybin Enterprises"
                   style={{
-                    width: `${logoCfg.containerHeight}px`,
-                    height: `${logoCfg.containerHeight}px`,
+                    width: `${logoCfg.containerHeight * 1.5}px`,
+                    height: `${logoCfg.containerHeight * 1.5}px`,
                     display: "block",
                     marginBottom: "12px",
                     background: logoBg,
