@@ -124,9 +124,7 @@ export default function Layout({ children }: LayoutProps) {
   const site = useLiveSiteSettings();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
-  const logoImg = isLight
-    ? "/assets/cybin-logo-light.png"
-    : "/assets/cybin-logo-dark.png";
+  const logoImg = "/assets/cybin-logo.png";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -200,6 +198,7 @@ export default function Layout({ children }: LayoutProps) {
     ? "rgba(0,122,106,0.1)"
     : "rgba(110,247,212, 0.08)";
   const footerBg = isLight ? "#f8fafc" : "#080614";
+  const logoBg = "transparent";
   const footerText = isLight
     ? "rgba(20,30,60,0.55)"
     : "rgba(232, 237, 248, 0.55)";
@@ -297,6 +296,7 @@ export default function Layout({ children }: LayoutProps) {
                   border: "none",
                   boxShadow: "none",
                   objectFit: "contain",
+                  borderRadius: "8px",
                   ...logoStyle,
                 }}
               />
@@ -612,7 +612,12 @@ export default function Layout({ children }: LayoutProps) {
             {/* Col 1: Logo + tagline */}
             <div>
               <div
-                style={{ background: "transparent", display: "inline-block" }}
+                style={{
+                  background: logoBg,
+                  display: "inline-block",
+                  borderRadius: "8px",
+                  padding: "4px",
+                }}
               >
                 <img
                   src={logoImg}
@@ -622,7 +627,7 @@ export default function Layout({ children }: LayoutProps) {
                     height: `${logoCfg.containerHeight}px`,
                     display: "block",
                     marginBottom: "12px",
-                    background: "transparent",
+                    background: logoBg,
                     border: "none",
                     boxShadow: "none",
                     ...logoStyle,

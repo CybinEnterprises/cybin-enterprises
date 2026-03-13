@@ -316,6 +316,7 @@ export default function WizardPage() {
   const [searchParams] = useSearchParams();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
+  const logoBg = isLight ? "#ffffff" : "#000000";
   const { actor } = useActor();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -461,7 +462,13 @@ export default function WizardPage() {
           <img
             src="/assets/cybin-logo.png"
             alt="Cybin Enterprises"
-            style={{ width: 36, height: 36, objectFit: "contain" }}
+            style={{
+              width: 36,
+              height: 36,
+              objectFit: "contain",
+              background: logoBg,
+              borderRadius: "4px",
+            }}
           />
           <span
             style={{

@@ -4,19 +4,66 @@ This document covers everything your development team needs to know to deploy, c
 
 ---
 
+## 🚀 Quick Reference (For Designers & Developers)
+
+### 🎨 Designers — Where to Find & Update Things
+
+| What You Need | Where to Go | File / Location |
+|--------------|-------------|-----------------|
+| **Logo** | Header & Footer | `src/frontend/public/assets/cybin-logo.png` |
+| **Hero Images** | Home, About, Industry pages | `src/frontend/public/assets/generated/` |
+| **Team Photos** | About, Team sections | `src/frontend/public/assets/mel-headshot.jpeg`, `shane-headshot.jpeg` |
+| **Colors** | Theme colors | `src/frontend/src/lib/theme/tokens.ts` |
+| **Fonts** | Typography | `src/frontend/src/lib/theme/tokens.ts` |
+| **Site Text** | All page copy | `src/frontend/src/components/pages/` (each page) |
+| **Blog Posts** | Blog section | `src/frontend/src/data/blogPosts.ts` |
+| **Industries Data** | Industries page | `src/frontend/src/data/industries.ts` |
+| **FAQ Content** | FAQ page | `src/frontend/src/components/pages/FaqPage.tsx` |
+
+### 💻 Developers — Key Files & Commands
+
+| What You Need | Location |
+|--------------|----------|
+| **Frontend Entry** | `src/frontend/src/App.tsx` |
+| **Main Layout** | `src/frontend/src/components/Layout.tsx` |
+| **Routing** | `src/frontend/src/lib/router.tsx` |
+| **Theme System** | `src/frontend/src/contexts/ThemeContext.tsx` |
+| **Image Settings Hook** | `src/frontend/src/hooks/useImageSettings.ts` |
+| **Site Settings Hook** | `src/frontend/src/hooks/useSiteSettings.ts` |
+| **Backend API** | `src/backend/main.mo` |
+| **Admin Panel** | `src/frontend/src/components/pages/AdminPage.tsx` |
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start development
+cd src/frontend && pnpm dev
+
+# Build for production
+cd src/frontend && pnpm build
+
+# Deploy to ICP
+dfx deploy --network ic
+```
+
+---
+
 ## Table of Contents
 
-1. [Project Structure](#1-project-structure)
-2. [Local Development Setup](#2-local-development-setup)
-3. [Building and Deploying to ICP](#3-building-and-deploying-to-icp)
-4. [Custom Domain Setup (GoDaddy, Cloudflare, Namecheap)](#4-custom-domain-setup)
-5. [Admin Panel Usage](#5-admin-panel-usage)
-6. [Third-Party Website Editor Integration](#6-third-party-website-editor-integration)
-7. [AI / LLM Integration (ChatGPT, Claude, Grok, Local LLM)](#7-ai--llm-integration)
-8. [Blog Automation and Webhooks](#8-blog-automation-and-webhooks)
-9. [GitHub Export and Handoff](#9-github-export-and-handoff)
-10. [Security Notes](#10-security-notes)
-11. [Environment Configuration Reference](#11-environment-configuration-reference)
+1. [Quick Reference](#-quick-reference-for-designers--developers)
+2. [Project Structure](#1-project-structure)
+3. [Common Updates Guide](#2-common-updates-guide)
+4. [Local Development Setup](#3-local-development-setup)
+5. [Building and Deploying to ICP](#4-building-and-deploying-to-icp)
+6. [Custom Domain Setup (GoDaddy, Cloudflare, Namecheap)](#5-custom-domain-setup)
+7. [Admin Panel Usage](#6-admin-panel-usage)
+8. [Third-Party Website Editor Integration](#7-third-party-website-editor-integration)
+9. [AI / LLM Integration (ChatGPT, Claude, Grok, Local LLM)](#8-ai--llm-integration)
+10. [Blog Automation and Webhooks](#9-blog-automation-and-webhooks)
+11. [GitHub Export and Handoff](#10-github-export-and-handoff)
+12. [Security Notes](#11-security-notes)
+13. [Environment Configuration Reference](#12-environment-configuration-reference)
 
 ---
 
@@ -54,7 +101,45 @@ This document covers everything your development team needs to know to deploy, c
 
 ---
 
-## 2. Local Development Setup
+
+## 2. Common Updates Guide
+
+### Updating the Logo
+1. Replace `src/frontend/public/assets/cybin-logo.png` with your new logo
+2. The logo automatically adapts: white background on light mode, black on dark mode
+3. Clear browser cache to see changes
+
+### Updating Site Colors
+- **Primary colors**: `src/frontend/src/lib/theme/tokens.ts` - Look for `color` and `accent` tokens
+- **Tailwind config**: `src/frontend/tailwind.config.js`
+- **Theme context**: `src/frontend/src/contexts/ThemeContext.tsx`
+
+### Updating Page Content
+Each page is a separate component in `src/frontend/src/components/pages/`:
+- HomePage.tsx - Landing page
+- AboutPage.tsx - About us
+- IndustriesPage.tsx - Industries we serve
+- PartnersPage.tsx - Partner program
+- BlogPostPage.tsx - Individual blog posts
+
+### Adding a New Page
+1. Create component in `src/frontend/src/components/pages/`
+2. Add route in `src/frontend/src/lib/router.tsx`
+3. Add navigation link in `src/frontend/src/components/Layout.tsx`
+
+### Updating Blog Posts
+Edit `src/frontend/src/data/blogPosts.ts` - Each post is an object with title, content, date, etc.
+
+### Updating Industries Data
+Edit `src/frontend/src/data/industries.ts` - Contains all industry-specific content and images.
+
+### Image Optimization
+- Source images go in `src/frontend/public/assets/uploads/`
+- Generated/optimized images in `src/frontend/public/assets/generated/`
+- Run `node scripts/resize-images.js` to optimize images
+- Run `node scripts/prune-unused-images.js` to remove unused images
+
+## 3. Local Development Setup
 
 ### Prerequisites
 
@@ -83,7 +168,7 @@ The site will be available at `http://localhost:5173`.
 
 ---
 
-## 3. Building and Deploying to ICP
+## 4. Building and Deploying to ICP
 
 ### Deploy to ICP Mainnet
 
@@ -114,7 +199,7 @@ After deploying, fill in `src/frontend/env.json`:
 
 ---
 
-## 4. Custom Domain Setup
+## 5. Custom Domain Setup
 
 To point `cybinenterprises.com` (or any custom domain) to your ICP-hosted site:
 
@@ -154,7 +239,7 @@ nslookup www.cybinenterprises.com
 
 ---
 
-## 5. Admin Panel Usage
+## 6. Admin Panel Usage
 
 Access the admin panel at: `https://[your-site-url]/admin`
 
@@ -180,7 +265,7 @@ All changes in the Site Editor and Image Editor apply **instantly** to the live 
 
 ---
 
-## 6. Third-Party Website Editor Integration
+## 7. Third-Party Website Editor Integration
 
 ### Option A — Iframe Embed
 
@@ -211,7 +296,7 @@ The admin panel's **Site Editor** tab (`/admin` → Site Editor) provides a visu
 
 ---
 
-## 7. AI / LLM Integration
+## 8. AI / LLM Integration
 
 This site is built to receive AI-generated content through backend webhooks. API keys must never be stored in the frontend.
 
@@ -328,7 +413,7 @@ public func generateBlogPost(prompt: Text) : async Text {
 
 ---
 
-## 8. Blog Automation and Webhooks
+## 9. Blog Automation and Webhooks
 
 ### Zapier / Make Integration
 
@@ -366,7 +451,7 @@ Use the HTTP Request node in n8n to POST to the blog webhook.
 
 ---
 
-## 9. GitHub Export and Handoff
+## 10. GitHub Export and Handoff
 
 ### Via Caffeine Dashboard
 
@@ -400,7 +485,7 @@ pnpm build
 
 ---
 
-## 10. Security Notes
+## 11. Security Notes
 
 | Topic | Guidance |
 |-------|----------|
@@ -414,7 +499,7 @@ pnpm build
 
 ---
 
-## 11. Environment Configuration Reference
+## 12. Environment Configuration Reference
 
 ### src/frontend/env.json
 
