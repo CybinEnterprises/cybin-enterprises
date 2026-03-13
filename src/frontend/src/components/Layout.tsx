@@ -124,7 +124,7 @@ export default function Layout({ children }: LayoutProps) {
   const site = useLiveSiteSettings();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
-  const logoImg = "/assets/cybin-logo.png";
+  const logoImg = isLight ? "/assets/cybin-logo.png" : "/assets/cybin-logo-dark.png";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -296,8 +296,7 @@ export default function Layout({ children }: LayoutProps) {
                   border: "none",
                   boxShadow: "none",
                   objectFit: "contain",
-                  borderRadius: "0",
-                  filter: isLight ? "none" : "brightness(0) invert(1)",
+                  borderRadius: "8px",
                   ...logoStyle,
                 }}
               />
@@ -632,7 +631,6 @@ export default function Layout({ children }: LayoutProps) {
                     border: "none",
                     boxShadow: "none",
                     borderRadius: "0",
-                    filter: isLight ? "none" : "brightness(0) invert(1)",
                     ...logoStyle,
                   }}
                 />
