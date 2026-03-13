@@ -125,9 +125,9 @@ export default function Layout({ children }: LayoutProps) {
   const { resolved } = useTheme();
   const isLight = resolved === "light";
   const logoImg = "/assets/cybin-logo.png";
-  const logoDarkFilter = !isLight
-    ? "brightness(0) invert(1)"
-    : undefined;
+  const logoDarkBg = !isLight
+    ? { background: "rgba(255,255,255,0.92)", borderRadius: "8px", padding: "4px 10px" }
+    : {};
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -278,10 +278,10 @@ export default function Layout({ children }: LayoutProps) {
               style={{
                 display: "flex",
                 alignItems: "center",
-                background: "transparent",
                 border: "none",
                 boxShadow: "none",
                 outline: "none",
+                ...logoDarkBg,
               }}
             >
               <img
@@ -298,7 +298,6 @@ export default function Layout({ children }: LayoutProps) {
                   border: "none",
                   boxShadow: "none",
                   objectFit: "contain",
-                  filter: logoDarkFilter,
                   ...logoStyle,
                 }}
               />
@@ -614,7 +613,7 @@ export default function Layout({ children }: LayoutProps) {
             {/* Col 1: Logo + tagline */}
             <div>
               <div
-                style={{ background: "transparent", display: "inline-block" }}
+                style={{ display: "inline-block", marginBottom: "12px", ...logoDarkBg }}
               >
                 <img
                   src={logoImg}
@@ -623,11 +622,9 @@ export default function Layout({ children }: LayoutProps) {
                     height: `${logoCfg.containerHeight}px`,
                     width: "auto",
                     display: "block",
-                    marginBottom: "12px",
                     background: "transparent",
                     border: "none",
                     boxShadow: "none",
-                    filter: logoDarkFilter,
                     ...logoStyle,
                   }}
                 />

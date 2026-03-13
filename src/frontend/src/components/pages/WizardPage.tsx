@@ -456,12 +456,15 @@ export default function WizardPage() {
             alignItems: "center",
             gap: 10,
             textDecoration: "none",
+            background: "rgba(255,255,255,0.92)",
+            borderRadius: "8px",
+            padding: "4px 10px",
           }}
         >
           <img
             src="/assets/cybin-logo.png"
             alt="Cybin Enterprises"
-            style={{ height: 32, width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)" }}
+            style={{ height: 32, width: "auto", objectFit: "contain" }}
           />
         </Link>
         <nav className="hidden md:flex items-center gap-4">
