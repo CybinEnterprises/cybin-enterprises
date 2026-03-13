@@ -183,8 +183,8 @@ export default function Layout({ children }: LayoutProps) {
   // Theme-aware color tokens
   const headerBg = isLight
     ? scrolled
-      ? "rgba(248,249,252,0.97)"
-      : "rgba(248,249,252,0.94)"
+      ? "hsl(0, 0%, 90%)"
+      : "hsl(0, 0%, 90%)"
     : scrolled
       ? "rgba(13,11,26,0.97)"
       : "rgba(13,11,26,0.92)";
