@@ -377,6 +377,4 @@
   animation: scrollTicker 160s linear infinite;
 }
 
-.ticker-track:hover {
-  animation-play-state: paused;
-}
+
