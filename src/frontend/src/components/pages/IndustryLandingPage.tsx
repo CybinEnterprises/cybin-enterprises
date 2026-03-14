@@ -55,18 +55,7 @@ export default function IndustryLandingPage() {
         },
   );
 
-  if (!industry) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 dark:bg-cybin-navy">
-        <h1 className="text-2xl font-bold mb-4 text-slate-900 dark:text-teal-50">
-          Industry Not Found
-        </h1>
-        <Link to="/industries" className="cybin-btn-blue">
-          Browse All Industries
-        </Link>
-      </div>
-    );
-  }
+
 
   return (
     <div>
@@ -173,10 +162,7 @@ export default function IndustryLandingPage() {
       </section>
 
       {/* Pain Points */}
-      <section
-        className="bg-slate-50 dark:bg-cybin-navy py-16"
-        style={{ padding: "72px 0" }}
-      >
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <span
@@ -220,7 +206,7 @@ export default function IndustryLandingPage() {
       </section>
 
       {/* Benefits */}
-      <section className="bg-slate-50 dark:bg-[#0c1020] py-16">
+
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-up">
           <h2 className="text-2xl font-bold mb-8 font-display text-slate-900 dark:text-[#e8edf8]">
             How Cybin Can Help
@@ -252,9 +238,7 @@ export default function IndustryLandingPage() {
       </section>
 
       {/* FAQ */}
-      <section
-        className="bg-slate-50 dark:bg-cybin-navy py-16"
-        style={{ padding: "64px 0" }}
+
       >
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
