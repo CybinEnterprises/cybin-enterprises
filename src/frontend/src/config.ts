@@ -96,26 +96,25 @@ function processError(e: unknown): never {
 }
 
 async function maybeLoadMockBackend(): Promise<backendInterface | null> {
-  if (import.meta.env.VITE_USE_MOCK !== "true") {
-    return null;
+  if (import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true") {
+    try {
+      // If VITE_USE_MOCK is enabled, try to load a mock backend module *if it exists*.
+      // We use import.meta.glob so builds don't fail when the mock file is absent.
+      const mockModules = import.meta.glob("./mocks/backend.{ts,tsx,js,jsx}");
+
+      const path = Object.keys(mockModules)[0];
+      if (!path) return null;
+
+      const mod = (await mockModules[path]()) as {
+        mockBackend?: backendInterface;
+      };
+
+      return mod.mockBackend ?? null;
+    } catch {
+      return null;
+    }
   }
-
-  try {
-    // If VITE_USE_MOCK is enabled, try to load a mock backend module *if it exists*.
-    // We use import.meta.glob so builds don't fail when the mock file is absent.
-    const mockModules = import.meta.glob("./mocks/backend.{ts,tsx,js,jsx}");
-
-    const path = Object.keys(mockModules)[0];
-    if (!path) return null;
-
-    const mod = (await mockModules[path]()) as {
-      mockBackend?: backendInterface;
-    };
-
-    return mod.mockBackend ?? null;
-  } catch {
-    return null;
-  }
+  return null;
 }
 
 export async function createActorWithConfig(

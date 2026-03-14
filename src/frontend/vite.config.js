@@ -42,8 +42,13 @@ export default defineConfig({
     environment("all", { prefix: "DFX_" }),
     environment(["II_URL"]),
     environment(["STORAGE_GATEWAY_URL"]),
+    environment(["VITE_USE_MOCK"]),
+    environment(["VITE_DEV_MODE"]),
     react(),
   ],
+  define: {
+    VITE_DEV_MODE: JSON.stringify(true),
+  },
   resolve: {
     alias: [
       {
