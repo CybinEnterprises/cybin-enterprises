@@ -1,26 +1,10 @@
-console.log('🎯 App.tsx loading...');
+// Ultra-minimal test - just logs to console
+console.log('🎯 App.tsx loaded!');
 
-function TestApp() {
-  console.log('🎯 TestApp rendering...');
-  return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: '#0f172a', 
-      color: '#00d4b8',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'monospace'
-    }}>
-      <div style={{ textAlign: 'center' }}>
-        <h1>🎯 Cybin Enterprises</h1>
-        <p>Application is loading correctly!</p>
-        <p>Mock mode: {import.meta.env.VITE_USE_MOCK}</p>
-        <p>Dev mode: {import.meta.env.VITE_DEV_MODE}</p>
-        <p>Build successful - no blank white page!</p>
-      </div>
-    </div>
-  );
+// Try to render absolutely nothing first
+export default function App() {
+  console.log('🎯 App component called!');
+  
+  // Return absolutely minimal content
+  return null;
 }
-
-export default TestApp;
