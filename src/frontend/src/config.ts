@@ -51,7 +51,7 @@ export async function loadConfig(): Promise<Config> {
       backend_canister_id: (config.backend_canister_id === "undefined"
         ? backendCanisterId || "rdmx6-jaaaa-aaaab-qaabq-cai"
         : config.backend_canister_id) as string,
-      storage_gateway_url: process.env.STORAGE_GATEWAY_URL ?? "nogateway",
+      storage_gateway_url: process.env.STORAGE_GATEWAY_URL ?? "https://blob.caffeine.ai",
       bucket_name: DEFAULT_BUCKET_NAME,
       project_id:
         config.project_id !== "undefined"
@@ -71,12 +71,12 @@ export async function loadConfig(): Promise<Config> {
       // Don't throw in development
     }
     const fallbackConfig = {
-      backend_host: "https://cybinenterprises.com",
+      backend_host: "https://cybin-enterprises.com/",
       backend_canister_id: backendCanisterId || "rdmx6-jaaaa-aaaab-qaabq-cai",
       storage_gateway_url: DEFAULT_STORAGE_GATEWAY_URL,
       bucket_name: DEFAULT_BUCKET_NAME,
       project_id: "cybin-enterprises",
-      ii_derivation_origin: "https://cybinenterprises.com",
+      ii_derivation_origin: "https://cybin-enterprises.com/",
     };
     return fallbackConfig;
   }
