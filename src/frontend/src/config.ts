@@ -49,7 +49,7 @@ export async function loadConfig(): Promise<Config> {
       backend_host:
         config.backend_host === "undefined" ? undefined : config.backend_host,
       backend_canister_id: (config.backend_canister_id === "undefined"
-        ? backendCanisterId
+        ? backendCanisterId || "rdmx6-jaaaa-aaaab-qaabq-cai"
         : config.backend_canister_id) as string,
       storage_gateway_url: process.env.STORAGE_GATEWAY_URL ?? "nogateway",
       bucket_name: DEFAULT_BUCKET_NAME,
@@ -98,19 +98,11 @@ function processError(e: unknown): never {
 async function maybeLoadMockBackend(): Promise<backendInterface | null> {
   if (import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true") {
     try {
-      // If VITE_USE_MOCK is enabled, try to load a mock backend module *if it exists*.
-      // We use import.meta.glob so builds don't fail when the mock file is absent.
-      const mockModules = import.meta.glob("./mocks/backend.{ts,tsx,js,jsx}");
-
-      const path = Object.keys(mockModules)[0];
-      if (!path) return null;
-
-      const mod = (await mockModules[path]()) as {
-        mockBackend?: backendInterface;
-      };
-
-      return mod.mockBackend ?? null;
+      // Direct import of mock backend
+      const { mockBackend } = await import("./mocks/backend");
+      return mockBackend;
     } catch {
+      console.warn("Mock backend not found, falling back to null");
       return null;
     }
   }
@@ -120,12 +112,6 @@ async function maybeLoadMockBackend(): Promise<backendInterface | null> {
 export async function createActorWithConfig(
   options?: CreateActorOptions,
 ): Promise<backendInterface> {
-  // Attempt to load mock backend if enabled
-  const mock = await maybeLoadMockBackend();
-  if (mock) {
-    return mock;
-  }
-
   const config = await loadConfig();
   const resolvedOptions = options ?? {};
   
