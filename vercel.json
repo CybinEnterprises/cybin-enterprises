@@ -4,6 +4,7 @@
   "installCommand": "pnpm install",
   "buildCommand": "cd src/frontend && pnpm build:skip-bindings",
   "outputDirectory": "src/frontend/dist",
+  "cleanUrls": true,
   "public": true,
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

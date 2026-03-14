@@ -7,7 +7,8 @@ interface SeoProps {
   ogImage?: string;
 }
 
-const DEFAULT_OG_IMAGE = "https://cybinenterprises.com/assets/cybin-logo.png";
+const VERIFIED_ORIGIN = "https://cybin-enterprises-1.vercel.app";
+const DEFAULT_OG_IMAGE = `${VERIFIED_ORIGIN}/assets/cybin-logo.png?v=3`;
 
 /**
  * Dynamically updates page-level SEO meta tags on route changes.
@@ -38,7 +39,8 @@ export function useSeo({ title, description, canonical, ogImage }: SeoProps) {
       canon.setAttribute("rel", "canonical");
       document.head.appendChild(canon);
     }
-    canon.setAttribute("href", `https://cybinenterprises.com${canonical}`);
+    // Always use the verified origin for canonicals to ensure boat consistency
+    canon.setAttribute("href", `${VERIFIED_ORIGIN}${canonical}`);
 
     // Open Graph tags
     const setOgMeta = (property: string, content: string) => {
@@ -53,11 +55,15 @@ export function useSeo({ title, description, canonical, ogImage }: SeoProps) {
       tag.setAttribute("content", content);
     };
 
+    const absoluteOgImage = ogImage?.startsWith("http") 
+      ? (ogImage.includes("?") ? ogImage : `${ogImage}?v=3`)
+      : (ogImage ? `${VERIFIED_ORIGIN}${ogImage}?v=3` : DEFAULT_OG_IMAGE);
+
     setOgMeta("og:title", title);
     setOgMeta("og:description", description);
-    setOgMeta("og:url", `https://cybinenterprises.com${canonical}`);
+    setOgMeta("og:url", `${VERIFIED_ORIGIN}${canonical}`);
     setOgMeta("og:type", "website");
-    setOgMeta("og:image", ogImage ?? DEFAULT_OG_IMAGE);
+    setOgMeta("og:image", absoluteOgImage);
 
     // Twitter tags
     const setTwitterMeta = (name: string, content: string) => {
@@ -73,6 +79,6 @@ export function useSeo({ title, description, canonical, ogImage }: SeoProps) {
     setTwitterMeta("twitter:title", title);
     setTwitterMeta("twitter:description", description);
     setTwitterMeta("twitter:card", "summary_large_image");
-    setTwitterMeta("twitter:image", ogImage ?? DEFAULT_OG_IMAGE);
+    setTwitterMeta("twitter:image", absoluteOgImage);
   }, [title, description, canonical, ogImage]);
 }

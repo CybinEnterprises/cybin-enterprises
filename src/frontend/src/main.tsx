@@ -1,8 +1,8 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { InternetIdentityProvider } from "./hooks/useInternetIdentity";
 import "../index.css";
-
-console.log('🎯 main.tsx loading!');
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
@@ -14,10 +14,12 @@ declare global {
   }
 }
 
-console.log('🎯 About to create root...');
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <App />
+  <QueryClientProvider client={queryClient}>
+    <InternetIdentityProvider>
+      <App />
+    </InternetIdentityProvider>
+  </QueryClientProvider>,
 );
-
-console.log('🎯 Root rendered!');

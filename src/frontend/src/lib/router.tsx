@@ -26,27 +26,34 @@ const RouteContext = createContext<RouteContextValue>({
   navigate: () => {},
 });
 
-// ─── BrowserRouter ────────────────────────────────────────────────────────────
+// ─── HashRouter ───────────────────────────────────────────────────────────────
 
-export function BrowserRouter({ children }: { children: ReactNode }) {
-  const [pathname, setPathname] = useState(() => window.location.pathname);
+export function HashRouter({ children }: { children: ReactNode }) {
+  const [pathname, setPathname] = useState(() => getHashPath());
 
   useEffect(() => {
-    const handler = () => setPathname(window.location.pathname);
+    const handler = () => {
+      setPathname(getHashPath());
+    };
+    window.addEventListener("hashchange", handler);
     window.addEventListener("popstate", handler);
-    return () => window.removeEventListener("popstate", handler);
+    return () => {
+      window.removeEventListener("hashchange", handler);
+      window.removeEventListener("popstate", handler);
+    };
   }, []);
 
   const navigate = useCallback((to: string, opts?: { replace?: boolean }) => {
+    const targetHash = to.startsWith("/") ? `#${to}` : to;
     if (opts?.replace) {
-      window.history.replaceState(null, "", to);
+      window.history.replaceState(null, "", targetHash);
     } else {
-      window.history.pushState(null, "", to);
+      window.location.hash = targetHash;
     }
-    // Scroll to top instantly on every navigation so users always start at top
+    // Scroll to top instantly on every navigation
     window.scrollTo({ top: 0, behavior: "instant" });
-    setPathname(to.split("?")[0]);
-    window.dispatchEvent(new PopStateEvent("popstate"));
+    setPathname(targetHash.replace(/^#/, "").split("?")[0] || "/");
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
   }, []);
 
   return (
@@ -54,6 +61,27 @@ export function BrowserRouter({ children }: { children: ReactNode }) {
       {children}
     </RouteContext.Provider>
   );
+}
+
+/**
+ * Robust hash parsing that survives social media tracking junk (?fbclid=..., ?utm_...)
+ */
+function getHashPath(): string {
+  const hash = window.location.hash;
+  if (!hash) return "/";
+  
+  // Remove the leading '#'
+  let path = hash.substring(1);
+  
+  // If the hash itself contains a query string (e.g. #/about?fbclid=123), strip it
+  path = path.split("?")[0];
+  
+  // Ensure it starts with /
+  if (!path.startsWith("/")) {
+    path = "/" + path;
+  }
+  
+  return path || "/";
 }
 
 // ─── Routes & Route ───────────────────────────────────────────────────────────
@@ -156,12 +184,15 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       // External links
       if (to.startsWith("http://") || to.startsWith("https://")) return;
+      
       e.preventDefault();
       navigate(to, { replace });
     };
 
+    const hashTo = to.startsWith("/") ? `#${to}` : to;
+
     return (
-      <a ref={ref} href={to} onClick={handleClick} {...rest}>
+      <a ref={ref} href={hashTo} onClick={handleClick} {...rest}>
         {children}
       </a>
     );
