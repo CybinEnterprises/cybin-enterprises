@@ -35,9 +35,9 @@ export async function loadConfig(): Promise<Config> {
   }
   const backendCanisterId = process.env.CANISTER_ID_BACKEND;
   const envBaseUrl = process.env.BASE_URL || "/";
-  const baseUrl = envBaseUrl.endsWith("/") ? envBaseUrl : `${envBaseUrl}/`;
+  const baseUrl = envBaseUrl.endsWith("/") ? envBaseUrl.slice(0, -1) : envBaseUrl;
   try {
-    const response = await fetch(`${baseUrl}env.json`);
+    const response = await fetch(`${baseUrl}/env.json`);
     const config = (await response.json()) as JsonConfig;
     if (!backendCanisterId && config.backend_canister_id === "undefined") {
       // Silenced in production to avoid console noise
@@ -49,9 +49,9 @@ export async function loadConfig(): Promise<Config> {
       backend_host:
         config.backend_host === "undefined" ? undefined : config.backend_host,
       backend_canister_id: (config.backend_canister_id === "undefined"
-        ? backendCanisterId
+        ? backendCanisterId || "rdmx6-jaaaa-aaaab-qaabq-cai"
         : config.backend_canister_id) as string,
-      storage_gateway_url: process.env.STORAGE_GATEWAY_URL ?? "nogateway",
+      storage_gateway_url: process.env.STORAGE_GATEWAY_URL ?? "https://blob.caffeine.ai",
       bucket_name: DEFAULT_BUCKET_NAME,
       project_id:
         config.project_id !== "undefined"
@@ -71,12 +71,12 @@ export async function loadConfig(): Promise<Config> {
       // Don't throw in development
     }
     const fallbackConfig = {
-      backend_host: undefined,
-      backend_canister_id: backendCanisterId || "local-development",
+      backend_host: "https://cybin-enterprises.com/",
+      backend_canister_id: backendCanisterId || "rdmx6-jaaaa-aaaab-qaabq-cai",
       storage_gateway_url: DEFAULT_STORAGE_GATEWAY_URL,
       bucket_name: DEFAULT_BUCKET_NAME,
-      project_id: DEFAULT_PROJECT_ID,
-      ii_derivation_origin: undefined,
+      project_id: "cybin-enterprises",
+      ii_derivation_origin: "https://cybin-enterprises.com/",
     };
     return fallbackConfig;
   }
@@ -96,39 +96,33 @@ function processError(e: unknown): never {
 }
 
 async function maybeLoadMockBackend(): Promise<backendInterface | null> {
-  if (import.meta.env.VITE_USE_MOCK !== "true") {
-    return null;
+  if (import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true") {
+    try {
+      // Direct import of mock backend
+      const { mockBackend } = await import("./mocks/backend");
+      return mockBackend;
+    } catch {
+      console.warn("Mock backend not found, falling back to null");
+      return null;
+    }
   }
-
-  try {
-    // If VITE_USE_MOCK is enabled, try to load a mock backend module *if it exists*.
-    // We use import.meta.glob so builds don't fail when the mock file is absent.
-    const mockModules = import.meta.glob("./mocks/backend.{ts,tsx,js,jsx}");
-
-    const path = Object.keys(mockModules)[0];
-    if (!path) return null;
-
-    const mod = (await mockModules[path]()) as {
-      mockBackend?: backendInterface;
-    };
-
-    return mod.mockBackend ?? null;
-  } catch {
-    return null;
-  }
+  return null;
 }
 
 export async function createActorWithConfig(
   options?: CreateActorOptions,
 ): Promise<backendInterface> {
-  // Attempt to load mock backend if enabled
-  const mock = await maybeLoadMockBackend();
-  if (mock) {
-    return mock;
-  }
-
   const config = await loadConfig();
   const resolvedOptions = options ?? {};
+  
+  // Don't create HttpAgent if we're using mock backend
+  if (import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true") {
+    const mock = await maybeLoadMockBackend();
+    if (mock) {
+      return mock;
+    }
+  }
+  
   const agent = new HttpAgent({
     ...resolvedOptions.agentOptions,
     host: config.backend_host,

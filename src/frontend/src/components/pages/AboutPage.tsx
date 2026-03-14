@@ -62,8 +62,37 @@ export default function AboutPage() {
     return () => observer.disconnect();
   }, []);
 
+  // Light mode colors
+  const lightBg = "#f8fafc";
+  const lightBgAlt = "#f1f5f9";
+  const lightCardBg = "#ffffff";
+  const lightTextPrimary = "#0f172a";
+  const lightTextSecondary = "#475569";
+  const lightTextMuted = "#64748b";
+  const lightBorder = "#e2e8f0";
+  const lightAccent = "#00a88e";
+  const lightAccentGlow = "rgba(0, 168, 142, 0.1)";
+
+  // Dark mode colors
+  const darkBg = "#0a0f1e";
+  const darkBgAlt = "#080d1a";
+  const darkTextPrimary = "#e8edf8";
+  const darkTextSecondary = "rgba(232,237,248,0.65)";
+  const darkBorder = "rgba(110,247,212,0.12)";
+  const darkAccent = "#00d4b8";
+  const darkAccentGlow = "rgba(110,247,212,0.08)";
+
+  const bg = isLight ? lightBg : darkBg;
+  const bgAlt = isLight ? lightBgAlt : darkBgAlt;
+  const textPrimary = isLight ? lightTextPrimary : darkTextPrimary;
+  const textSecondary = isLight ? lightTextSecondary : darkTextSecondary;
+  const accent = isLight ? lightAccent : darkAccent;
+  const cardBg = isLight ? lightCardBg : "linear-gradient(160deg, rgba(8,13,26,0.99) 0%, rgba(4,6,18,0.97) 100%)";
+  const border = isLight ? lightBorder : darkBorder;
+  const accentGlow = isLight ? lightAccentGlow : darkAccentGlow;
+
   return (
-    <div>
+    <div style={{ backgroundColor: bg }}>
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -124,12 +153,16 @@ export default function AboutPage() {
           ],
         }}
       />
+
       {/* Hero */}
       <section
         className="page-hero-bg"
         style={{
           padding: "80px 0 60px",
-          borderBottom: "1px solid rgba(110,247,212,0.08)",
+          background: isLight 
+            ? "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)"
+            : "linear-gradient(180deg, #0d1526 0%, #0a0f1e 100%)",
+          borderBottom: `1px solid ${isLight ? "#e2e8f0" : "rgba(110,247,212,0.08)"}`,
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -138,23 +171,15 @@ export default function AboutPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{
-                  color: isLight
-                    ? "rgba(20,30,60,0.6)"
-                    : "rgba(232,237,248,0.45)",
-                }}
+                style={{ color: isLight ? "rgba(15,23,42,0.5)" : "rgba(232,237,248,0.45)" }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{
-                  color: isLight
-                    ? "rgba(20,30,60,0.3)"
-                    : "rgba(232,237,248,0.3)",
-                }}
+                style={{ color: isLight ? "rgba(15,23,42,0.25)" : "rgba(232,237,248,0.3)" }}
               />
-              <span className="text-sm" style={{ color: "#00d4b8" }}>
+              <span className="text-sm" style={{ color: accent }}>
                 About
               </span>
             </div>
@@ -162,20 +187,15 @@ export default function AboutPage() {
               className="text-4xl sm:text-5xl font-bold mb-5"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: isLight ? "#1a2040" : "#e8edf8",
+                color: textPrimary,
                 lineHeight: 1.15,
               }}
             >
-              About <span style={{ color: "#00d4b8" }}>Cybin Enterprises</span>
+              About <span style={{ color: accent }}>Cybin Enterprises</span>
             </h1>
             <p
               className="text-lg"
-              style={{
-                color: isLight
-                  ? "rgba(20,30,60,0.7)"
-                  : "rgba(232, 237, 248, 0.65)",
-                lineHeight: 1.7,
-              }}
+              style={{ color: textSecondary, lineHeight: 1.7 }}
             >
               Cybin Enterprises helps businesses navigate complex payment
               environments with clarity, structure, and long-term reliability.
@@ -184,31 +204,53 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Mission - Beautiful in both modes */}
       <section
         style={{
-          backgroundColor: isLight ? "#F9FAFF" : "#0a0f1e",
-          padding: "72px 0",
+          backgroundColor: bg,
+          padding: "80px 0",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
-            className="animate-fade-up p-10 rounded-2xl text-center max-w-3xl mx-auto"
+            className="animate-fade-up p-12 rounded-3xl text-center max-w-3xl mx-auto"
             style={{
-              background:
-                "linear-gradient(135deg, rgba(110,247,212, 0.06), rgba(26, 10, 46, 0.5))",
-              border: "1px solid rgba(110,247,212, 0.12)",
+              background: isLight
+                ? "linear-gradient(135deg, #ffffff 0%, #f0fdfa 50%, #f8fafc 100%)"
+                : "linear-gradient(135deg, rgba(0,212,184,0.08) 0%, rgba(26,10,46,0.5) 100%)",
+              border: `1px solid ${isLight ? "rgba(0,168,142,0.2)" : "rgba(110,247,212,0.12)"}`,
+              boxShadow: isLight
+                ? "0 4px 24px rgba(0,168,142,0.08), 0 12px 48px rgba(0,0,0,0.04)"
+                : "0 4px 24px rgba(0,0,0,0.3)",
             }}
           >
-            <Star
-              size={32}
-              style={{ color: "#00d4b8", margin: "0 auto 16px" }}
-            />
+            <div
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: "50%",
+                background: isLight
+                  ? "linear-gradient(135deg, #00d4b8 0%, #00a88e 100%)"
+                  : "rgba(0,212,184,0.15)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 20px",
+                boxShadow: isLight
+                  ? "0 4px 20px rgba(0,212,184,0.3)"
+                  : "none",
+              }}
+            >
+              <Star
+                size={28}
+                style={{ color: isLight ? "#ffffff" : "#00d4b8" }}
+              />
+            </div>
             <h2
-              className="text-2xl font-bold mb-4"
+              className="text-2xl sm:text-3xl font-bold mb-5"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: isLight ? "#1a2040" : "#e8edf8",
+                color: textPrimary,
               }}
             >
               {site.about.missionTitle}
@@ -216,9 +258,9 @@ export default function AboutPage() {
             <p
               className="text-base leading-relaxed"
               style={{
-                color: isLight
-                  ? "rgba(20,30,60,0.7)"
-                  : "rgba(232, 237, 248, 0.7)",
+                color: textSecondary,
+                maxWidth: "600px",
+                margin: "0 auto",
               }}
             >
               {site.about.missionBody}
@@ -227,76 +269,71 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <div className="cybin-section-divider" />
-
-      {/* ══════════════════════════════════════════════
-          FOUNDERS — PRESTIGE MAGAZINE AUTHORITY LAYOUT
-          Portrait-first, side-by-side, commanding scale
-          ══════════════════════════════════════════════ */}
+      {/* Founders Section */}
       <section
         data-ocid="about.founders.section"
         style={{
-          backgroundColor: isLight ? "#f0f3fa" : "#080d1a",
-          padding: "120px 0 100px",
+          backgroundColor: bgAlt,
+          padding: "100px 0 80px",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Subtle grid texture overlay for depth */}
+        {/* Grid texture */}
         <div
           aria-hidden="true"
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage:
-              "linear-gradient(rgba(110,247,212,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(110,247,212,0.025) 1px, transparent 1px)",
+            backgroundImage: isLight
+              ? "none"
+              : "linear-gradient(rgba(110,247,212,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(110,247,212,0.025) 1px, transparent 1px)",
             backgroundSize: "64px 64px",
             pointerEvents: "none",
             zIndex: 0,
           }}
         />
-        {/* Ambient atmospheric gradients */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "50%",
-            height: "100%",
-            background:
-              "radial-gradient(ellipse 70% 60% at 25% 45%, rgba(110,247,212,0.07) 0%, transparent 70%)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            width: "50%",
-            height: "100%",
-            background:
-              "radial-gradient(ellipse 70% 60% at 75% 45%, rgba(124,92,191,0.09) 0%, transparent 70%)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        />
+        {/* Ambient gradients - dark mode only */}
+        {!isLight && (
+          <>
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "50%",
+                height: "100%",
+                background: "radial-gradient(ellipse 70% 60% at 25% 45%, rgba(110,247,212,0.07) 0%, transparent 70%)",
+                pointerEvents: "none",
+                zIndex: 0,
+              }}
+            />
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+                width: "50%",
+                height: "100%",
+                background: "radial-gradient(ellipse 70% 60% at 75% 45%, rgba(124,92,191,0.09) 0%, transparent 70%)",
+                pointerEvents: "none",
+                zIndex: 0,
+              }}
+            />
+          </>
+        )}
 
         <div
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
           style={{ position: "relative", zIndex: 1 }}
         >
           {/* Section heading */}
-          <div className="text-center mb-16 animate-fade-up">
+          <div className="text-center mb-14 animate-fade-up">
             <span
               className="text-xs font-bold uppercase tracking-widest"
-              style={{
-                color: "#00d4b8",
-                letterSpacing: "0.2em",
-              }}
+              style={{ color: accent, letterSpacing: "0.2em" }}
             >
               Leadership
             </span>
@@ -304,7 +341,7 @@ export default function AboutPage() {
               className="text-4xl sm:text-5xl font-bold mt-4 mb-4"
               style={{
                 fontFamily: "Sora, system-ui, sans-serif",
-                color: "#e8edf8",
+                color: textPrimary,
                 lineHeight: 1.12,
               }}
             >
@@ -312,32 +349,32 @@ export default function AboutPage() {
             </h2>
             <p
               className="text-base max-w-xl mx-auto"
-              style={{ color: "rgba(232,237,248,0.5)", lineHeight: 1.7 }}
+              style={{ color: textSecondary, lineHeight: 1.7 }}
             >
               {site.about.foundersSectionSubtitle}
             </p>
           </div>
 
-          {/* Founders side-by-side grid */}
+          {/* Founders grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-14">
-            {/* ══ MEL KOTCHEY ══ */}
+            {/* MEL KOTCHEY */}
             <div
               className="animate-fade-up"
               data-ocid="about.founders.card.1"
               style={{ display: "flex", flexDirection: "column" }}
             >
-              {/* Portrait hero zone — real photo with CSS edge-blend */}
+              {/* Portrait */}
               <div
                 style={{
                   position: "relative",
                   height: `${melCfg.containerHeight}px`,
                   overflow: "hidden",
-                  borderRadius: "20px 20px 0 0",
+                  borderRadius: isLight ? "20px 20px 0 0" : "20px 20px 0 0",
                 }}
               >
                 <img
                   src={melPhoto}
-                  alt="Mel Kotchey, Co-Founder & CEO of Cybin Enterprises"
+                  alt="Mel Kotchey, Co-Founder & CEO"
                   loading="lazy"
                   width={800}
                   height={1000}
@@ -347,92 +384,46 @@ export default function AboutPage() {
                     width: "100%",
                     height: "100%",
                     display: "block",
+                    objectFit: "cover",
                     ...melStyle,
                   }}
                 />
-                {/* Teal rim-light — left + right edges */}
+                {/* Overlay for text readability */}
                 <div
-                  aria-hidden="true"
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background:
-                      "linear-gradient(to right, rgba(110,247,212,0.18) 0%, transparent 18%, transparent 82%, rgba(110,247,212,0.14) 100%)",
+                    background: isLight
+                      ? "linear-gradient(to bottom, transparent 40%, rgba(255,255,255,0.9) 80%)"
+                      : "linear-gradient(to bottom, transparent 40%, rgba(8,13,26,0.95) 80%)",
                     pointerEvents: "none",
-                    zIndex: 2,
-                    mixBlendMode: "screen",
-                  }}
-                />
-                {/* Bottom fade to section background */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "55%",
-                    background:
-                      "linear-gradient(to bottom, transparent 0%, rgba(8,13,26,0.55) 60%, rgba(8,13,26,0.98) 100%)",
-                    pointerEvents: "none",
-                    zIndex: 3,
-                  }}
-                />
-                {/* Top subtle vignette */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "25%",
-                    background:
-                      "linear-gradient(to bottom, rgba(8,13,26,0.5) 0%, transparent 100%)",
-                    pointerEvents: "none",
-                    zIndex: 3,
-                  }}
-                />
-                {/* Ambient teal glow — atmospheric, blended behind photo edges */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    inset: "-20px",
-                    background:
-                      "radial-gradient(ellipse 80% 60% at 50% 110%, rgba(110,247,212,0.28) 0%, transparent 60%)",
-                    pointerEvents: "none",
-                    zIndex: 4,
-                    mixBlendMode: "screen",
                   }}
                 />
               </div>
 
-              {/* Bio card — seamlessly attached below portrait */}
+              {/* Bio Card */}
               <div
                 className="rounded-b-2xl"
                 style={{
-                  background:
-                    "linear-gradient(160deg, rgba(8,13,26,0.99) 0%, rgba(4,6,18,0.97) 100%)",
-                  border: "1px solid rgba(110,247,212,0.18)",
+                  background: isLight ? "#ffffff" : cardBg,
+                  border: `1px solid ${isLight ? "#e2e8f0" : "rgba(110,247,212,0.18)"}`,
                   borderTop: "none",
-                  boxShadow:
-                    "0 0 60px rgba(110,247,212,0.08), 0 0 120px rgba(110,247,212,0.04), inset 0 1px 0 rgba(110,247,212,0.06)",
+                  boxShadow: isLight
+                    ? "0 8px 30px rgba(0,0,0,0.08)"
+                    : "0 0 60px rgba(110,247,212,0.08)",
                   padding: "28px 32px 32px",
                   flex: 1,
                 }}
               >
-                {/* Name + title */}
                 <div className="mb-5">
                   <h3
                     style={{
                       fontFamily: "Sora, system-ui, sans-serif",
                       fontSize: "28px",
                       fontWeight: 700,
-                      color: "#e8edf8",
+                      color: textPrimary,
                       lineHeight: 1.2,
                       marginBottom: 0,
-                      letterSpacing: "-0.01em",
                     }}
                   >
                     {site.about.melName}
@@ -441,7 +432,7 @@ export default function AboutPage() {
                     style={{
                       fontSize: "13px",
                       fontWeight: 600,
-                      color: "#00d4b8",
+                      color: accent,
                       textTransform: "uppercase",
                       letterSpacing: "0.12em",
                       fontFamily: "Cabinet Grotesk, system-ui, sans-serif",
@@ -450,91 +441,45 @@ export default function AboutPage() {
                   >
                     {site.about.melTitle}
                   </p>
-                  <div
-                    style={{
-                      marginTop: "16px",
-                      borderTop: "1px solid rgba(110,247,212,0.15)",
-                    }}
-                  />
+                  <div style={{ marginTop: "16px", borderTop: `1px solid ${isLight ? "#e2e8f0" : "rgba(110,247,212,0.15)"}` }} />
                 </div>
 
-                {/* Bio text */}
-                <p
-                  style={{
-                    color: "rgba(232,237,248,0.75)",
-                    fontSize: "15px",
-                    lineHeight: 1.8,
-                    marginBottom: "12px",
-                  }}
-                >
+                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "12px" }}>
                   {site.about.melBio1}
                 </p>
-                <p
-                  style={{
-                    color: "rgba(232,237,248,0.75)",
-                    fontSize: "15px",
-                    lineHeight: 1.8,
-                    marginBottom: "24px",
-                  }}
-                >
+                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "24px" }}>
                   {site.about.melBio2}
                 </p>
 
-                {/* Achievements panel */}
+                {/* Achievements */}
                 <div
                   className="rounded-xl"
                   style={{
-                    backgroundColor: "rgba(110,247,212,0.04)",
-                    border: "1px solid rgba(110,247,212,0.1)",
+                    backgroundColor: isLight ? "rgba(0,168,142,0.04)" : "rgba(110,247,212,0.04)",
+                    border: `1px solid ${isLight ? "rgba(0,168,142,0.1)" : "rgba(110,247,212,0.1)"}`,
                     padding: "20px",
                   }}
                 >
                   <div className="flex items-center gap-2 mb-4">
-                    <Award
-                      size={15}
-                      style={{ color: "#00d4b8", flexShrink: 0 }}
-                    />
+                    <Award size={15} style={{ color: accent, flexShrink: 0 }} />
                     <span
                       style={{
                         fontSize: "11px",
                         fontWeight: 700,
                         textTransform: "uppercase",
                         letterSpacing: "0.14em",
-                        color: "#00d4b8",
+                        color: accent,
                         fontFamily: "Cabinet Grotesk, system-ui, sans-serif",
                       }}
                     >
                       Achievements
                     </span>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                    }}
-                  >
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     {melAchievements.map((a) => (
                       <div key={a} className="flex items-start gap-3">
-                        <span
-                          style={{
-                            color: "#00d4b8",
-                            fontSize: "8px",
-                            marginTop: "6px",
-                            flexShrink: 0,
-                          }}
-                        >
-                          ◆
-                        </span>
-                        <p
-                          style={{
-                            color: "rgba(232,237,248,0.68)",
-                            fontSize: "13px",
-                            lineHeight: 1.5,
-                          }}
-                        >
-                          {a}
-                        </p>
+                        <span style={{ color: accent, fontSize: "8px", marginTop: "6px", flexShrink: 0 }}>◆</span>
+                        <p style={{ color: textSecondary, fontSize: "13px", lineHeight: 1.5 }}>{a}</p>
                       </div>
                     ))}
                   </div>
@@ -542,17 +487,13 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* ══ SHANE SUEHR ══ */}
+            {/* SHANE SUEHR */}
             <div
               className="animate-fade-up"
               data-ocid="about.founders.card.2"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                transitionDelay: "120ms",
-              }}
+              style={{ display: "flex", flexDirection: "column", transitionDelay: "120ms" }}
             >
-              {/* Portrait hero zone — real photo with CSS edge-blend */}
+              {/* Portrait */}
               <div
                 style={{
                   position: "relative",
@@ -563,7 +504,7 @@ export default function AboutPage() {
               >
                 <img
                   src={shanePhoto}
-                  alt="Shane Suehr, Co-Founder & COO of Cybin Enterprises"
+                  alt="Shane Suehr, Co-Founder & COO"
                   loading="lazy"
                   width={832}
                   height={1248}
@@ -573,92 +514,45 @@ export default function AboutPage() {
                     width: "100%",
                     height: "100%",
                     display: "block",
+                    objectFit: "cover",
                     ...shaneStyle,
                   }}
                 />
-                {/* Purple rim-light — left + right edges */}
                 <div
-                  aria-hidden="true"
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background:
-                      "linear-gradient(to right, rgba(124,92,191,0.2) 0%, transparent 18%, transparent 82%, rgba(124,92,191,0.16) 100%)",
+                    background: isLight
+                      ? "linear-gradient(to bottom, transparent 40%, rgba(255,255,255,0.9) 80%)"
+                      : "linear-gradient(to bottom, transparent 40%, rgba(8,13,26,0.95) 80%)",
                     pointerEvents: "none",
-                    zIndex: 2,
-                    mixBlendMode: "screen",
-                  }}
-                />
-                {/* Bottom fade to section background */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: "55%",
-                    background:
-                      "linear-gradient(to bottom, transparent 0%, rgba(8,13,26,0.55) 60%, rgba(8,13,26,0.98) 100%)",
-                    pointerEvents: "none",
-                    zIndex: 3,
-                  }}
-                />
-                {/* Top subtle vignette */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "25%",
-                    background:
-                      "linear-gradient(to bottom, rgba(8,13,26,0.5) 0%, transparent 100%)",
-                    pointerEvents: "none",
-                    zIndex: 3,
-                  }}
-                />
-                {/* Ambient purple glow */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    inset: "-20px",
-                    background:
-                      "radial-gradient(ellipse 80% 60% at 50% 110%, rgba(124,92,191,0.32) 0%, transparent 60%)",
-                    pointerEvents: "none",
-                    zIndex: 4,
-                    mixBlendMode: "screen",
                   }}
                 />
               </div>
 
-              {/* Bio card */}
+              {/* Bio Card */}
               <div
                 className="rounded-b-2xl"
                 style={{
-                  background:
-                    "linear-gradient(160deg, rgba(8,13,26,0.99) 0%, rgba(5,3,18,0.97) 100%)",
-                  border: "1px solid rgba(124,92,191,0.22)",
+                  background: isLight ? "#ffffff" : cardBg,
+                  border: `1px solid ${isLight ? "#e2e8f0" : "rgba(124,92,191,0.22)"}`,
                   borderTop: "none",
-                  boxShadow:
-                    "0 0 60px rgba(124,92,191,0.1), 0 0 120px rgba(124,92,191,0.05), inset 0 1px 0 rgba(124,92,191,0.06)",
+                  boxShadow: isLight
+                    ? "0 8px 30px rgba(0,0,0,0.08)"
+                    : "0 0 60px rgba(124,92,191,0.1)",
                   padding: "28px 32px 32px",
                   flex: 1,
                 }}
               >
-                {/* Name + title */}
                 <div className="mb-5">
                   <h3
                     style={{
                       fontFamily: "Sora, system-ui, sans-serif",
                       fontSize: "28px",
                       fontWeight: 700,
-                      color: "#e8edf8",
+                      color: textPrimary,
                       lineHeight: 1.2,
                       marginBottom: 0,
-                      letterSpacing: "-0.01em",
                     }}
                   >
                     {site.about.shaneName}
@@ -667,7 +561,7 @@ export default function AboutPage() {
                     style={{
                       fontSize: "13px",
                       fontWeight: 600,
-                      color: "#a87ef5",
+                      color: isLight ? "#7c3aed" : "#a87ef5",
                       textTransform: "uppercase",
                       letterSpacing: "0.12em",
                       fontFamily: "Cabinet Grotesk, system-ui, sans-serif",
@@ -676,91 +570,45 @@ export default function AboutPage() {
                   >
                     {site.about.shaneTitle}
                   </p>
-                  <div
-                    style={{
-                      marginTop: "16px",
-                      borderTop: "1px solid rgba(124,92,191,0.18)",
-                    }}
-                  />
+                  <div style={{ marginTop: "16px", borderTop: `1px solid ${isLight ? "#e2e8f0" : "rgba(124,92,191,0.18)"}` }} />
                 </div>
 
-                {/* Bio text */}
-                <p
-                  style={{
-                    color: "rgba(232,237,248,0.75)",
-                    fontSize: "15px",
-                    lineHeight: 1.8,
-                    marginBottom: "12px",
-                  }}
-                >
+                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "12px" }}>
                   {site.about.shaneBio1}
                 </p>
-                <p
-                  style={{
-                    color: "rgba(232,237,248,0.75)",
-                    fontSize: "15px",
-                    lineHeight: 1.8,
-                    marginBottom: "24px",
-                  }}
-                >
+                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "24px" }}>
                   {site.about.shaneBio2}
                 </p>
 
-                {/* Expertise panel */}
+                {/* Expertise */}
                 <div
                   className="rounded-xl"
                   style={{
-                    backgroundColor: "rgba(124,92,191,0.05)",
-                    border: "1px solid rgba(124,92,191,0.12)",
+                    backgroundColor: isLight ? "rgba(124,58,237,0.04)" : "rgba(124,92,191,0.05)",
+                    border: `1px solid ${isLight ? "rgba(124,58,237,0.1)" : "rgba(124,92,191,0.12)"}`,
                     padding: "20px",
                   }}
                 >
                   <div className="flex items-center gap-2 mb-4">
-                    <Award
-                      size={15}
-                      style={{ color: "#a87ef5", flexShrink: 0 }}
-                    />
+                    <Award size={15} style={{ color: isLight ? "#7c3aed" : "#a87ef5", flexShrink: 0 }} />
                     <span
                       style={{
                         fontSize: "11px",
                         fontWeight: 700,
                         textTransform: "uppercase",
                         letterSpacing: "0.14em",
-                        color: "#a87ef5",
+                        color: isLight ? "#7c3aed" : "#a87ef5",
                         fontFamily: "Cabinet Grotesk, system-ui, sans-serif",
                       }}
                     >
                       Areas of Expertise
                     </span>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                    }}
-                  >
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     {shaneExpertise.map((a) => (
                       <div key={a} className="flex items-start gap-3">
-                        <span
-                          style={{
-                            color: "#a87ef5",
-                            fontSize: "8px",
-                            marginTop: "6px",
-                            flexShrink: 0,
-                          }}
-                        >
-                          ◆
-                        </span>
-                        <p
-                          style={{
-                            color: "rgba(232,237,248,0.68)",
-                            fontSize: "13px",
-                            lineHeight: 1.5,
-                          }}
-                        >
-                          {a}
-                        </p>
+                        <span style={{ color: isLight ? "#7c3aed" : "#a87ef5", fontSize: "8px", marginTop: "6px", flexShrink: 0 }}>◆</span>
+                        <p style={{ color: textSecondary, fontSize: "13px", lineHeight: 1.5 }}>{a}</p>
                       </div>
                     ))}
                   </div>
@@ -768,15 +616,14 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-          {/* /founders grid */}
         </div>
       </section>
 
       {/* CTA */}
       <section
         style={{
-          backgroundColor: isLight ? "#F9FAFF" : "#0a0f1e",
-          padding: "72px 0",
+          backgroundColor: bg,
+          padding: "80px 0",
         }}
       >
         <div className="max-w-3xl mx-auto px-4 text-center animate-fade-up">
@@ -784,14 +631,14 @@ export default function AboutPage() {
             className="text-3xl font-bold mb-5"
             style={{
               fontFamily: "Sora, system-ui, sans-serif",
-              color: "#e8edf8",
+              color: textPrimary,
             }}
           >
             Ready to Work With Us?
           </h2>
           <p
             className="text-base mb-8"
-            style={{ color: "rgba(232, 237, 248, 0.6)" }}
+            style={{ color: textSecondary }}
           >
             Reach out today to begin the conversation about your payment needs.
           </p>
