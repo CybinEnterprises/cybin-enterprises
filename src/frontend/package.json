@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build:skip-bindings": "CANISTER_ID_BACKEND=rdmx6-jaaaa-aaaab-qaabq-cai BASE_URL=https://cybinenterprises.com II_URL=https://identity.ic0.app vite build && pnpm copy:env",
-    "build": "CANISTER_ID_BACKEND=rdmx6-jaaaa-aaaab-qaabq-cai BASE_URL=https://cybinenterprises.com II_URL=https://identity.ic0.app vite build && pnpm copy:env",
+    "build:skip-bindings": "CANISTER_ID_BACKEND=rdmx6-jaaaa-aaaab-qaabq-cai BASE_URL=https://cybinenterprises.com II_URL=https://identity.ic0.app VITE_USE_MOCK=true vite build && pnpm copy:env",
+    "build": "CANISTER_ID_BACKEND=rdmx6-jaaaa-aaaab-qaabq-cai BASE_URL=https://cybinenterprises.com II_URL=https://identity.ic0.app VITE_USE_MOCK=true vite build && pnpm copy:env",
     "copy:env": "cp env.json dist/",
     "typecheck": "tsc --noEmit --incremental --tsBuildInfoFile node_modules/.cache/tsconfig.tsbuildinfo --pretty",
     "check": "biome check src",
