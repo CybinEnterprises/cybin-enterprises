@@ -35,9 +35,9 @@ export async function loadConfig(): Promise<Config> {
   }
   const backendCanisterId = process.env.CANISTER_ID_BACKEND;
   const envBaseUrl = process.env.BASE_URL || "/";
-  const baseUrl = envBaseUrl.endsWith("/") ? envBaseUrl : `${envBaseUrl}/`;
+  const baseUrl = envBaseUrl.endsWith("/") ? envBaseUrl.slice(0, -1) : envBaseUrl;
   try {
-    const response = await fetch(`${baseUrl}env.json`);
+    const response = await fetch(`${baseUrl}/env.json`);
     const config = (await response.json()) as JsonConfig;
     if (!backendCanisterId && config.backend_canister_id === "undefined") {
       // Silenced in production to avoid console noise
