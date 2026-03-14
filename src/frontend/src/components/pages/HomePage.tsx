@@ -11,7 +11,7 @@ import { TestimonialsSection } from "./home/TestimonialsSection";
 
 export default function HomePage() {
   useSeo({
-    canonical: "https://cybinenterprises.com/",
+    canonical: "/",
     title:
       "High-Risk Merchant Accounts | Payment Solutions for Every Industry | Cybin Enterprises",
     description:

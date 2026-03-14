@@ -16,7 +16,7 @@ import {
 
 export default function SolutionsEnterprisePage() {
   useSeo({
-    canonical: "https://cybinenterprises.com/solutions/enterprise",
+    canonical: "/solutions/enterprise",
     title: "Enterprise Payment Solutions | Cybin Enterprises",
     description:
       "Enterprise high-risk merchant accounts for businesses processing $250K+ monthly. Multi-MID structuring, international acquiring, backup redundancy, and dedicated account management.",

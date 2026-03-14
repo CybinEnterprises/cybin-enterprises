@@ -59,7 +59,7 @@ const solutions = [
 
 export default function SolutionsPage() {
   useSeo({
-    canonical: "https://cybinenterprises.com/solutions",
+    canonical: "/solutions",
     title: "Payment Solutions | Cybin Enterprises",
     description:
       "High-risk merchant accounts, enterprise processing, international acquiring, chargeback protection, and multi-MID structuring. Solutions for every high-risk business type.",

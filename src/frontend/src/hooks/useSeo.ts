@@ -38,7 +38,10 @@ export function useSeo({ title, description, canonical, ogImage }: SeoProps) {
       canon.setAttribute("rel", "canonical");
       document.head.appendChild(canon);
     }
-    canon.setAttribute("href", `https://cybinenterprises.com${canonical}`);
+    const fullCanonical = canonical.startsWith("http")
+      ? canonical
+      : `https://cybinenterprises.com${canonical}`;
+    canon.setAttribute("href", fullCanonical);
 
     // Open Graph tags
     const setOgMeta = (property: string, content: string) => {
@@ -55,7 +58,10 @@ export function useSeo({ title, description, canonical, ogImage }: SeoProps) {
 
     setOgMeta("og:title", title);
     setOgMeta("og:description", description);
-    setOgMeta("og:url", `https://cybinenterprises.com${canonical}`);
+    const fullOgUrl = canonical.startsWith("http")
+      ? canonical
+      : `https://cybinenterprises.com${canonical}`;
+    setOgMeta("og:url", fullOgUrl);
     setOgMeta("og:type", "website");
     setOgMeta("og:image", ogImage ?? DEFAULT_OG_IMAGE);
 

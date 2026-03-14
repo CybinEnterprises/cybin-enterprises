@@ -70,7 +70,7 @@ const steps = [
 
 export default function HowItWorksPage() {
   useSeo({
-    canonical: "https://cybinenterprises.com/how-it-works",
+    canonical: "/how-it-works",
     title: "How It Works | Cybin Enterprises",
     description:
       "Learn how Cybin Enterprises helps high-risk businesses get approved for merchant accounts. Four steps: tell us your situation, we structure options, application & approval, then process with confidence.",

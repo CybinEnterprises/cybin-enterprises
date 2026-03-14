@@ -109,7 +109,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function PeptidesPage() {
   useSeo({
-    canonical: "https://cybinenterprises.com/industries/peptides",
+    canonical: "/industries/peptides",
     title:
       "Peptides Merchant Account | High-Risk Payment Processing | Cybin Enterprises",
     description:
