@@ -124,10 +124,7 @@ export default function Layout({ children }: LayoutProps) {
   const site = useLiveSiteSettings();
   const { resolved } = useTheme();
   const isLight = resolved === "light";
-  const logoImg = "/assets/cybin-logo.png";
-  const logoDarkBg = !isLight
-    ? { background: "rgba(255,255,255,0.92)", borderRadius: "8px", padding: "4px 10px" }
-    : {};
+  const logoImg = isLight ? "/assets/cybin-logo-light.png" : "/assets/cybin-logo-dark.png";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -281,7 +278,6 @@ export default function Layout({ children }: LayoutProps) {
                 border: "none",
                 boxShadow: "none",
                 outline: "none",
-                ...logoDarkBg,
               }}
             >
               <img
@@ -613,7 +609,7 @@ export default function Layout({ children }: LayoutProps) {
             {/* Col 1: Logo + tagline */}
             <div>
               <div
-                style={{ display: "inline-block", marginBottom: "12px", ...logoDarkBg }}
+                style={{ display: "inline-block", marginBottom: "12px" }}
               >
                 <img
                   src={logoImg}
