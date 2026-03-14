@@ -107,6 +107,34 @@ function assertProviderPresent(
  * login and clear functions.
  */
 export const useInternetIdentity = (): InternetIdentityContext => {
+  // Check if we're in mock mode - if so, skip all authentication
+  const isMockMode = import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true";
+  
+  if (isMockMode) {
+    // In mock mode, simulate a successful authentication
+    return {
+      loginStatus: "success" as const,
+      isInitializing: false,
+      isLoginIdle: false,
+      isLoggingIn: false,
+      isLoginSuccess: true,
+      isLoginError: false,
+      identity: {
+        getPrincipal: () => ({ toText: () => "mock-principal", isAnonymous: () => false }),
+        toJSON: () => ({}),
+      } as any,
+      login: () => {
+        // Mock login - do nothing
+        console.log("Mock mode: Skipping authentication");
+      },
+      clear: () => {
+        // Mock clear - do nothing
+        console.log("Mock mode: Skipping logout");
+      },
+      loginError: undefined,
+    };
+  }
+
   const context = useContext(InternetIdentityReactContext);
   assertProviderPresent(context);
   return context;

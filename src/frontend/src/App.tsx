@@ -251,11 +251,106 @@ function AppRoutes() {
 }
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    console.log('🔄 App component mounting...');
+
+    // Simulate app initialization
+    const timer = setTimeout(() => {
+      try {
+        console.log('✅ App initialized successfully');
+        setIsLoading(false);
+      } catch (error) {
+        console.error('❌ App initialization error:', error);
+        setHasError(true);
+        setIsLoading(false);
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (hasError) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'monospace',
+        color: '#ef4444',
+        backgroundColor: '#0f172a'
+      }}>
+        <div style={{ textAlign: 'center', padding: '20px' }}>
+          <h1>⚠️ Application Error</h1>
+          <p>Failed to load Cybin Enterprises application.</p>
+          <p>Please refresh the page or contact support.</p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              marginTop: '10px',
+              padding: '10px 20px',
+              backgroundColor: '#00d4b8',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer'
+            }}
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'monospace',
+        color: '#00d4b8',
+        backgroundColor: '#0f172a'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '40px',
+            height: '40px',
+            border: '4px solid #1e293b',
+            borderTop: '4px solid #00d4b8',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 20px'
+          }}></div>
+          <p>Loading Cybin Enterprises...</p>
+        </div>
+        <style>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  console.log('🎯 Rendering main app...');
+
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <InternetIdentityProvider>
+          <BrowserRouter>
+            <AppRoutes />
+            <usePageTracking />
+          </BrowserRouter>
+        </InternetIdentityProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

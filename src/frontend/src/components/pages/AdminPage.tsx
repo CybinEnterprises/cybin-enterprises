@@ -257,7 +257,8 @@ export default function AdminPage() {
     queryKey: ["admin-submissions"],
     queryFn: async () => {
       if (!actor) throw new Error("Not connected");
-      return actor.getAllSubmissions();
+      const result = await actor.getAllSubmissions({ page: 0n, pageSize: 10n });
+      return result.ok?.data || [];
     },
     enabled: !!actor && authed,
     staleTime: 30_000,

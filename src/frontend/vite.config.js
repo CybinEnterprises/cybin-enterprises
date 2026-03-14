@@ -42,11 +42,12 @@ export default defineConfig({
     environment("all", { prefix: "DFX_" }),
     environment(["II_URL"]),
     environment(["STORAGE_GATEWAY_URL"]),
-    environment(["VITE_USE_MOCK"]),
+    environment(["VITE_USE_MOCK"], { default: "true" }),
     react(),
   ],
   define: {
     VITE_DEV_MODE: JSON.stringify(true),
+    VITE_USE_MOCK: JSON.stringify(process.env.VITE_USE_MOCK || "true"),
   },
   resolve: {
     alias: [

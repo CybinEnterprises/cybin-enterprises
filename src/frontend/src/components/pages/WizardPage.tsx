@@ -316,7 +316,7 @@ export default function WizardPage() {
   const goBackToSimple = () => { setStep(3); };
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#0a0f1e" }}>
+    <div style={{ minHeight: "100dvh", backgroundColor: "#0a0f1e" }}>
       {/* Ticker */}
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 60 }}>
         <TickerBar />
