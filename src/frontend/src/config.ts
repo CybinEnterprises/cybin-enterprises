@@ -128,6 +128,15 @@ export async function createActorWithConfig(
 
   const config = await loadConfig();
   const resolvedOptions = options ?? {};
+  
+  // Don't create HttpAgent if we're using mock backend
+  if (import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true") {
+    const mock = await maybeLoadMockBackend();
+    if (mock) {
+      return mock;
+    }
+  }
+  
   const agent = new HttpAgent({
     ...resolvedOptions.agentOptions,
     host: config.backend_host,
