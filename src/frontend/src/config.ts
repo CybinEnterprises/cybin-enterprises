@@ -71,12 +71,12 @@ export async function loadConfig(): Promise<Config> {
       // Don't throw in development
     }
     const fallbackConfig = {
-      backend_host: undefined,
-      backend_canister_id: backendCanisterId || "local-development",
+      backend_host: "https://cybinenterprises.com",
+      backend_canister_id: backendCanisterId || "rdmx6-jaaaa-aaaab-qaabq-cai",
       storage_gateway_url: DEFAULT_STORAGE_GATEWAY_URL,
       bucket_name: DEFAULT_BUCKET_NAME,
-      project_id: DEFAULT_PROJECT_ID,
-      ii_derivation_origin: undefined,
+      project_id: "cybin-enterprises",
+      ii_derivation_origin: "https://cybinenterprises.com",
     };
     return fallbackConfig;
   }
