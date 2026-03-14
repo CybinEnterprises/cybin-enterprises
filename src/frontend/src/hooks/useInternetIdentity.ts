@@ -108,7 +108,7 @@ function assertProviderPresent(
  */
 export const useInternetIdentity = (): InternetIdentityContext => {
   // Check if we're in mock mode - if so, skip all authentication
-  const isMockMode = import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true";
+  const isMockMode = import.meta.env.VITE_USE_MOCK === "true" || import.meta.env.VITE_DEV_MODE === "true" || process.env.VERCEL_ENV === "preview";
   
   if (isMockMode) {
     // In mock mode, simulate a successful authentication
