@@ -3,8 +3,8 @@
  * Uses CSS variables - automatic light/dark mode support
  */
 
-import NeuronCanvas from "@/components/NeuronCanvas";
-import { Link } from "@/lib/router";
+import NeuronCanvas from "@/src/components/NeuronCanvas";
+import { Link } from "@/src/lib/router";
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { ThemeText } from "../primitives/ThemeText";

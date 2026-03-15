@@ -1,7 +1,7 @@
-import { JsonLd } from "@/components/JsonLd";
-import { useTheme } from "@/contexts/ThemeContext";
-import { useSeo } from "@/hooks/useSeo";
-import { Link } from "@/lib/router";
+import { JsonLd } from "@/src/components/JsonLd";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { useSeo } from "@/src/hooks/useSeo";
+import { Link } from "@/src/lib/router";
 import {
   AlertTriangle,
   Cannabis,

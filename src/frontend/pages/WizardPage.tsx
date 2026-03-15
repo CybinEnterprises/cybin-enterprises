@@ -1,7 +1,7 @@
-import NeuronCanvas from "@/components/NeuronCanvas";
-import TickerBar from "@/components/TickerBar";
-import { useTheme } from "@/contexts/ThemeContext";
-import { Link, useSearchParams } from "@/lib/router";
+import NeuronCanvas from "@/src/components/NeuronCanvas";
+import TickerBar from "@/src/components/TickerBar";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { Link, useSearchParams } from "@/src/lib/router";
 import {
   AlertTriangle,
   ArrowRight,

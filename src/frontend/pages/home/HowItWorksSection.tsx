@@ -1,6 +1,6 @@
-import NeuronCanvas from "@/components/NeuronCanvas";
-import { useTheme } from "@/contexts/ThemeContext";
-import { Link } from "@/lib/router";
+import NeuronCanvas from "@/src/components/NeuronCanvas";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { Link } from "@/src/lib/router";
 import { motion } from "motion/react";
 import React from "react";
 

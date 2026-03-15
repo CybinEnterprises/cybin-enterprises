@@ -1,8 +1,8 @@
-import { JsonLd } from "@/components/JsonLd";
-import { useTheme } from "@/contexts/ThemeContext";
-import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
-import { useSeo } from "@/hooks/useSeo";
-import { Link } from "@/lib/router";
+import { JsonLd } from "@/src/components/JsonLd";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { useLiveSiteSettings } from "@/src/hooks/useLiveSiteSettings";
+import { useSeo } from "@/src/hooks/useSeo";
+import { Link } from "@/src/lib/router";
 import { useMutation } from "@tanstack/react-query";
 import {
   AlertCircle,

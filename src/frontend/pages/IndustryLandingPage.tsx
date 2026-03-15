@@ -1,11 +1,11 @@
-import { JsonLd } from "@/components/JsonLd";
-import { useTheme } from "@/contexts/ThemeContext";
-import { useSeo } from "@/hooks/useSeo";
-import { Link, useParams } from "@/lib/router";
+import { JsonLd } from "@/src/components/JsonLd";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { useSeo } from "@/src/hooks/useSeo";
+import { Link, useParams } from "@/src/lib/router";
 import { AlertTriangle, CheckCircle, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
 
-import { type IndustryData, industries } from "@/data/industries";
+import { type IndustryData, industries } from "@/src/data/industries";
 
 export default function IndustryLandingPage() {
   const { resolved } = useTheme();
@@ -13,7 +13,6 @@ export default function IndustryLandingPage() {
   const { slug } = useParams<{ slug: string }>();
   const industry = industries.find((i) => i.slug === slug);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: re-run on slug change to animate new content
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -34,13 +33,10 @@ export default function IndustryLandingPage() {
     return () => observer.disconnect();
   }, [slug]);
 
-  // Scroll to top on slug change
-  // biome-ignore lint/correctness/useExhaustiveDependencies: scroll on slug change intentional
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [slug]);
 
-  // Call hooks unconditionally
   useSeo(
     industry
       ? {
@@ -55,7 +51,21 @@ export default function IndustryLandingPage() {
         },
   );
 
-
+  if (!industry) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold mb-4">Industry Not Found</h1>
+          <p className="text-slate-600 dark:text-slate-400 mb-8">
+            The industry you're looking for doesn't exist.
+          </p>
+          <Link to="/industries" className="cybin-btn-primary">
+            View All Industries
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -79,7 +89,6 @@ export default function IndustryLandingPage() {
         }}
       />
 
-      {/* Hero */}
       <section
         className="page-hero-bg"
         style={{
@@ -158,25 +167,11 @@ export default function IndustryLandingPage() {
               <ChevronRight size={16} />
             </Link>
           </div>
-          </div>
-          </section>
-          <section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          style={{ padding: "72px 0" }}
-          >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-up">
-          <span
-          className="text-xs font-bold uppercase tracking-widest"
-          style={{ color: "#00d4b8" }}
-          >
-          Common Challenges
-          </span>
-          <h2 className="text-3xl font-bold mt-3 font-display text-slate-900 dark:text-[#e8edf8]">
-          Why Payment Processing Is Difficult in This Space
-          </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        </div>
+      </section>
+
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fade-up">
             <span
               className="text-xs font-bold uppercase tracking-widest"
@@ -215,146 +210,39 @@ export default function IndustryLandingPage() {
               </div>
             ))}
           </div>
-          </div>
-          </div>
-          </section>
-
-      {/* Benefits */}
-
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-up">
-          <h2 className="text-2xl font-bold mb-8 font-display text-slate-900 dark:text-[#e8edf8]">
-            How Cybin Can Help
-          </h2>
-          <div className="flex flex-col gap-3 text-left">
-            {industry.benefits.map((b) => (
-              <div key={b} className="flex items-center gap-3">
-                <CheckCircle
-                  size={16}
-                  style={{ color: "#00d4b8", flexShrink: 0 }}
-                />
-                <span className="text-sm text-slate-700 dark:text-[#e8edf8]/80">
-                  {b}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8">
-            <Link
-              to="/apply"
-              data-ocid="industry.benefits.cta.button"
-              className="cybin-btn-primary"
-            >
-              Get Started
-              <ChevronRight size={16} />
-            </Link>
-          </div>
         </div>
-      </div>
-    </section>
-          {/* FAQ */}
-          <section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
+      </section>
+
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center animate-fade-up">
+        <h2 className="text-2xl font-bold mb-8 font-display text-slate-900 dark:text-[#e8edf8]">
+          How Cybin Can Help
+        </h2>
+        <div className="flex flex-col gap-3 text-left">
+          {industry.benefits.map((b) => (
+            <div key={b} className="flex items-center gap-3">
+              <CheckCircle
+                size={16}
+                style={{ color: "#00d4b8", flexShrink: 0 }}
+              />
+              <span className="text-sm text-slate-700 dark:text-[#e8edf8]/80">
+                {b}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8">
+          <Link
+            to="/apply"
+            data-ocid="industry.benefits.cta.button"
+            className="cybin-btn-primary"
           >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-          className="bg-slate-50 dark:bg-cybin-navy py-16"
-          >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-          Frequently Asked Questions
-          </h2>section
-      className="bg-slate-50 dark:bg-cybin-navy py-16"
-      >
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
-      Frequently Asked Questions
-      </h2>
+            Get Started
+            <ChevronRight size={16} />
+          </Link>
+        </div>
+      </section>
+
+      <section className="bg-slate-50 dark:bg-cybin-navy py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">
             Frequently Asked Questions
@@ -384,7 +272,6 @@ export default function IndustryLandingPage() {
         </div>
       </section>
 
-      {/* Related Industries */}
       <section className="bg-slate-100 dark:bg-[#0c1020] py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-8 text-center animate-fade-up font-display text-slate-900 dark:text-[#e8edf8]">

@@ -1,4 +1,4 @@
-import { Link } from "@/lib/router";
+import { Link } from "@/src/lib/router";
 import { motion } from "motion/react";
 import React from "react";
 

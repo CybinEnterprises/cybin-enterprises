@@ -1,6 +1,6 @@
 // Reference ID: pages.home.HomePage
 // Dependencies: features.hooks.useSeo, pages.home.HeroSection, pages.home.IndustryTicker, pages.home.PainPointsSection, pages.home.HowItWorksSection, pages.home.IndustryGridSection, pages.home.EnterpriseCalloutSection, pages.home.TestimonialsSection, pages.home.FinalCtaSection
-import { useSeo } from "@/features/hooks/useSeo";
+import { useSeo } from "@/src/hooks/useSeo";
 import React from "react";
 import { EnterpriseCalloutSection } from "./home/EnterpriseCalloutSection";
 import { FinalCtaSection } from "./home/FinalCtaSection";

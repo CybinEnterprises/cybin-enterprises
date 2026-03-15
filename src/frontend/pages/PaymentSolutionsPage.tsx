@@ -1,8 +1,8 @@
-import { JsonLd } from "@/components/JsonLd";
-import PaymentBadges from "@/components/PaymentBadges";
-import { useTheme } from "@/contexts/ThemeContext";
-import { useSeo } from "@/hooks/useSeo";
-import { Link } from "@/lib/router";
+import { JsonLd } from "@/src/components/JsonLd";
+import PaymentBadges from "@/src/components/PaymentBadges";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { useSeo } from "@/src/hooks/useSeo";
+import { Link } from "@/src/lib/router";
 import {
   ArrowRight,
   Building2,
@@ -187,6 +187,7 @@ export default function PaymentSolutionsPage() {
           },
         }}
       />
+
       {/* Hero */}
       <section
         className="page-hero-bg"
@@ -415,24 +416,14 @@ export default function PaymentSolutionsPage() {
                 volume, and industry requirements to recommend the best payment
                 infrastructure for your situation.
               </p>
-              <Link
-              to="/apply"
-              >
-              <div>
-              <h3
-              className="text-xl font-bold mb-4"
-              style={{
-              color: isLight ? "#1a2040" : "#e8edf8",
-              fontFamily: "Sora, system-ui, sans-serif",
-              }}
-              >
-              Not sure what you need?
-              </h3>
-              </div>
+              <Link to="/apply" className="cybin-btn-primary">
+                Start Your Application
+                <ChevronRight size={16} />
               </Link>
-              </div>
-              </div>
-              </section>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="cybin-section-divider" />
 
@@ -525,5 +516,13 @@ export default function PaymentSolutionsPage() {
           </div>
 
           <div className="text-center mt-14">
-            <Link
-
+            <Link to="/apply" className="cybin-btn-primary">
+              Start Your Application
+              <ChevronRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}

@@ -1,6 +1,6 @@
-import { JsonLd } from "@/components/JsonLd";
-import { useSeo } from "@/hooks/useSeo";
-import { Link } from "@/lib/router";
+import { JsonLd } from "@/src/components/JsonLd";
+import { useSeo } from "@/src/hooks/useSeo";
+import { Link } from "@/src/lib/router";
 import {
   AlertTriangle,
   ChevronDown,

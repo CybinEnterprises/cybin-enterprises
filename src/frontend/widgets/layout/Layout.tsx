@@ -1,9 +1,9 @@
 // Reference ID: widgets.layout.Layout
 // Dependencies: shared.contexts.ThemeContext, features.hooks.useLiveImageSettings, features.hooks.useLiveSiteSettings, shared.lib.router, widgets.layout.TickerBar
-import { useTheme } from "@/shared/contexts/ThemeContext";
-import { useLiveImageSettings } from "@/features/hooks/useLiveImageSettings";
-import { useLiveSiteSettings } from "@/features/hooks/useLiveSiteSettings";
-import { Link, useLocation } from "@/shared/lib/router";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { useLiveImageSettings } from "@/src/hooks/useLiveImageSettings";
+import { useLiveSiteSettings } from "@/src/hooks/useLiveSiteSettings";
+import { Link, useLocation } from "@/lib/router";
 import {
   ChevronDown,
   ChevronRight,
@@ -329,7 +329,7 @@ export default function Layout({ children }: LayoutProps) {
                                 e.currentTarget.style.color = accentTeal;
                                 e.currentTarget.style.backgroundColor = isLight
                                   ? "rgba(0,122,106,0.05)"
-                                  : "rgba(110,247,212,0.06)",
+                                  : "rgba(110,247,212,0.06)"
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.color = isLight

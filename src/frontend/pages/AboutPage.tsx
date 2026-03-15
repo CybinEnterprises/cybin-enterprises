@@ -1,9 +1,9 @@
-import { JsonLd } from "@/components/JsonLd";
-import { useTheme } from "@/contexts/ThemeContext";
-import { useLiveImageSettings } from "@/hooks/useLiveImageSettings";
-import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
-import { useSeo } from "@/hooks/useSeo";
-import { Link } from "@/lib/router";
+import { JsonLd } from "@/src/components/JsonLd";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { useLiveImageSettings } from "@/src/hooks/useLiveImageSettings";
+import { useLiveSiteSettings } from "@/src/hooks/useLiveSiteSettings";
+import { useSeo } from "@/src/hooks/useSeo";
+import { Link } from "@/src/lib/router";
 import { Award, ChevronRight, Star } from "lucide-react";
 import { useEffect } from "react";
 const melPhoto = "/assets/mel-headshot.jpeg";
