@@ -325,7 +325,7 @@ export default function WizardPage() {
       {/* Header */}
       <header style={{ position: "fixed", top: 38, left: 0, right: 0, zIndex: 50, backgroundColor: "rgba(10,22,40,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,255,255,0.06)", height: 64, display: "flex", alignItems: "center", padding: "0 24px", justifyContent: "space-between" }}>
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <img src={logoImg} alt="Cybin Enterprises" style={{ width: 36, height: 36, objectFit: "contain", background: logoBg, borderRadius: "4px" }} />
+          <img src={logoImg} alt="Cybin Enterprises" style={{ height: 36, width: "auto", maxWidth: 140, objectFit: "contain" }} />
           <span style={{ fontWeight: 700, color: "rgba(232,237,248,0.9)", fontSize: "0.9rem" }}>Cybin Enterprises</span>
         </Link>
         <nav className="hidden md:flex items-center gap-5">

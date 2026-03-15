@@ -234,9 +234,8 @@ export default function Layout({ children }: LayoutProps) {
               <div
                 style={{
                   background: "transparent",
-                  borderRadius: "8px",
-                  padding: "8px",
-                  display: "inline-block",
+                  display: "inline-flex",
+                  alignItems: "center",
                 }}
               >
                 <img
@@ -245,14 +244,14 @@ export default function Layout({ children }: LayoutProps) {
                   loading="eager"
                   fetchPriority="high"
                   style={{
-                    width: `${logoCfg.containerHeight * 1.5}px`,
                     height: `${logoCfg.containerHeight * 1.5}px`,
+                    width: "auto",
+                    maxWidth: `${logoCfg.containerHeight * 5}px`,
                     display: "block",
                     flexShrink: 0,
                     border: "none",
                     boxShadow: "none",
                     objectFit: "contain",
-                    borderRadius: "4px",
                     ...logoStyle,
                   }}
               />
@@ -357,7 +356,7 @@ export default function Layout({ children }: LayoutProps) {
                             onMouseEnter={(e) => {
                               e.currentTarget.style.backgroundColor = isLight
                                 ? "rgba(0,122,106,0.05)"
-                                : "rgba(110,247,212,0.06)",
+                                : "rgba(110,247,212,0.06)";
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.backgroundColor =
@@ -570,23 +569,22 @@ export default function Layout({ children }: LayoutProps) {
             <div>
               <div
                 style={{
-                  background: logoBg,
-                  display: "inline-block",
-                  borderRadius: "8px",
-                  padding: "4px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  marginBottom: "12px",
                 }}
               >
                 <img
                   src={logoImg}
                   alt="Cybin Enterprises"
                   style={{
-                    width: `${logoCfg.containerHeight * 1.5}px`,
                     height: `${logoCfg.containerHeight * 1.5}px`,
+                    width: "auto",
+                    maxWidth: `${logoCfg.containerHeight * 5}px`,
                     display: "block",
-                    marginBottom: "12px",
                     border: "none",
                     boxShadow: "none",
-                    borderRadius: "0",
+                    objectFit: "contain",
                     ...logoStyle,
                   }}
               />
