@@ -1,7 +1,7 @@
-import { JsonLd } from "@/components/JsonLd";
-import { type Category, blogPosts } from "@/data/blogPosts";
-import { useSeo } from "@/hooks/useSeo";
-import { Link, useParams } from "@/lib/router";
+import { JsonLd } from "@/src/components/JsonLd";
+import { type Category, blogPosts } from "@/src/data/blogPosts";
+import { useSeo } from "@/src/hooks/useSeo";
+import { Link, useParams } from "@/src/lib/router";
 import { ArrowLeft, ChevronRight, Clock } from "lucide-react";
 import { useEffect } from "react";
 

@@ -16,7 +16,7 @@ import {
   getSettings,
   resetImageSettings,
   saveSettings,
-} from "@/hooks/useImageSettings";
+} from "@/src/hooks/useImageSettings";
 import {
   Check,
   ClipboardCopy,

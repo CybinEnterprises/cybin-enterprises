@@ -1,4 +1,4 @@
-import { ANALYTICS_KEY, type AnalyticsEvent } from "@/hooks/usePageTracking";
+import { ANALYTICS_KEY, type AnalyticsEvent } from "@/src/hooks/usePageTracking";
 import { BarChart2, Monitor, Smartphone, Tablet, Trash2 } from "lucide-react";
 import { useCallback, useState } from "react";
 

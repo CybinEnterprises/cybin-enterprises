@@ -1,7 +1,7 @@
-import { useTheme } from "@/contexts/ThemeContext";
-import { useLiveImageSettings } from "@/hooks/useLiveImageSettings";
-import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
-import { Link, useLocation } from "@/lib/router";
+import { useTheme } from "@/src/contexts/ThemeContext";
+import { useLiveImageSettings } from "@/src/hooks/useLiveImageSettings";
+import { useLiveSiteSettings } from "@/src/hooks/useLiveSiteSettings";
+import { Link, useLocation } from "@/src/lib/router";
 import {
   ChevronDown,
   ChevronRight,
