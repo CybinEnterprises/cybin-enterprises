@@ -13,4 +13,4 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
-Sitemap: https://cybinenterprises.com/sitemap.xml
+Sitemap: https://cybin-enterprises-1.vercel.app/sitemap.xml

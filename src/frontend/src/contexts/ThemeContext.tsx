@@ -10,18 +10,18 @@ export type ThemeMode = "light" | "dark";
 export type ResolvedTheme = "light" | "dark";
 
 interface ThemeContextValue {
-  mode: ThemeMode;
+  theme: ThemeMode;
   resolved: ResolvedTheme;
-  setMode: (mode: ThemeMode) => void;
+  setTheme: (theme: ThemeMode) => void;
   toggle: () => void;
   // Keep cycle for any legacy callers
   cycle: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  mode: "dark",
+  theme: "dark",
   resolved: "dark",
-  setMode: () => {},
+  setTheme: () => {},
   toggle: () => {},
   cycle: () => {},
 });
@@ -94,7 +94,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider
-      value={{ mode, resolved: mode, setMode, toggle, cycle: toggle }}
+      value={{ theme: mode, resolved: mode, setTheme: setMode, toggle, cycle: toggle }}
     >
       {children}
     </ThemeContext.Provider>

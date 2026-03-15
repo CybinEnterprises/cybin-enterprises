@@ -18,10 +18,11 @@
     "jsx": "react-jsx",
     "types": ["vite/client", "node"],
     "paths": {
-      "declarations/*": ["../declarations/*"],
-      "@/*": ["./src/*"]
+      "declarations/*": ["./declarations/*"],
+      "@/*": ["./*"],
+      "@services/*": ["./services/*"]
     }
   },
-  "include": ["src"],
+  "include": [".", "components", "hooks", "lib", "contexts", "data", "declarations", "mocks", "services", "stores", "styles", "types", "config.ts", "App.tsx", "main.tsx", "index.css", "backend.ts", "backend.d.ts"],
   "exclude": ["node_modules", "dist", "build", "*.config.js"]
 }

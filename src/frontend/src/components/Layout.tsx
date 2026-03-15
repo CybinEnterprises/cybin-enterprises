@@ -119,6 +119,7 @@ function ThemeToggle() {
   );
 }
 
+// Force recompile for logo cache fix - ${Date.now()}
 export default function Layout({ children }: LayoutProps) {
   const { style: logoStyle, config: logoCfg } = useLiveImageSettings("logo");
   const site = useLiveSiteSettings();
@@ -180,13 +181,14 @@ export default function Layout({ children }: LayoutProps) {
     typeof window !== "undefined" ? window.location.hostname : "";
 
   // Theme-aware color tokens
+  // Using --cybin-navy (#0a0f1e) to match hero section
   const headerBg = isLight
     ? scrolled
-      ? "rgba(248,249,252,0.97)"
-      : "rgba(248,249,252,0.94)"
+      ? "#ffffff"
+      : "#ffffff"
     : scrolled
-      ? "rgba(13,11,26,0.97)"
-      : "rgba(13,11,26,0.92)";
+      ? "#0a0f1e"
+      : "#0a0f1e";
   const navLinkColor = isLight
     ? "rgba(20,30,60,0.7)"
     : "rgba(232, 237, 248, 0.75)";
@@ -198,6 +200,7 @@ export default function Layout({ children }: LayoutProps) {
     ? "rgba(0,122,106,0.1)"
     : "rgba(110,247,212, 0.08)";
   const footerBg = isLight ? "#f8fafc" : "#080614";
+  const logoBg = isLight ? "rgba(248, 249, 252, 0.94)" : "rgba(13, 11, 26, 0.92)";
   const footerText = isLight
     ? "rgba(20,30,60,0.55)"
     : "rgba(232, 237, 248, 0.55)";
@@ -252,12 +255,10 @@ export default function Layout({ children }: LayoutProps) {
         className="fixed top-[38px] left-0 right-0 z-50 transition-all duration-300"
         style={{
           backgroundColor: headerBg,
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
           borderBottom: scrolled
             ? `1px solid ${isLight ? "rgba(0,0,0,0.1)" : "rgba(99,102,241,0.2)"}`
             : "1px solid transparent",
-          boxShadow: scrolled
+          boxShadow: scrolled || !isLight
             ? isLight
               ? "0 4px 32px rgba(0,0,0,0.08)"
               : "0 4px 32px rgba(0,0,0,0.5)"
@@ -280,23 +281,32 @@ export default function Layout({ children }: LayoutProps) {
                 outline: "none",
               }}
             >
-              <img
-                src={logoImg}
-                alt="Cybin Enterprises"
-                loading="eager"
-                fetchPriority="high"
+              <div
                 style={{
-                  height: `${logoCfg.containerHeight}px`,
-                  width: "auto",
-                  display: "block",
-                  flexShrink: 0,
                   background: "transparent",
-                  border: "none",
-                  boxShadow: "none",
-                  objectFit: "contain",
-                  ...logoStyle,
+                  borderRadius: "8px",
+                  padding: "8px",
+                  display: "inline-block",
                 }}
-              />
+              >
+                <img
+                  src={logoImg}
+                  alt="Cybin Enterprises"
+                  loading="eager"
+                  fetchPriority="high"
+                  style={{
+                    width: `${logoCfg.containerHeight * 1.5}px`,
+                    height: `${logoCfg.containerHeight * 1.5}px`,
+                    display: "block",
+                    flexShrink: 0,
+                    border: "none",
+                    boxShadow: "none",
+                    objectFit: "contain",
+                    borderRadius: "4px",
+                    ...logoStyle,
+                  }}
+                />
+              </div>
             </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
@@ -609,18 +619,24 @@ export default function Layout({ children }: LayoutProps) {
             {/* Col 1: Logo + tagline */}
             <div>
               <div
-                style={{ display: "inline-block", marginBottom: "12px" }}
+                style={{
+                  background: logoBg,
+                  display: "inline-block",
+                  borderRadius: "8px",
+                  padding: "4px",
+                }}
               >
                 <img
                   src={logoImg}
                   alt="Cybin Enterprises"
                   style={{
-                    height: `${logoCfg.containerHeight}px`,
-                    width: "auto",
+                    width: `${logoCfg.containerHeight * 1.5}px`,
+                    height: `${logoCfg.containerHeight * 1.5}px`,
                     display: "block",
-                    background: "transparent",
+                    marginBottom: "12px",
                     border: "none",
                     boxShadow: "none",
+                    borderRadius: "0",
                     ...logoStyle,
                   }}
                 />

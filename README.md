@@ -4,19 +4,64 @@ This document covers everything your development team needs to know to deploy, c
 
 ---
 
+## 🚀 Quick Reference (For Designers & Developers)
+
+### 🎨 Designers — Where to Find & Update Things
+
+| What You Need | Where to Go | File / Location |
+|--------------|-------------|-----------------|
+| **Logo** | Header & Footer | `src/frontend/public/assets/cybin-logo.png` |
+| **Hero Images** | Home, About, Industry pages | `src/frontend/public/assets/generated/` |
+| **Team Photos** | About, Team sections | `src/frontend/public/assets/mel-headshot.jpeg`, `uploads/IMG_2988-1.jpeg` |
+| **Colors** | Theme colors | `src/frontend/lib/theme/tokens.ts` |
+| **Fonts** | Typography | `src/frontend/lib/theme/tokens.ts` |
+| **Site Text** | All page copy | `src/frontend/components/pages/` (each page) |
+| **Blog Posts** | Blog section | `src/frontend/data/blogPosts.ts` |
+| **Industries Data** | Industries page | `src/frontend/data/industries.ts` |
+| **FAQ Content** | FAQ page | `src/frontend/components/pages/FaqPage.tsx` |
+### 💻 Developers — Key Files & Commands
+| What You Need | Location |
+|--------------|----------|
+| **Frontend Entry** | `src/frontend/App.tsx` |
+| **Main Layout** | `src/frontend/components/Layout.tsx` |
+| **Routing** | `src/frontend/lib/router.tsx` |
+| **Theme System** | `src/frontend/contexts/ThemeContext.tsx` |
+| **Image Settings Hook** | `src/frontend/hooks/useImageSettings.ts` |
+| **Site Settings Hook** | `src/frontend/hooks/useSiteSettings.ts` |
+| **Backend API** | `src/backend/main.mo` |
+| **Backend Types** | `src/frontend/declarations/backend.did.d.ts` |*Admin Panel** | `src/frontend/components/pages/AdminPage.tsx` |
+
+```bash
+# Install dependencies
+pnpm install
+
+# Start development
+cd src/frontend && pnpm dev
+
+# Build for production
+cd src/frontend && pnpm build
+
+# Deploy to ICP
+dfx deploy --network ic
+```
+
+---
+
 ## Table of Contents
 
-1. [Project Structure](#1-project-structure)
-2. [Local Development Setup](#2-local-development-setup)
-3. [Building and Deploying to ICP](#3-building-and-deploying-to-icp)
-4. [Custom Domain Setup (GoDaddy, Cloudflare, Namecheap)](#4-custom-domain-setup)
-5. [Admin Panel Usage](#5-admin-panel-usage)
-6. [Third-Party Website Editor Integration](#6-third-party-website-editor-integration)
-7. [AI / LLM Integration (ChatGPT, Claude, Grok, Local LLM)](#7-ai--llm-integration)
-8. [Blog Automation and Webhooks](#8-blog-automation-and-webhooks)
-9. [GitHub Export and Handoff](#9-github-export-and-handoff)
-10. [Security Notes](#10-security-notes)
-11. [Environment Configuration Reference](#11-environment-configuration-reference)
+1. [Quick Reference](#-quick-reference-for-designers--developers)
+2. [Project Structure](#1-project-structure)
+3. [Common Updates Guide](#2-common-updates-guide)
+4. [Local Development Setup](#3-local-development-setup)
+5. [Building and Deploying to ICP](#4-building-and-deploying-to-icp)
+6. [Custom Domain Setup (GoDaddy, Cloudflare, Namecheap)](#5-custom-domain-setup)
+7. [Admin Panel Usage](#6-admin-panel-usage)
+8. [Third-Party Website Editor Integration](#7-third-party-website-editor-integration)
+9. [AI / LLM Integration (ChatGPT, Claude, Grok, Local LLM)](#8-ai--llm-integration)
+10. [Blog Automation and Webhooks](#9-blog-automation-and-webhooks)
+11. [GitHub Export and Handoff](#10-github-export-and-handoff)
+12. [Security Notes](#11-security-notes)
+13. [Environment Configuration Reference](#12-environment-configuration-reference)
 
 ---
 
@@ -30,23 +75,43 @@ This document covers everything your development team needs to know to deploy, c
 │   └── frontend/          # React + TypeScript + Tailwind frontend
 │       ├── public/
 │       │   └── assets/    # Images, logo, headshots
-│       ├── src/
-│       │   ├── App.tsx                    # Route definitions
-│       │   ├── backend.d.ts               # Auto-generated backend type bindings
-│       │   ├── components/
-│       │   │   ├── Layout.tsx             # Header, footer, nav
-│       │   │   └── pages/
-│       │   │       ├── admin/             # Admin panel tabs
-│       │   │       ├── HomePage.tsx
-│       │   │       ├── AboutPage.tsx
-│       │   │       ├── LegalPage.tsx      # Privacy Policy, Terms, Cookie Policy
-│       │   │       ├── PartnersPage.tsx
-│       │   │       ├── WizardPage.tsx     # Intake wizard
-│       │   │       └── ...
-│       │   └── hooks/
-│       │       ├── useSiteSettings.ts     # Site-wide text/color settings
-│       │       └── useImageSettings.ts    # Image crop/zoom settings
-│       └── env.json                       # Canister IDs (fill in after deploy)
+│       │       ├── cybin-logo.png         # Main logo (OG image fallback)
+│       │       ├── cybin-logo-light.png   # Light mode logo
+│       │       ├── cybin-logo-dark.png    # Dark mode logo
+│       │       ├── mel-headshot.jpeg      # Mel's photo
+│       │       ├── uploads/               # User-uploaded images
+│       │       │   └── IMG_2988-1.jpeg    # Shane's photo
+│       │       └── generated/             # Optimized images
+│       ├── components/     # React components
+│       │   ├── Layout.tsx              # Header, footer, nav
+│       │   ├── pages/                  # Page components
+│       │   │   ├── admin/               # Admin panel tabs
+│       │   │   ├── home/                # Home page sections
+│       │   │   ├── HomePage.tsx
+│       │   │   ├── AboutPage.tsx
+│       │   │   ├── LegalPage.tsx        # Privacy Policy, Terms, Cookie Policy
+│       │   │   ├── PartnersPage.tsx
+│       │   │   ├── WizardPage.tsx       # Intake wizard
+│       │   │   └── ...
+│       │   └── ui/            # UI primitives (shadcn/ui)
+│       ├── hooks/             # Custom React hooks
+│       │   ├── useSiteSettings.ts       # Site-wide text/color settings
+│       │   └── useImageSettings.ts       # Image crop/zoom settings
+│       ├── lib/               # Utilities
+│       │   └── router.tsx     # React Router configuration
+│       ├── src/               # Theme & context (empty folder - see #195)
+│       │   └── contexts/
+│       │       └── ThemeContext.tsx
+│       ├── data/              # Static data
+│       │   ├── blogPosts.ts
+│       │   └── industries.ts
+│       ├── declarations/      # Auto-generated type bindings
+│       │   └── backend.did.d.ts
+│       ├── App.tsx            # Main app entry with routes
+│       ├── main.tsx          # React mount point
+│       ├── env.json          # Canister IDs (fill in after deploy)
+│       ├── index.html        # HTML template
+│       └── tailwind.config.js
 ├── dfx.json               # ICP deployment configuration
 ├── package.json
 └── README.md              # This file
@@ -54,7 +119,45 @@ This document covers everything your development team needs to know to deploy, c
 
 ---
 
-## 2. Local Development Setup
+
+## 2. Common Updates Guide
+
+### Updating the Logo
+1. Replace `src/frontend/public/assets/cybin-logo.png` with your new logo
+2. The logo automatically adapts: white background on light mode, black on dark mode
+3. Clear browser cache to see changes
+
+### Updating Site Colors
+- **Primary colors**: `src/frontend/lib/theme/tokens.ts` - Look for `color` and `accent` tokens
+- **Tailwind config**: `src/frontend/tailwind.config.js`
+- **Theme context**: `src/frontend/contexts/ThemeContext.tsx`
+
+### Updating Page Content
+Each page is a separate component in `src/frontend/components/pages/`:
+- HomePage.tsx - Landing page
+- AboutPage.tsx - About us
+- IndustriesPage.tsx - Industries we serve
+- PartnersPage.tsx - Partner program
+- BlogPostPage.tsx - Individual blog posts
+
+### Adding a New Page
+1. Create component in `src/frontend/components/pages/`
+2. Add route in `src/frontend/lib/router.tsx`
+3. Add navigation link in `src/frontend/components/Layout.tsx`
+
+### Updating Blog Posts
+Edit `src/frontend/data/blogPosts.ts` - Each post is an object with title, content, date, etc.
+
+### Updating Industries Data
+Edit `src/frontend/data/industries.ts` - Contains all industry-specific content and images.
+
+### Image Optimization
+- Source images go in `src/frontend/public/assets/uploads/`
+- Generated/optimized images in `src/frontend/public/assets/generated/`
+- Run `node scripts/resize-images.js` to optimize images
+- Run `node scripts/prune-unused-images.js` to remove unused images
+
+## 3. Local Development Setup
 
 ### Prerequisites
 
@@ -83,7 +186,7 @@ The site will be available at `http://localhost:5173`.
 
 ---
 
-## 3. Building and Deploying to ICP
+## 4. Building and Deploying to ICP
 
 ### Deploy to ICP Mainnet
 
@@ -114,7 +217,7 @@ After deploying, fill in `src/frontend/env.json`:
 
 ---
 
-## 4. Custom Domain Setup
+## 5. Custom Domain Setup
 
 To point `cybinenterprises.com` (or any custom domain) to your ICP-hosted site:
 
@@ -154,7 +257,7 @@ nslookup www.cybinenterprises.com
 
 ---
 
-## 5. Admin Panel Usage
+## 6. Admin Panel Usage
 
 Access the admin panel at: `https://[your-site-url]/admin`
 
@@ -180,7 +283,7 @@ All changes in the Site Editor and Image Editor apply **instantly** to the live 
 
 ---
 
-## 6. Third-Party Website Editor Integration
+## 7. Third-Party Website Editor Integration
 
 ### Option A — Iframe Embed
 
@@ -203,15 +306,14 @@ Embed the live site in any platform that supports iframes (Notion pages, Webflow
 3. Open `src/frontend/tailwind.config.js` — extract the color tokens
 4. Recreate the visual layer in Webflow or Framer using these exact tokens
 5. For dynamic data (blog posts, contact form, wizard submissions), connect Webflow to the ICP backend API using Webflow's custom code embed + fetch API calls
-6. Reference `src/frontend/src/backend.d.ts` for the exact API method signatures
-
+6. Reference `src/frontend/backend.d.ts` for the exact API method signatures
 ### Option C — Visual Site Builder with Live Edit (Admin Panel)
 
 The admin panel's **Site Editor** tab (`/admin` → Site Editor) provides a visual interface to edit all site copy, images, and colors without touching code. This is the recommended approach for non-technical content updates.
 
 ---
 
-## 7. AI / LLM Integration
+## 8. AI / LLM Integration
 
 This site is built to receive AI-generated content through backend webhooks. API keys must never be stored in the frontend.
 
@@ -328,7 +430,7 @@ public func generateBlogPost(prompt: Text) : async Text {
 
 ---
 
-## 8. Blog Automation and Webhooks
+## 9. Blog Automation and Webhooks
 
 ### Zapier / Make Integration
 
@@ -366,7 +468,7 @@ Use the HTTP Request node in n8n to POST to the blog webhook.
 
 ---
 
-## 9. GitHub Export and Handoff
+## 10. GitHub Export and Handoff
 
 ### Via Caffeine Dashboard
 
@@ -400,7 +502,7 @@ pnpm build
 
 ---
 
-## 10. Security Notes
+## 11. Security Notes
 
 | Topic | Guidance |
 |-------|----------|
@@ -414,7 +516,136 @@ pnpm build
 
 ---
 
-## 11. Environment Configuration Reference
+## 12. Backend v2.0.0 - Professional API
+
+The backend has been upgraded to v2.0.0 with enterprise-grade features:
+
+### New Features
+
+| Feature | Description |
+|---------|-------------|
+| **Stable Storage** | Data persists across canister upgrades |
+| **Pagination** | All list queries support `page` and `pageSize` params |
+| **Rate Limiting** | 10 requests/minute per user |
+| **Audit Logging** | Track all create/update/delete operations |
+| **Analytics** | Monthly metrics for submissions, applications, leads |
+| **Status Workflows** | Each entity has status (New/InProgress/Completed) |
+| **Input Validation** | Email, phone, FEIN validation |
+
+### API Response Format
+
+All mutations now return `OperationResult<T>`:
+
+```typescript
+// Success
+{ ok: T }
+
+// Error
+{ err: { ValidationError: "error message" } }
+```
+
+### Helper Functions
+
+```typescript
+import { isOk, getErrorMessage, createPaginationParams } from './backend';
+
+// Check if operation succeeded
+if (isOk(result)) {
+  const data = result.ok;
+}
+
+// Get error message
+const error = getErrorMessage(result);
+
+// Create pagination params
+const params = createPaginationParams(0, 20); // page 0, 20 items per page
+```
+
+### Example: Submitting Contact Form
+
+```typescript
+const result = await actor.submitContactForm(
+  name,
+  email,
+  phone,
+  businessType,
+  message
+);
+
+if (isOk(result)) {
+  console.log('Submission ID:', result.ok);
+} else {
+  console.error('Error:', getErrorMessage(result));
+}
+```
+
+### Example: Paginated Query
+
+```typescript
+const result = await actor.getAllSubmissions(
+  createPaginationParams(0, 10)
+);
+
+if (isOk(result)) {
+  const { data, page } = result.ok;
+  console.log('Total pages:', page.totalPages);
+  console.log('Items:', data);
+}
+```
+
+### Backend API Reference
+
+| Endpoint | Description |
+|----------|-------------|
+| `healthCheck()` | System status |
+| `getAnalytics()` | Monthly metrics |
+| `getDatabaseStats()` | Record counts |
+| `submitContactForm()` | Contact form submission |
+| `submitWizardApplication()` | Intake wizard submission |
+| `submitPartnerLead()` | Partner application |
+| `createBlogPost()` | Create blog post |
+| `publishBlogPost()` | Publish blog post |
+| `getAuditLogs()` | Query audit trail |
+
+---
+
+## 13. Custom Domain Setup - Developer Handoff
+
+When handing off to your development team for custom domain deployment:
+
+### Pre-Deployment Checklist
+
+- [ ] Backend canister deployed to ICP mainnet
+- [ ] Frontend canister deployed to ICP mainnet
+- [ ] Canister IDs saved from deployment
+- [ ] env.json updated with production values
+- [ ] Admin PIN changed from default
+- [ ] Health check verified: `https://[canister].icp0.io/healthCheck`
+
+### DNS Configuration Required
+
+| Record Type | Host | Value | Priority |
+|------------|------|-------|----------|
+| CNAME | @ | [canister-id].icp0.io | - |
+| CNAME | www | [canister-id].icp0.io | - |
+| CNAME | _canister-id | [canister-id] | - |
+| TXT | _canister-id | [canister-id] | - |
+
+### Production Environment (env.json)
+
+```json
+{
+  "backend_canister_id": "XXXXX-xxyyy-zzzz-aaaa-bbbbbbbbbbbb-ic",
+  "frontend_canister_id": "XXXXX-xxyyy-zzzz-aaaa-bbbbbbbbbbbb-ic",
+  "backend_host": "https://icp0.io",
+  "project_id": "your-project-id",
+  "ii_derivation_origin": "https://your-domain.com"
+}
+```
+
+---
+
+## 14. Environment Configuration Reference
 
 ### src/frontend/env.json
 

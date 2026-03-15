@@ -16,7 +16,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { loadConfig } from "../config";
+import { loadConfig } from "@/config";
 
 export type Status =
   | "initializing"

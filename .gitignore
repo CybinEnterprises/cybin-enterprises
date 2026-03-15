@@ -10,3 +10,4 @@ coverage
 .cache
 .vscode/settings.json
 .idea
+.vercel

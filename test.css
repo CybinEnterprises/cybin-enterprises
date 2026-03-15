@@ -1,0 +1,7 @@
+/* Test case */
+:root {
+  --color-hero-bg: #0d1526;
+}
+.page-hero {
+  background-color: var(--color-hero-bg);
+}

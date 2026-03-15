@@ -6,7 +6,7 @@ import environment from "vite-plugin-environment";
 const ii_url =
   process.env.DFX_NETWORK === "local"
     ? `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:8081/`
-    : `https://identity.internetcomputer.org/`;
+    : `https://identity.ic0.app/`;
 
 process.env.II_URL = process.env.II_URL || ii_url;
 process.env.STORAGE_GATEWAY_URL =
@@ -43,17 +43,22 @@ export default defineConfig({
     environment("all", { prefix: "DFX_" }),
     environment(["II_URL"]),
     environment(["STORAGE_GATEWAY_URL"]),
+    environment(["VITE_USE_MOCK"], { default: "true" }),
     react(),
   ],
+  define: {
+    VITE_DEV_MODE: JSON.stringify(true),
+    VITE_USE_MOCK: JSON.stringify(process.env.VITE_USE_MOCK || "true"),
+  },
   resolve: {
     alias: [
       {
         find: "declarations",
-        replacement: fileURLToPath(new URL("../declarations", import.meta.url)),
+        replacement: fileURLToPath(new URL("./declarations", import.meta.url)),
       },
       {
         find: "@",
-        replacement: fileURLToPath(new URL("./src", import.meta.url)),
+        replacement: fileURLToPath(new URL(".", import.meta.url)),
       },
     ],
     dedupe: ["@dfinity/agent"],
