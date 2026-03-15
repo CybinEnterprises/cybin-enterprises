@@ -12,27 +12,24 @@ This document covers everything your development team needs to know to deploy, c
 |--------------|-------------|-----------------|
 | **Logo** | Header & Footer | `src/frontend/public/assets/cybin-logo.png` |
 | **Hero Images** | Home, About, Industry pages | `src/frontend/public/assets/generated/` |
-| **Team Photos** | About, Team sections | `src/frontend/public/assets/mel-headshot.jpeg`, `shane-headshot.jpeg` |
-| **Colors** | Theme colors | `src/frontend/src/lib/theme/tokens.ts` |
-| **Fonts** | Typography | `src/frontend/src/lib/theme/tokens.ts` |
-| **Site Text** | All page copy | `src/frontend/src/components/pages/` (each page) |
-| **Blog Posts** | Blog section | `src/frontend/src/data/blogPosts.ts` |
-| **Industries Data** | Industries page | `src/frontend/src/data/industries.ts` |
-| **FAQ Content** | FAQ page | `src/frontend/src/components/pages/FaqPage.tsx` |
-
+| **Team Photos** | About, Team sections | `src/frontend/public/assets/mel-headshot.jpeg`, `uploads/IMG_2988-1.jpeg` |
+| **Colors** | Theme colors | `src/frontend/lib/theme/tokens.ts` |
+| **Fonts** | Typography | `src/frontend/lib/theme/tokens.ts` |
+| **Site Text** | All page copy | `src/frontend/components/pages/` (each page) |
+| **Blog Posts** | Blog section | `src/frontend/data/blogPosts.ts` |
+| **Industries Data** | Industries page | `src/frontend/data/industries.ts` |
+| **FAQ Content** | FAQ page | `src/frontend/components/pages/FaqPage.tsx` |
 ### 💻 Developers — Key Files & Commands
-
 | What You Need | Location |
 |--------------|----------|
-| **Frontend Entry** | `src/frontend/src/App.tsx` |
-| **Main Layout** | `src/frontend/src/components/Layout.tsx` |
-| **Routing** | `src/frontend/src/lib/router.tsx` |
-| **Theme System** | `src/frontend/src/contexts/ThemeContext.tsx` |
-| **Image Settings Hook** | `src/frontend/src/hooks/useImageSettings.ts` |
-| **Site Settings Hook** | `src/frontend/src/hooks/useSiteSettings.ts` |
+| **Frontend Entry** | `src/frontend/App.tsx` |
+| **Main Layout** | `src/frontend/components/Layout.tsx` |
+| **Routing** | `src/frontend/lib/router.tsx` |
+| **Theme System** | `src/frontend/contexts/ThemeContext.tsx` |
+| **Image Settings Hook** | `src/frontend/hooks/useImageSettings.ts` |
+| **Site Settings Hook** | `src/frontend/hooks/useSiteSettings.ts` |
 | **Backend API** | `src/backend/main.mo` |
-| **Backend Types** | `src/frontend/src/declarations/backend.did.d.ts` |
-| **Admin Panel** | `src/frontend/src/components/pages/AdminPage.tsx` |
+| **Backend Types** | `src/frontend/declarations/backend.did.d.ts` |*Admin Panel** | `src/frontend/components/pages/AdminPage.tsx` |
 
 ```bash
 # Install dependencies
@@ -78,23 +75,43 @@ dfx deploy --network ic
 │   └── frontend/          # React + TypeScript + Tailwind frontend
 │       ├── public/
 │       │   └── assets/    # Images, logo, headshots
-│       ├── src/
-│       │   ├── App.tsx                    # Route definitions
-│       │   ├── backend.d.ts               # Auto-generated backend type bindings
-│       │   ├── components/
-│       │   │   ├── Layout.tsx             # Header, footer, nav
-│       │   │   └── pages/
-│       │   │       ├── admin/             # Admin panel tabs
-│       │   │       ├── HomePage.tsx
-│       │   │       ├── AboutPage.tsx
-│       │   │       ├── LegalPage.tsx      # Privacy Policy, Terms, Cookie Policy
-│       │   │       ├── PartnersPage.tsx
-│       │   │       ├── WizardPage.tsx     # Intake wizard
-│       │   │       └── ...
-│       │   └── hooks/
-│       │       ├── useSiteSettings.ts     # Site-wide text/color settings
-│       │       └── useImageSettings.ts    # Image crop/zoom settings
-│       └── env.json                       # Canister IDs (fill in after deploy)
+│       │       ├── cybin-logo.png         # Main logo (OG image fallback)
+│       │       ├── cybin-logo-light.png   # Light mode logo
+│       │       ├── cybin-logo-dark.png    # Dark mode logo
+│       │       ├── mel-headshot.jpeg      # Mel's photo
+│       │       ├── uploads/               # User-uploaded images
+│       │       │   └── IMG_2988-1.jpeg    # Shane's photo
+│       │       └── generated/             # Optimized images
+│       ├── components/     # React components
+│       │   ├── Layout.tsx              # Header, footer, nav
+│       │   ├── pages/                  # Page components
+│       │   │   ├── admin/               # Admin panel tabs
+│       │   │   ├── home/                # Home page sections
+│       │   │   ├── HomePage.tsx
+│       │   │   ├── AboutPage.tsx
+│       │   │   ├── LegalPage.tsx        # Privacy Policy, Terms, Cookie Policy
+│       │   │   ├── PartnersPage.tsx
+│       │   │   ├── WizardPage.tsx       # Intake wizard
+│       │   │   └── ...
+│       │   └── ui/            # UI primitives (shadcn/ui)
+│       ├── hooks/             # Custom React hooks
+│       │   ├── useSiteSettings.ts       # Site-wide text/color settings
+│       │   └── useImageSettings.ts       # Image crop/zoom settings
+│       ├── lib/               # Utilities
+│       │   └── router.tsx     # React Router configuration
+│       ├── src/               # Theme & context (empty folder - see #195)
+│       │   └── contexts/
+│       │       └── ThemeContext.tsx
+│       ├── data/              # Static data
+│       │   ├── blogPosts.ts
+│       │   └── industries.ts
+│       ├── declarations/      # Auto-generated type bindings
+│       │   └── backend.did.d.ts
+│       ├── App.tsx            # Main app entry with routes
+│       ├── main.tsx          # React mount point
+│       ├── env.json          # Canister IDs (fill in after deploy)
+│       ├── index.html        # HTML template
+│       └── tailwind.config.js
 ├── dfx.json               # ICP deployment configuration
 ├── package.json
 └── README.md              # This file
@@ -111,12 +128,12 @@ dfx deploy --network ic
 3. Clear browser cache to see changes
 
 ### Updating Site Colors
-- **Primary colors**: `src/frontend/src/lib/theme/tokens.ts` - Look for `color` and `accent` tokens
+- **Primary colors**: `src/frontend/lib/theme/tokens.ts` - Look for `color` and `accent` tokens
 - **Tailwind config**: `src/frontend/tailwind.config.js`
-- **Theme context**: `src/frontend/src/contexts/ThemeContext.tsx`
+- **Theme context**: `src/frontend/contexts/ThemeContext.tsx`
 
 ### Updating Page Content
-Each page is a separate component in `src/frontend/src/components/pages/`:
+Each page is a separate component in `src/frontend/components/pages/`:
 - HomePage.tsx - Landing page
 - AboutPage.tsx - About us
 - IndustriesPage.tsx - Industries we serve
@@ -124,15 +141,15 @@ Each page is a separate component in `src/frontend/src/components/pages/`:
 - BlogPostPage.tsx - Individual blog posts
 
 ### Adding a New Page
-1. Create component in `src/frontend/src/components/pages/`
-2. Add route in `src/frontend/src/lib/router.tsx`
-3. Add navigation link in `src/frontend/src/components/Layout.tsx`
+1. Create component in `src/frontend/components/pages/`
+2. Add route in `src/frontend/lib/router.tsx`
+3. Add navigation link in `src/frontend/components/Layout.tsx`
 
 ### Updating Blog Posts
-Edit `src/frontend/src/data/blogPosts.ts` - Each post is an object with title, content, date, etc.
+Edit `src/frontend/data/blogPosts.ts` - Each post is an object with title, content, date, etc.
 
 ### Updating Industries Data
-Edit `src/frontend/src/data/industries.ts` - Contains all industry-specific content and images.
+Edit `src/frontend/data/industries.ts` - Contains all industry-specific content and images.
 
 ### Image Optimization
 - Source images go in `src/frontend/public/assets/uploads/`
@@ -289,8 +306,7 @@ Embed the live site in any platform that supports iframes (Notion pages, Webflow
 3. Open `src/frontend/tailwind.config.js` — extract the color tokens
 4. Recreate the visual layer in Webflow or Framer using these exact tokens
 5. For dynamic data (blog posts, contact form, wizard submissions), connect Webflow to the ICP backend API using Webflow's custom code embed + fetch API calls
-6. Reference `src/frontend/src/backend.d.ts` for the exact API method signatures
-
+6. Reference `src/frontend/backend.d.ts` for the exact API method signatures
 ### Option C — Visual Site Builder with Live Edit (Admin Panel)
 
 The admin panel's **Site Editor** tab (`/admin` → Site Editor) provides a visual interface to edit all site copy, images, and colors without touching code. This is the recommended approach for non-technical content updates.

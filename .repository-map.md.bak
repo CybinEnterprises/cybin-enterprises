@@ -1,0 +1,228 @@
+# Repository Map
+
+## 1. Animation Trigger Dependency Graph
+
+### Core Animation Triggers
+- `useScrollAnimation` (src/frontend/hooks/useScrollAnimation.ts)
+  - Triggers: IntersectionObserver threshold (default 0.1)
+  - Effects: Sets `animationPlayState: running` on target element
+  - Used by: HeroSection, HowItWorksSection, EnterpriseCalloutSection, etc.
+
+- `useScrollReveal` (src/frontend/hooks/useScrollReveal.ts)
+  - Triggers: IntersectionObserver threshold (default 0.1)
+  - Effects: Adds `animate-fade-rise` class and sets animation state
+  - Used by: Various UI components needing scroll-triggered animations
+
+- `NeuronCanvas` (src/frontend/src/components/NeuronCanvas.tsx)
+  - Triggers: Theme changes (light/dark)
+  - Effects: Renders animated neuron background based on theme mode
+  - Used by: HeroSection, HowItWorksSection, EnterpriseCalloutSection
+
+- Motion/Framer Animations
+  - `HowItWorksSection`: Uses `motion` from "motion/react" for step animations
+  - `EnterpriseCalloutSection`: Uses `NeuronCanvas` with theme-based animation
+  - `TestimonialsSection`: Uses implicit CSS animations via classes
+
+### Animation Dependencies
+- CSS Animations: Defined in tailwind.config.js (keyframes: accordion-down/up)
+- Custom Animations: Inline styles in HomePage.tsx (spin, pulse keyframes)
+- Theme-Based: All animations respect dark/light mode via `useTheme` hook
+
+## 2. Theme Variable Registry
+
+### Design Tokens (src/frontend/lib/theme/tokens.ts)
+```
+colors:
+  brand:
+    primary: #0a0f1e (cybin-navy)
+    accent: #00d4b8 (cybin-teal)
+    accentWarm: #a87ef5
+  dark:
+    background: #0a0f1e
+    surface: #110f22
+    surfaceElevated: #1a1833
+    heroBg: #0d1526
+    textPrimary: #e8edf8
+    textSecondary: #d4e0f5
+    textMuted: rgba(232,237,248,0.55)
+    textInverse: #0a0f1e
+    border: rgba(255,255,255,0.08)
+    borderSubtle: rgba(255,255,255,0.04)
+    borderAccent: rgba(0,212,184,0.12)
+    cardBg: rgba(255,255,255,0.03)
+    cardBorder: rgba(255,255,255,0.07)
+  light:
+    background: #ffffff
+    surface: #f8fafc
+    surfaceElevated: #ffffff
+    heroBg: #f8fafc
+    textPrimary: #0a0f1e
+    textSecondary: rgba(10,15,30,0.75)
+    textMuted: rgba(10,15,30,0.55)
+    textInverse: #ffffff
+    border: #e2e8f0
+    borderSubtle: #f1f5f9
+    borderAccent: rgba(99,102,241,0.2)
+    cardBg: rgba(99,102,241,0.04)
+    cardBorder: rgba(99,102,241,0.12)
+
+spacing: xs(4px), sm(8px), md(16px), lg(24px), xl(32px), 2xl(48px), 3xl(64px), 4xl(80px)
+radius: sm(8px), md(12px), lg(16px), xl(20px), full(9999px)
+transitions: fast(150ms), base(200ms), slow(300ms)
+```
+
+### CSS Variables (src/frontend/lib/theme/tokens.ts)
+```
+cssVars:
+  colors:
+    background: --color-background
+    surface: --color-surface
+    ... (all color tokens mapped to CSS vars)
+  fonts:
+    display: --font-display
+    body: --font-body
+    serif: --font-serif
+  neuron:
+    color: --neuron-color
+    secondary: --neuron-secondary
+    opacity: --neuron-opacity
+```
+
+### Theme Context (src/frontend/contexts/ThemeContext.tsx)
+- Provides: `resolved` ("light"|"dark"), `toggle` function
+- Persists theme in localStorage
+- Uses `prefers-color-scheme` as default
+- Anti-flash strategy: Sets `data-theme` on documentElement
+
+### Theme Usage
+- Layout.tsx: Uses theme to set headerBg, navLinkColors, footerColors, etc.
+- UI Components: Use `cn()` utility with dark mode variants (e.g., `dark:bg-cybin-navy`)
+- Custom Properties: Tokens converted to CSS vars via `varValue()` helper
+
+## 3. SEO Critical Path Index
+
+### Core SEO Files
+- `useSeo` (src/frontend/hooks/useSeo.ts)
+  - Updates: document.title, meta description, canonical link, OG/Twitter tags
+  - Critical: Canonical URL always uses VERIFIED_ORIGIN (https://cybin-enterprises-1.vercel.app)
+  - OG Image: Defaults to /assets/cybin-logo.png?v=3 with theme-aware handling
+
+- `JsonLd` (src/frontend/src/components/JsonLd.tsx)
+  - Generates: JSON-LD schema for Organization, WebSite, BreadcrumbList
+  - Critical: Must match canonical URL and business info
+
+### SEO-Critical Pages
+- All pages use `useSeo` hook (HomePage, AboutPage, ContactPage, etc.)
+- Canonical URLs: Must be absolute and match VERIFIED_ORIGIN
+- Meta Tags: Title, description, og:title, og:description, og:url, og:image
+
+### SEO Dependencies
+- Route Changes: useSeo runs on every route change via useEffect
+- Theme Changes: OG image may need regeneration if theme affects image
+- Build Time: Static export (if used) must preserve SEO tags
+
+## Reference ID System
+
+### File Header Format
+Every file should contain:
+```
+// Reference ID: <module>.<file>.<purpose>
+// Dependencies: <list of file references>
+```
+
+### Example
+```
+// Reference ID: src.frontend.hooks.useSeo
+// Dependencies: src.frontend.lib.router, src.frontend.contexts.ThemeContext
+```
+
+### Reference ID Structure
+- `<layer>.<subpath>.<filename>`
+- Layers: app, pages, widgets, features, entities, shared
+- Example: `shared.ui.button` for src/frontend/components/ui/button.tsx
+
+## Critical "Do Not Touch" List
+
+1. SEO Canonical Logic (useSeo.ts lines 42-43)
+   - Always uses VERIFIED_ORIGIN for canonicals
+   - Changing breaks SEO consistency
+
+2. Theme Detection Anti-Flash (ThemeContext.tsx)
+   - Uses `prefers-color-scheme` + localStorage
+   - Sets `data-theme` on documentElement before render
+
+3. Animation Z-Index Management
+   - NeuronCanvas uses absolute positioning
+   - TickerBar uses fixed positioning (z-index: 60)
+   - Cookie consent uses fixed positioning (z-index: 60)
+
+4. StorageClient Hash Validation
+   - Strict SHA-256 format validation
+   - Changing breaks file upload/download
+
+5. Route Matching Logic (lib/router.tsx)
+   - Custom hash-based router
+   - Changing breaks client-side navigation
+
+## Change Checklists
+
+### "I want to add a new page"
+1. Create page in /pages directory
+2. Add route to App.tsx (or create route component)
+3. Add useSeo hook with appropriate title/description/canonical
+4. Add link to navigation menu in Layout.tsx
+5. Add to sitemap if static export
+
+### "I want to change a color"
+1. Update tokens.ts (light/dark sections)
+2. Update cssVars if new token needed
+3. Update tailwind.config.js if using in CSS
+4. Check all usages in components (should auto-update via token reference)
+5. Verify contrast ratios for accessibility
+
+### "I want to add an animation"
+1. Determine trigger (scroll, click, theme change)
+2. For scroll: use useScrollAnimation/useScrollReveal hooks
+3. For theme: use useTheme hook and conditionally apply classes
+4. For complex motion: use framer-motion (motion/react)
+5. Add to animation dependency graph in .repository-map.md
+6. Test in both light and dark modes
+
+## Layer Definitions (FSD)
+
+/app: Global setup (routing, global styles, theme providers)
+- src/frontend/App.tsx
+- src/frontend/main.tsx
+- src/frontend/index.css
+- src/frontend/lib/router.tsx
+- src/frontend/contexts/ThemeContext.tsx
+
+/pages: Full page compositions
+- src/frontend/components/pages/*.tsx
+- src/frontend/components/pages/home/*.tsx
+
+/widgets: Complex components (Theme-Aware Navbar, Animated Hero)
+- src/frontend/components/layout/PageHero.tsx
+- src/frontend/src/components/Layout.tsx (header/footer)
+- src/frontend/components/ui/menubar.tsx
+- src/frontend/components/ui/navigation-menu.tsx
+
+/features: Business logic (Dark/Light Mode toggle, User Auth)
+- src/frontend/hooks/useThemeColors.ts
+- src/frontend/hooks/useSiteSettings.ts
+- src/frontend/hooks/useInternetIdentity.ts
+- src/frontend/hooks/useActor.ts
+
+/entities: Domain data (Product list, Industry-specific data)
+- src/frontend/data/blogPosts.ts
+- src/frontend/data/industries.ts
+- src/frontend/components/pages/home/IndustryTicker.tsx (ALL_INDUSTRIES)
+
+/shared: Reusable UI, SEO utilities, Animation presets, API clients
+- src/frontend/components/ui/*
+- src/frontend/hooks/*
+- src/frontend/lib/*
+- src/frontend/contexts/*
+
+---
+*Generated during Phase 1: Deep Scan. Update as refactoring progresses.*

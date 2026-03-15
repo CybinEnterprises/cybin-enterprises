@@ -53,11 +53,11 @@ export default defineConfig({
     alias: [
       {
         find: "declarations",
-        replacement: fileURLToPath(new URL("../declarations", import.meta.url)),
+        replacement: fileURLToPath(new URL("./declarations", import.meta.url)),
       },
       {
         find: "@",
-        replacement: fileURLToPath(new URL("./src", import.meta.url)),
+        replacement: fileURLToPath(new URL(".", import.meta.url)),
       },
     ],
     dedupe: ["@dfinity/agent"],
