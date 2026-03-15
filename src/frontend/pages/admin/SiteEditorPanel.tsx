@@ -17,14 +17,14 @@ import {
   type ImageKey,
   getSettings as getImageSettings,
   saveSettings as saveImageSettings,
-} from "@/src/hooks/useImageSettings";
+} from "@/hooks/useImageSettings";
 import {
   SITE_DEFAULTS,
   SITE_SETTINGS_EVENT,
   type SiteSettings,
   getSiteSettings,
   saveSiteSettings,
-} from "@/src/hooks/useSiteSettings";
+} from "@/hooks/useSiteSettings";
 import {
   Check,
   ChevronDown,

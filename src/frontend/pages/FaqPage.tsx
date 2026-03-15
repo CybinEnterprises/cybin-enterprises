@@ -1,8 +1,8 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const faqSections = [
   {

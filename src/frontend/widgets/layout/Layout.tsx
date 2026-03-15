@@ -1,9 +1,11 @@
 // Reference ID: widgets.layout.Layout
 // Dependencies: shared.contexts.ThemeContext, features.hooks.useLiveImageSettings, features.hooks.useLiveSiteSettings, shared.lib.router, widgets.layout.TickerBar
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { useLiveImageSettings } from "@/src/hooks/useLiveImageSettings";
-import { useLiveSiteSettings } from "@/src/hooks/useLiveSiteSettings";
-import { Link, useLocation } from "@/lib/router";
+
+import ThemeToggle from "@/components/ThemeToggle";
+import TickerBar from "@/components/TickerBar";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useLiveImageSettings } from "@/hooks/useLiveImageSettings";
+import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
 import {
   ChevronDown,
   ChevronRight,
@@ -16,9 +18,8 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import { useEffect, useState, ReactNode } from "react";
-
-import TickerBar from "./TickerBar";
+import { ReactNode, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 interface CookieCategories {
   necessary: boolean;
@@ -71,30 +72,34 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-
-
 // Force recompile for logo cache fix - ${Date.now()}
 export default function Layout({ children }: LayoutProps) {
-  const { style: logoStyle, config: logoCfg } = useLiveImageSettings("logo");
-  const site = useLiveSiteSettings();
-  const { resolved } = useTheme();
+  const { style: logoStyle, config: logoCfg } = useLiveImageSettings?.(
+    "logo",
+  ) ?? { style: {}, config: {} };
+  const site = useLiveSiteSettings?.() ?? {};
+  const { resolved } = useTheme?.() ?? { resolved: "light" };
   const isLight = resolved === "light";
-  const logoImg = isLight ? "/assets/cybin-logo-light.png" : "/assets/cybin-logo-dark.png";
+  const logoImg = isLight
+    ? "/assets/cybin-logo-light.png"
+    : "/assets/cybin-logo-dark.png";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [cookieConsent, setCookieConsent] = useState<CookieCategories | null>(() => {
-    if (typeof window !== "undefined") {
-      const raw = localStorage.getItem("cybin-cookie-consent");
-      if (!raw) return null;
-      try {
-        return JSON.parse(raw) as CookieCategories;
-      } catch (e) {
-        return null;
+  const [cookieConsent, setCookieConsent] = useState<CookieCategories | null>(
+    () => {
+      if (typeof window !== "undefined") {
+        const raw = localStorage.getItem("cybin-cookie-consent");
+        if (!raw) return null;
+        try {
+          return JSON.parse(raw) as CookieCategories;
+        } catch (e) {
+          return null;
+        }
       }
-    }
-    return null;
-  });
+      return null;
+    },
+  );
   const [cookieAnalytics, setCookieAnalytics] = useState(false);
   const [cookiePreferences, setCookiePreferences] = useState(false);
   const location = useLocation();
@@ -152,7 +157,9 @@ export default function Layout({ children }: LayoutProps) {
     ? "rgba(0,122,106,0.1)"
     : "rgba(110,247,212, 0.08)";
   const footerBg = isLight ? "#f8fafc" : "#080614";
-  const logoBg = isLight ? "rgba(248, 249, 252, 0.94)" : "rgba(13, 11, 26, 0.92)";
+  const logoBg = isLight
+    ? "rgba(248, 249, 252, 0.94)"
+    : "rgba(13, 11, 26, 0.92)";
   const footerText = isLight
     ? "rgba(20,30,60,0.55)"
     : "rgba(232, 237, 248, 0.55)";
@@ -161,7 +168,6 @@ export default function Layout({ children }: LayoutProps) {
   const footerCopyright = isLight
     ? "rgba(20,30,60,0.4)"
     : "rgba(232,237,248,0.35)";
-
 
   const footerBorder = isLight
     ? "rgba(0,122,106,0.15)"
@@ -173,8 +179,8 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 60 }}>
-      {/* <TickerBar /> */}
-    </div>
+        {/* <TickerBar /> */}
+      </div>
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only"
@@ -207,11 +213,12 @@ export default function Layout({ children }: LayoutProps) {
           borderBottom: scrolled
             ? `1px solid ${isLight ? "rgba(0,0,0,0.1)" : "rgba(99,102,241,0.2)"}`
             : "1px solid transparent",
-          boxShadow: scrolled || !isLight
-            ? isLight
-              ? "0 4px 32px rgba(0,0,0,0.08)"
-              : "0 4px 32px rgba(0,0,0,0.5)"
-            : "none",
+          boxShadow:
+            scrolled || !isLight
+              ? isLight
+                ? "0 4px 32px rgba(0,0,0,0.08)"
+                : "0 4px 32px rgba(0,0,0,0.5)"
+              : "none",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -255,9 +262,9 @@ export default function Layout({ children }: LayoutProps) {
                     borderRadius: "4px",
                     ...logoStyle,
                   }}
-              />
-            </div>
-          </Link>
+                />
+              </div>
+            </Link>
 
             <nav className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => {
@@ -329,7 +336,7 @@ export default function Layout({ children }: LayoutProps) {
                                 e.currentTarget.style.color = accentTeal;
                                 e.currentTarget.style.backgroundColor = isLight
                                   ? "rgba(0,122,106,0.05)"
-                                  : "rgba(110,247,212,0.06)"
+                                  : "rgba(110,247,212,0.06)";
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.color = isLight
@@ -357,7 +364,7 @@ export default function Layout({ children }: LayoutProps) {
                             onMouseEnter={(e) => {
                               e.currentTarget.style.backgroundColor = isLight
                                 ? "rgba(0,122,106,0.05)"
-                                : "rgba(110,247,212,0.06)",
+                                : "rgba(110,247,212,0.06)";
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.backgroundColor =
@@ -589,7 +596,7 @@ export default function Layout({ children }: LayoutProps) {
                     borderRadius: "0",
                     ...logoStyle,
                   }}
-              />
+                />
               </div>
               <p
                 className="text-sm leading-relaxed mb-4"
@@ -894,8 +901,7 @@ export default function Layout({ children }: LayoutProps) {
                     style={{ color: "#6EF7D4", textDecoration: "underline" }}
                   >
                     Cookie Policy
-                  </Link>
-                  {" "}
+                  </Link>{" "}
                   <Link
                     to="/do-not-sell"
                     style={{ color: "#6EF7D4", textDecoration: "underline" }}
@@ -1049,9 +1055,7 @@ export default function Layout({ children }: LayoutProps) {
                   </p>
                 </div>
               </div>
-              <div
-                className="flex flex-col sm:flex-row items-center justify-end gap-3"
-              >
+              <div className="flex flex-col sm:flex-row items-center justify-end gap-3">
                 <button
                   type="button"
                   data-ocid="cookie.necessary_only.button"
@@ -1068,7 +1072,8 @@ export default function Layout({ children }: LayoutProps) {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.color = "rgba(232, 237, 248, 0.45)";
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)";
+                    e.currentTarget.style.borderColor =
+                      "rgba(255,255,255,0.08)";
                   }}
                 >
                   Necessary Only
@@ -1120,4 +1125,3 @@ export default function Layout({ children }: LayoutProps) {
     </div>
   );
 }
-

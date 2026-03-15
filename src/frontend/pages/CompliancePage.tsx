@@ -1,6 +1,5 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 import {
   AlertTriangle,
   ChevronDown,
@@ -15,6 +14,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const pillars = [
   {

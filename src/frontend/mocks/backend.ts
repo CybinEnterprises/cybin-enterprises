@@ -1,156 +1,78 @@
-import type { backendInterface, ContactSubmission, WizardApplication, PartialLead, BlogPost } from "../backend";
+import type { backendInterface, BlogPost, ContactSubmission, PartialLead, PartnerLead, WizardApplication } from "../backend";
 
 // Mock backend for Vercel preview deployment
 // This allows the app to function without blockchain connectivity
 export const mockBackend: backendInterface = {
-  // System functions
-  healthCheck: async () => {
-    return {
-      status: "healthy",
-      version: "2.0.0",
-      timestamp: 0n,
-      storageStats: {
-        submissions: 0n,
-        applications: 0n,
-        leads: 0n,
-        blogPosts: 0n,
-        partnerLeads: 0n,
-      },
-    };
-  },
-  getVersion: async () => {
-    return "2.0.0";
-  },
-  getCanisterPrincipal: async () => {
-    return { toText: () => "mock-principal" } as any;
-  },
-
-  // Analytics
-  getAnalytics: async () => {
-    return {
-      totalContactSubmissions: 0n,
-      totalWizardApplications: 0n,
-      totalPartnerLeads: 0n,
-      totalBlogViews: 0n,
-      totalActivePartners: 0n,
-      submissionsThisMonth: 0n,
-      applicationsThisMonth: 0n,
-      leadsThisMonth: 0n,
-      timestamp: 0n,
-    };
-  },
-
-  // Site settings
-  getSiteSetting: async (key) => {
-    return [];
-  },
-  setSiteSetting: async (key, value) => {
-    return { ok: true };
-  },
-  getAllSiteSettings: async () => {
-    return [];
-  },
-
-  // Audit logs
-  getAuditLogs: async ({ page, pageSize }) => {
-    return { ok: { data: [], page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
-  },
-
-  // Contact submissions
-  submitContactForm: async (name, email, phone, businessType, message) => {
-    return { ok: 0n };
-  },
-  getAllSubmissions: async ({ page, pageSize }) => {
-    const submissions: ContactSubmission[] = [];
-    return { ok: { data: submissions, page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
-  },
-  getSubmission: async (id) => {
-    return { err: "Submission not found in mock mode" };
-  },
-  getTotalSubmissions: async () => {
-    return 0n;
-  },
-  updateSubmissionStatus: async (id, status, notes) => {
-    return { ok: true };
-  },
-
-  // Wizard applications
-  submitWizardApplication: async (industry, regulatoryHurdle, name, email, phone, businessName, fein, hasFein) => {
-    return { ok: 0n };
-  },
-  savePartialLead: async (email, industry, regulatoryHurdle) => {
-    return { ok: 0n };
-  },
-  getAllWizardApplications: async ({ page, pageSize }) => {
-    const applications: WizardApplication[] = [];
-    return { ok: { data: applications, page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
-  },
-  getAllPartialLeads: async ({ page, pageSize }) => {
-    const leads: PartialLead[] = [];
-    return { ok: { data: leads, page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
-  },
-  getTotalWizardApplications: async () => {
-    return 0n;
-  },
-  updateApplicationStatus: async (id, status, notes) => {
-    return { ok: true };
-  },
-
   // Blog posts
-  getAllBlogPosts: async ({ page, pageSize }) => {
-    const posts: BlogPost[] = [];
-    return { ok: { data: posts, page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
-  },
-  getBlogPost: async (id) => {
-    return { err: "Blog post not found in mock mode" };
-  },
-  createBlogPost: async (title, category, excerpt, body, author, readTime, publishDate, featured, tags, timestamp = 0n, viewCount = 0n) => {
-    return { ok: 0n };
-  },
-  updateBlogPost: async (id, title, category, excerpt, body, author, readTime, publishDate, featured, tags, published, content, seoTitle, seoDescription) => {
-    return { ok: true };
-  },
-  deleteBlogPost: async (id) => {
-    return { ok: true };
-  },
-  publishBlogPost: async (id) => {
-    return { ok: true };
-  },
-  unpublishBlogPost: async (id) => {
-    return { ok: true };
-  },
-  getPublishedBlogPosts: async ({ page, pageSize }) => {
-    return { ok: { data: [], page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
-  },
-  getFeaturedBlogPosts: async () => {
+  getAllBlogPosts: async (): Promise<BlogPost[]> => {
     return [];
   },
-  getBlogPostsByCategory: async (category, { page, pageSize }) => {
-    return { ok: { data: [], page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
+  getPublishedBlogPosts: async (): Promise<BlogPost[]> => {
+    return [];
+  },
+  getBlogPost: async (_id: bigint): Promise<BlogPost | null> => {
+    return null;
+  },
+  createBlogPost: async (title: string, category: string, excerpt: string, body: string, author: string, readTime: string, publishDate: string): Promise<bigint> => {
+    console.log("Mock createBlogPost:", { title, category, excerpt, body, author, readTime, publishDate });
+    return 0n;
+  },
+  updateBlogPost: async (id: bigint, title: string, category: string, excerpt: string, body: string, author: string, readTime: string, publishDate: string): Promise<boolean> => {
+    console.log("Mock updateBlogPost:", { id, title, category, excerpt, body, author, readTime, publishDate });
+    return true;
+  },
+  deleteBlogPost: async (_id: bigint): Promise<boolean> => {
+    return true;
+  },
+  publishBlogPost: async (_id: bigint): Promise<boolean> => {
+    return true;
+  },
+  unpublishBlogPost: async (_id: bigint): Promise<boolean> => {
+    return true;
   },
 
-  // Image settings
-  getImageSettings: async () => {
-    return { ok: {} };
+  // Partial leads
+  getAllPartialLeads: async (): Promise<PartialLead[]> => {
+    return [];
   },
-  updateImageSettings: async (image_settings) => {
-    return { ok: true };
+  savePartialLead: async (email: string, industry: string, regulatoryHurdle: string): Promise<bigint> => {
+    console.log("Mock savePartialLead:", { email, industry, regulatoryHurdle });
+    return 0n;
   },
 
   // Partner leads
-  submitPartnerLead: async (company, email, phone, website, message) => {
-    return { ok: 0n };
+  getAllPartnerLeads: async (): Promise<PartnerLead[]> => {
+    return [];
   },
-  getAllPartnerLeads: async ({ page, pageSize }) => {
-    return { ok: { data: [], page: { page, pageSize, totalItems: 0n, totalPages: 0n } } };
-  },
-  getTotalPartnerLeads: async () => {
+  submitPartnerLead: async (companyName: string, contactName: string, email: string, phone: string, partnershipType: string, description: string): Promise<bigint> => {
+    console.log("Mock submitPartnerLead:", { companyName, contactName, email, phone, partnershipType, description });
     return 0n;
   },
-  updatePartnerLeadStatus: async (id, status, notes) => {
-    return { ok: true };
+  getTotalPartnerLeads: async (): Promise<bigint> => {
+    return 0n;
   },
-  deletePartnerLead: async (id) => {
-    return { ok: true };
+
+  // Contact submissions
+  getAllSubmissions: async (): Promise<ContactSubmission[]> => {
+    return [];
+  },
+  submitContactForm: async (name: string, email: string, phone: string, businessType: string, message: string): Promise<bigint> => {
+    console.log("Mock submitContactForm:", { name, email, phone, businessType, message });
+    return 0n;
+  },
+  getTotalSubmissions: async (): Promise<bigint> => {
+    return 0n;
+  },
+
+  // Wizard applications
+  getAllWizardApplications: async (): Promise<WizardApplication[]> => {
+    return [];
+  },
+  submitWizardApplication: async (industry: string, regulatoryHurdle: string, name: string, email: string, phone: string, businessName: string, fein: string, hasFein: boolean): Promise<bigint> => {
+    console.log("Mock submitWizardApplication:", { industry, regulatoryHurdle, name, email, phone, businessName, fein, hasFein });
+    return 0n;
+  },
+  getTotalWizardApplications: async (): Promise<bigint> => {
+    return 0n;
   },
 };

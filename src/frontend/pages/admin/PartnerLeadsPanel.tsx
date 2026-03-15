@@ -1,4 +1,4 @@
-import { useActor } from "@/src/hooks/useActor";
+import { useActor } from "@/hooks/useActor";
 import { useQuery } from "@tanstack/react-query";
 import {
   Building2,

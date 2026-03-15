@@ -1,6 +1,5 @@
-import NeuronCanvas from "@/src/components/NeuronCanvas";
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { Link } from "@/src/lib/router";
+import NeuronCanvas from "@/components/NeuronCanvas";
+import { useTheme } from "@/contexts/ThemeContext";
 import {
   ArrowUpRight,
   CheckCircle,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 /* ───── Psychological Trust Architecture ──────────────────────────
    Uses proven persuasion methodologies:

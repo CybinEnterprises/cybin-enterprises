@@ -1,10 +1,10 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { Tabs, TabsList, TabsTrigger } from "@/src/components/ui/tabs";
-import { type Category, blogPosts } from "@/src/data/blogPosts";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { type Category, blogPosts } from "@/data/blogPosts";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 import { ArrowRight, ChevronRight, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const categories: Category[] = [
   "All",

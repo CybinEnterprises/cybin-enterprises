@@ -1,6 +1,5 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 import {
   Award,
   Building2,
@@ -10,6 +9,7 @@ import {
   Shield,
   Users,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function KnowledgePage() {
   useSeo({

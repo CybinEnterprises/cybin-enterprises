@@ -1,4 +1,4 @@
-import { useActor } from "@/src/hooks/useActor";
+import { useActor } from "@/hooks/useActor";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   BookOpen,

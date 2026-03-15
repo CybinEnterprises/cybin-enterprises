@@ -1,11 +1,11 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link, useParams } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useSeo } from "@/hooks/useSeo";
 import { AlertTriangle, CheckCircle, ChevronRight } from "lucide-react";
 import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
-import { type IndustryData, industries } from "@/src/data/industries";
+import { type IndustryData, industries } from "@/data/industries";
 
 export default function IndustryLandingPage() {
   const { resolved } = useTheme();

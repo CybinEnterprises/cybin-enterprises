@@ -1,18 +1,20 @@
-console.log('🎯 App.tsx loading...');
+console.log("🎯 App.tsx loading...");
 
 function TestApp() {
-  console.log('🎯 TestApp rendering...');
+  console.log("🎯 TestApp rendering...");
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      backgroundColor: '#0f172a', 
-      color: '#00d4b8',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'monospace'
-    }}>
-      <div style={{ textAlign: 'center' }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#0f172a",
+        color: "#00d4b8",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "monospace",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
         <h1>🎯 Cybin Enterprises</h1>
         <p>Application is loading correctly!</p>
         <p>Mock mode: {import.meta.env.VITE_USE_MOCK}</p>

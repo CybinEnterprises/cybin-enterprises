@@ -1,6 +1,5 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 import {
   BarChart3,
   BookOpen,
@@ -14,6 +13,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 interface IntegrationCategory {
   id: string;

@@ -69,18 +69,18 @@ export function HashRouter({ children }: { children: ReactNode }) {
 function getHashPath(): string {
   const hash = window.location.hash;
   if (!hash) return "/";
-  
+
   // Remove the leading '#'
   let path = hash.substring(1);
-  
+
   // If the hash itself contains a query string (e.g. #/about?fbclid=123), strip it
   path = path.split("?")[0];
-  
+
   // Ensure it starts with /
   if (!path.startsWith("/")) {
     path = "/" + path;
   }
-  
+
   return path || "/";
 }
 
@@ -184,7 +184,7 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
       // External links
       if (to.startsWith("http://") || to.startsWith("https://")) return;
-      
+
       e.preventDefault();
       navigate(to, { replace });
     };

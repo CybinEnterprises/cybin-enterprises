@@ -1,12 +1,11 @@
-// Reference ID: app.App
-// Dependencies: app.contexts.ThemeContext, app.lib.router, app.hooks.usePageTracking, app.widgets.layout.Layout, app.pages.AboutPage, app.pages.AccessibilityPage, app.pages.AdminPage, app.pages.BlogPostPage, app.pages.CompliancePage, app.pages.ContactPage, app.pages.DoNotSellPage, app.pages.FaqPage, app.pages.FraudDeflectPage, app.pages.HardwarePage, app.pages.HomePage, app.pages.HowItWorksPage, app.pages.IndustriesPage, app.pages.IndustryLandingPage, app.pages.InsightsPage, app.pages.KnowledgePage, app.pages.LegalPage, app.pages.PartnersPage, app.pages.PaymentSolutionsPage, app.pages.PeptidesPage, app.pages.SolutionsEnterprisePage, app.pages.SolutionsPage, app.pages.WizardPage
-// Reference ID: app.App
-// Dependencies: app.contexts.ThemeContext, app.lib.router, app.hooks.usePageTracking, app.widgets.layout.Layout, app.pages.AboutPage, app.pages.AccessibilityPage, app.pages.AdminPage, app.pages.BlogPostPage, app.pages.CompliancePage, app.pages.ContactPage, app.pages.DoNotSellPage, app.pages.FaqPage, app.pages.FraudDeflectPage, app.pages.HardwarePage, app.pages.HomePage, app.pages.HowItWorksPage, app.pages.IndustriesPage, app.pages.IndustryLandingPage, app.pages.InsightsPage, app.pages.KnowledgePage, app.pages.LegalPage, app.pages.PartnersPage, app.pages.PaymentSolutionsPage, app.pages.PeptidesPage, app.pages.SolutionsEnterprisePage, app.pages.SolutionsPage, app.pages.WizardPage
-import { ThemeProvider } from "@/src/contexts/ThemeContext";
-import { usePageTracking } from "@/src/hooks/usePageTracking";
-import { HashRouter, Route, Routes, useNavigate } from "@/lib/router";
-import { useEffect } from "react";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { usePageTracking } from "@/hooks/usePageTracking";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import Layout from "../widgets/layout/Layout";
+import { useEffect } from "react";
+import { HashRouter, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+
 import AboutPage from "../pages/AboutPage";
 import AccessibilityPage from "../pages/AccessibilityPage";
 import AdminPage from "../pages/AdminPage";
@@ -34,7 +33,6 @@ import PeptidesPage from "../pages/PeptidesPage";
 import SolutionsEnterprisePage from "../pages/SolutionsEnterprisePage";
 import SolutionsPage from "../pages/SolutionsPage";
 import WizardPage from "../pages/WizardPage";
-
 function IntegrationsRedirect() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -256,10 +254,12 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <HashRouter>
-        <AppRoutes />
-      </HashRouter>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <HashRouter>
+          <AppRoutes />
+        </HashRouter>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

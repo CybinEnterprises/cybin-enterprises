@@ -1,9 +1,9 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { type Category, blogPosts } from "@/src/data/blogPosts";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link, useParams } from "@/src/lib/router";
 import { ArrowLeft, ChevronRight, Clock } from "lucide-react";
 import { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { type Category, blogPosts } from "../data/blogPosts";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 
 const categoryColors: Record<Category, string> = {
   All: "#00d4b8",

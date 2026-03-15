@@ -1,7 +1,6 @@
-import NeuronCanvas from "@/src/components/NeuronCanvas";
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import NeuronCanvas from "@/components/NeuronCanvas";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useSeo } from "@/hooks/useSeo";
 import {
   AlertCircle,
   CheckCircle,
@@ -13,6 +12,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const faqs = [
   {

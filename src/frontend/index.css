@@ -1,4 +1,4 @@
-@import './lib/theme/tokens.css';
+@import "./lib/theme/tokens.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -122,7 +122,7 @@
     --cybin-page-hero-border: rgba(255, 255, 255, 0.08);
   }
 
-  [data-theme='light'] {
+  [data-theme="light"] {
     --cybin-page-hero-bg: #f8fafc;
     --cybin-page-hero-border: #e2e8f0;
   }
@@ -367,8 +367,12 @@
 
 /* ─── Infinite horizontal scrolling ticker ────────────────────────── */
 @keyframes scrollTicker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .ticker-track {
@@ -376,5 +380,3 @@
   width: max-content;
   animation: scrollTicker 160s linear infinite;
 }
-
-

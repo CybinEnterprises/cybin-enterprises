@@ -1,7 +1,6 @@
-import NeuronCanvas from "@/src/components/NeuronCanvas";
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import NeuronCanvas from "@/components/NeuronCanvas";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useSeo } from "@/hooks/useSeo";
 import {
   CheckCircle,
   ChevronRight,
@@ -13,6 +12,7 @@ import {
   Users,
   Zap,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function SolutionsEnterprisePage() {
   useSeo({

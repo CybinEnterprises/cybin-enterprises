@@ -377,7 +377,7 @@ export interface _SERVICE {
 /**
  * Create pagination params with sensible defaults
  */
-export function createPaginationParams(page: number = 0, pageSize: number = 20): PaginationParams {
+export function createPaginationParams(page = 0, pageSize = 20): PaginationParams {
   return { page: BigInt(page), pageSize: BigInt(pageSize) };
 }
 

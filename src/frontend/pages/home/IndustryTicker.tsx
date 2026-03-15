@@ -1,4 +1,4 @@
-import { useTheme } from "@/src/contexts/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import React from "react";
 
 export const ALL_INDUSTRIES = [

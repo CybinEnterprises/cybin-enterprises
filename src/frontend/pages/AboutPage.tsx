@@ -1,11 +1,11 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { useLiveImageSettings } from "@/src/hooks/useLiveImageSettings";
-import { useLiveSiteSettings } from "@/src/hooks/useLiveSiteSettings";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useLiveImageSettings } from "@/hooks/useLiveImageSettings";
+import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
+import { useSeo } from "@/hooks/useSeo";
 import { Award, ChevronRight, Star } from "lucide-react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const melPhoto = "/assets/mel-headshot.jpeg";
 const shanePhoto = "/assets/uploads/IMG_2988-1.jpeg";
 
@@ -87,7 +87,9 @@ export default function AboutPage() {
   const textPrimary = isLight ? lightTextPrimary : darkTextPrimary;
   const textSecondary = isLight ? lightTextSecondary : darkTextSecondary;
   const accent = isLight ? lightAccent : darkAccent;
-  const cardBg = isLight ? lightCardBg : "linear-gradient(160deg, rgba(8,13,26,0.99) 0%, rgba(4,6,18,0.97) 100%)";
+  const cardBg = isLight
+    ? lightCardBg
+    : "linear-gradient(160deg, rgba(8,13,26,0.99) 0%, rgba(4,6,18,0.97) 100%)";
   const border = isLight ? lightBorder : darkBorder;
   const accentGlow = isLight ? lightAccentGlow : darkAccentGlow;
 
@@ -159,7 +161,7 @@ export default function AboutPage() {
         className="page-hero-bg"
         style={{
           padding: "80px 0 60px",
-          background: isLight 
+          background: isLight
             ? "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)"
             : "linear-gradient(180deg, #0d1526 0%, #0a0f1e 100%)",
           borderBottom: `1px solid ${isLight ? "#e2e8f0" : "rgba(110,247,212,0.08)"}`,
@@ -171,13 +173,21 @@ export default function AboutPage() {
               <Link
                 to="/"
                 className="text-sm"
-                style={{ color: isLight ? "rgba(15,23,42,0.5)" : "rgba(232,237,248,0.45)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(15,23,42,0.5)"
+                    : "rgba(232,237,248,0.45)",
+                }}
               >
                 Home
               </Link>
               <ChevronRight
                 size={14}
-                style={{ color: isLight ? "rgba(15,23,42,0.25)" : "rgba(232,237,248,0.3)" }}
+                style={{
+                  color: isLight
+                    ? "rgba(15,23,42,0.25)"
+                    : "rgba(232,237,248,0.3)",
+                }}
               />
               <span className="text-sm" style={{ color: accent }}>
                 About
@@ -236,9 +246,7 @@ export default function AboutPage() {
                 alignItems: "center",
                 justifyContent: "center",
                 margin: "0 auto 20px",
-                boxShadow: isLight
-                  ? "0 4px 20px rgba(0,212,184,0.3)"
-                  : "none",
+                boxShadow: isLight ? "0 4px 20px rgba(0,212,184,0.3)" : "none",
               }}
             >
               <Star
@@ -304,7 +312,8 @@ export default function AboutPage() {
                 left: 0,
                 width: "50%",
                 height: "100%",
-                background: "radial-gradient(ellipse 70% 60% at 25% 45%, rgba(110,247,212,0.07) 0%, transparent 70%)",
+                background:
+                  "radial-gradient(ellipse 70% 60% at 25% 45%, rgba(110,247,212,0.07) 0%, transparent 70%)",
                 pointerEvents: "none",
                 zIndex: 0,
               }}
@@ -317,7 +326,8 @@ export default function AboutPage() {
                 right: 0,
                 width: "50%",
                 height: "100%",
-                background: "radial-gradient(ellipse 70% 60% at 75% 45%, rgba(124,92,191,0.09) 0%, transparent 70%)",
+                background:
+                  "radial-gradient(ellipse 70% 60% at 75% 45%, rgba(124,92,191,0.09) 0%, transparent 70%)",
                 pointerEvents: "none",
                 zIndex: 0,
               }}
@@ -441,13 +451,32 @@ export default function AboutPage() {
                   >
                     {site.about.melTitle}
                   </p>
-                  <div style={{ marginTop: "16px", borderTop: `1px solid ${isLight ? "#e2e8f0" : "rgba(110,247,212,0.15)"}` }} />
+                  <div
+                    style={{
+                      marginTop: "16px",
+                      borderTop: `1px solid ${isLight ? "#e2e8f0" : "rgba(110,247,212,0.15)"}`,
+                    }}
+                  />
                 </div>
 
-                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "12px" }}>
+                <p
+                  style={{
+                    color: textSecondary,
+                    fontSize: "15px",
+                    lineHeight: 1.8,
+                    marginBottom: "12px",
+                  }}
+                >
                   {site.about.melBio1}
                 </p>
-                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "24px" }}>
+                <p
+                  style={{
+                    color: textSecondary,
+                    fontSize: "15px",
+                    lineHeight: 1.8,
+                    marginBottom: "24px",
+                  }}
+                >
                   {site.about.melBio2}
                 </p>
 
@@ -455,7 +484,9 @@ export default function AboutPage() {
                 <div
                   className="rounded-xl"
                   style={{
-                    backgroundColor: isLight ? "rgba(0,168,142,0.04)" : "rgba(110,247,212,0.04)",
+                    backgroundColor: isLight
+                      ? "rgba(0,168,142,0.04)"
+                      : "rgba(110,247,212,0.04)",
                     border: `1px solid ${isLight ? "rgba(0,168,142,0.1)" : "rgba(110,247,212,0.1)"}`,
                     padding: "20px",
                   }}
@@ -475,11 +506,34 @@ export default function AboutPage() {
                       Achievements
                     </span>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                    }}
+                  >
                     {melAchievements.map((a) => (
                       <div key={a} className="flex items-start gap-3">
-                        <span style={{ color: accent, fontSize: "8px", marginTop: "6px", flexShrink: 0 }}>◆</span>
-                        <p style={{ color: textSecondary, fontSize: "13px", lineHeight: 1.5 }}>{a}</p>
+                        <span
+                          style={{
+                            color: accent,
+                            fontSize: "8px",
+                            marginTop: "6px",
+                            flexShrink: 0,
+                          }}
+                        >
+                          ◆
+                        </span>
+                        <p
+                          style={{
+                            color: textSecondary,
+                            fontSize: "13px",
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          {a}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -491,7 +545,11 @@ export default function AboutPage() {
             <div
               className="animate-fade-up"
               data-ocid="about.founders.card.2"
-              style={{ display: "flex", flexDirection: "column", transitionDelay: "120ms" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                transitionDelay: "120ms",
+              }}
             >
               {/* Portrait */}
               <div
@@ -570,13 +628,32 @@ export default function AboutPage() {
                   >
                     {site.about.shaneTitle}
                   </p>
-                  <div style={{ marginTop: "16px", borderTop: `1px solid ${isLight ? "#e2e8f0" : "rgba(124,92,191,0.18)"}` }} />
+                  <div
+                    style={{
+                      marginTop: "16px",
+                      borderTop: `1px solid ${isLight ? "#e2e8f0" : "rgba(124,92,191,0.18)"}`,
+                    }}
+                  />
                 </div>
 
-                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "12px" }}>
+                <p
+                  style={{
+                    color: textSecondary,
+                    fontSize: "15px",
+                    lineHeight: 1.8,
+                    marginBottom: "12px",
+                  }}
+                >
                   {site.about.shaneBio1}
                 </p>
-                <p style={{ color: textSecondary, fontSize: "15px", lineHeight: 1.8, marginBottom: "24px" }}>
+                <p
+                  style={{
+                    color: textSecondary,
+                    fontSize: "15px",
+                    lineHeight: 1.8,
+                    marginBottom: "24px",
+                  }}
+                >
                   {site.about.shaneBio2}
                 </p>
 
@@ -584,13 +661,21 @@ export default function AboutPage() {
                 <div
                   className="rounded-xl"
                   style={{
-                    backgroundColor: isLight ? "rgba(124,58,237,0.04)" : "rgba(124,92,191,0.05)",
+                    backgroundColor: isLight
+                      ? "rgba(124,58,237,0.04)"
+                      : "rgba(124,92,191,0.05)",
                     border: `1px solid ${isLight ? "rgba(124,58,237,0.1)" : "rgba(124,92,191,0.12)"}`,
                     padding: "20px",
                   }}
                 >
                   <div className="flex items-center gap-2 mb-4">
-                    <Award size={15} style={{ color: isLight ? "#7c3aed" : "#a87ef5", flexShrink: 0 }} />
+                    <Award
+                      size={15}
+                      style={{
+                        color: isLight ? "#7c3aed" : "#a87ef5",
+                        flexShrink: 0,
+                      }}
+                    />
                     <span
                       style={{
                         fontSize: "11px",
@@ -604,11 +689,34 @@ export default function AboutPage() {
                       Areas of Expertise
                     </span>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "10px",
+                    }}
+                  >
                     {shaneExpertise.map((a) => (
                       <div key={a} className="flex items-start gap-3">
-                        <span style={{ color: isLight ? "#7c3aed" : "#a87ef5", fontSize: "8px", marginTop: "6px", flexShrink: 0 }}>◆</span>
-                        <p style={{ color: textSecondary, fontSize: "13px", lineHeight: 1.5 }}>{a}</p>
+                        <span
+                          style={{
+                            color: isLight ? "#7c3aed" : "#a87ef5",
+                            fontSize: "8px",
+                            marginTop: "6px",
+                            flexShrink: 0,
+                          }}
+                        >
+                          ◆
+                        </span>
+                        <p
+                          style={{
+                            color: textSecondary,
+                            fontSize: "13px",
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          {a}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -636,10 +744,7 @@ export default function AboutPage() {
           >
             Ready to Work With Us?
           </h2>
-          <p
-            className="text-base mb-8"
-            style={{ color: textSecondary }}
-          >
+          <p className="text-base mb-8" style={{ color: textSecondary }}>
             Reach out today to begin the conversation about your payment needs.
           </p>
           <Link to="/contact" className="cybin-btn-primary">

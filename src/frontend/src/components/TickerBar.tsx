@@ -1,4 +1,4 @@
-import { useTheme } from "@/src/contexts/ThemeContext";
+import { useTheme } from "@/contexts/ThemeContext";
 import { Clock, Globe, Lock, Shield, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 

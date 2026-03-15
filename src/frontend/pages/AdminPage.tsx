@@ -18,7 +18,7 @@ import {
   Users,
 } from "lucide-react";
 import { useState } from "react";
-import { useActor } from "../../hooks/useActor";
+import { useActor } from "@/hooks/useActor";
 import AnalyticsPanel from "./admin/AnalyticsPanel";
 import BlogManagerPanel from "./admin/BlogManagerPanel";
 import ImageEditorPanel from "./admin/ImageEditorPanel";
@@ -257,8 +257,8 @@ export default function AdminPage() {
     queryKey: ["admin-submissions"],
     queryFn: async () => {
       if (!actor) throw new Error("Not connected");
-      const result = await actor.getAllSubmissions({ page: 0n, pageSize: 10n });
-      return result.ok?.data || [];
+      const result = await actor.getAllSubmissions();
+      return result || [];
     },
     enabled: !!actor && authed,
     staleTime: 30_000,

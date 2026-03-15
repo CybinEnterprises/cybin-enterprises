@@ -1,8 +1,7 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { useLiveSiteSettings } from "@/src/hooks/useLiveSiteSettings";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useLiveSiteSettings } from "@/hooks/useLiveSiteSettings";
+import { useSeo } from "@/hooks/useSeo";
 import { useMutation } from "@tanstack/react-query";
 import {
   AlertCircle,
@@ -13,7 +12,8 @@ import {
   Phone,
 } from "lucide-react";
 import { useState } from "react";
-import { useActor } from "../../hooks/useActor";
+import { Link } from "react-router-dom";
+import { useActor } from "@/hooks/useActor";
 
 const businessTypes = [
   "Research Peptides",

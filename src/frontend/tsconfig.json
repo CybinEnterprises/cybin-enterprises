@@ -17,12 +17,37 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": ["vite/client", "node"],
+    "baseUrl": ".",
     "paths": {
-      "declarations/*": ["./declarations/*"],
       "@/*": ["./*"],
-      "@services/*": ["./services/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@components/*": ["./src/components/*"],
+      "@lib/*": ["./lib/*"],
+      "@pages/*": ["./pages/*"],
+      "@widgets/*": ["./widgets/*"],
+      "@shared/*": ["./shared/*"],
+      "@data/*": ["./data/*"],
+      "@declarations/*": ["./declarations/*"],
+      "@mocks/*": ["./mocks/*"]
     }
   },
-  "include": [".", "components", "hooks", "lib", "contexts", "data", "declarations", "mocks", "services", "stores", "styles", "types", "config.ts", "App.tsx", "main.tsx", "index.css", "backend.ts", "backend.d.ts"],
+  "include": [
+    ".",
+    "src",
+    "lib",
+    "pages",
+    "widgets",
+    "shared",
+    "data",
+    "declarations",
+    "mocks",
+    "config.ts",
+    "App.tsx",
+    "main.tsx",
+    "index.css",
+    "backend.ts",
+    "backend.d.ts"
+  ],
   "exclude": ["node_modules", "dist", "build", "*.config.js"]
 }

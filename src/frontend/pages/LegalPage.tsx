@@ -1,7 +1,7 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface LegalSection {
   title: string;
@@ -82,7 +82,9 @@ export function LegalPageTemplate({
 
             <div className="space-y-8">
               {sections.map(({ title: sTitle, content }, i) => (
-                <div key={`section-${sTitle.replace(/\s+/g, '-').toLowerCase()}`}>
+                <div
+                  key={`section-${sTitle.replace(/\s+/g, "-").toLowerCase()}`}
+                >
                   <h2
                     className="text-lg font-bold mb-3"
                     style={{ fontFamily: "Sora, sans-serif", color: "#e8edf8" }}
@@ -91,7 +93,7 @@ export function LegalPageTemplate({
                   </h2>
                   {content.map((para, pIdx) => (
                     <p
-                      key={`para-${pIdx}-${para.substring(0, 20).replace(/\s+/g, '-').toLowerCase()}`}
+                      key={`para-${pIdx}-${para.substring(0, 20).replace(/\s+/g, "-").toLowerCase()}`}
                       className="text-sm mb-2"
                       style={{ color: "rgba(232,237,248,0.6)" }}
                     >

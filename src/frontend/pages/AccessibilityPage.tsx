@@ -1,6 +1,6 @@
-import { JsonLd } from "@/src/components/JsonLd";
+import { JsonLd } from "@/components/JsonLd";
+import { useSeo } from "@/hooks/useSeo";
 import { LegalPageTemplate } from "./LegalPage";
-import { useSeo } from "@/src/hooks/useSeo";
 
 export default function AccessibilityPage() {
   useSeo({

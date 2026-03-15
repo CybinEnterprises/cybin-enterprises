@@ -1,7 +1,6 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import { useActor } from "@/src/hooks/useActor";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import { useActor } from "@/hooks/useActor";
+import { useSeo } from "@/hooks/useSeo";
 import { useMutation } from "@tanstack/react-query";
 import {
   Building2,
@@ -16,6 +15,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const partnershipTypes = [
   {

@@ -1,6 +1,6 @@
-import { Link } from "@/src/lib/router";
 import { motion } from "motion/react";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const industryTiles = [
   { label: "Cannabis & CBD", href: "/industries/cannabis-cbd", icon: "🌿" },

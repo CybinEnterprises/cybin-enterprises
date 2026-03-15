@@ -8,15 +8,15 @@
    ============================================ */
 :root {
   /* ── Logo-extracted brand palette ── */
-  --color-brand-teal:        #00d4b8;   /* User specified bright teal */
-  --color-brand-teal-mid:    #00d4b8;   /* User specified mid teal */
-  --color-brand-teal-deep:   #00d4b8;   /* User specified deep teal */
-  --color-brand-navy:        #0a0f1e;   /* Navy blue from logo */
-  --color-brand-navy-dark:   #0a0f1e;   /* Dark navy */
+  --color-brand-teal: #00d4b8; /* User specified bright teal */
+  --color-brand-teal-mid: #00d4b8; /* User specified mid teal */
+  --color-brand-teal-deep: #00d4b8; /* User specified deep teal */
+  --color-brand-navy: #0a0f1e; /* Navy blue from logo */
+  --color-brand-navy-dark: #0a0f1e; /* Dark navy */
 
   /* Legacy alias → keep consistent across existing usages */
-  --color-brand-primary:     #00d4b8;
-  --color-brand-accent:      #00d4b8;
+  --color-brand-primary: #00d4b8;
+  --color-brand-accent: #00d4b8;
   --color-brand-accent-warm: #a87ef5;
 
   /* Typography */
@@ -55,49 +55,49 @@
 :root,
 [data-theme="dark"] {
   /* Surfaces — deep navy */
-  --color-background:        #0a0f1e;
-  --color-surface:           #110f22;
-  --color-surface-elevated:  #1a1833;
-  --color-hero-bg:           #0d1526;
-  
+  --color-background: #0a0f1e;
+  --color-surface: #110f22;
+  --color-surface-elevated: #1a1833;
+  --color-hero-bg: #0d1526;
+
   /* Text */
-  --color-text-primary:       #e8edf8;
-  --color-text-secondary:    #d4e0f5;
-  --color-text-muted:        rgba(232, 237, 248, 0.55);
-  --color-text-inverse:      #0a0f1e;
-  
+  --color-text-primary: #e8edf8;
+  --color-text-secondary: #d4e0f5;
+  --color-text-muted: rgba(232, 237, 248, 0.55);
+  --color-text-inverse: #0a0f1e;
+
   /* Borders */
-  --color-border:             rgba(255, 255, 255, 0.08);
-  --color-border-subtle:      rgba(255, 255, 255, 0.04);
-  --color-border-accent:     rgba(0, 212, 184, 0.12);
-  
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-border-accent: rgba(0, 212, 184, 0.12);
+
   /* Cards & Surfaces */
-  --color-card-bg:           rgba(255, 255, 255, 0.03);
-  --color-card-border:       rgba(255, 255, 255, 0.07);
-  
+  --color-card-bg: rgba(255, 255, 255, 0.03);
+  --color-card-border: rgba(255, 255, 255, 0.07);
+
   /* Accent — bright teal */
-  --color-text-accent:       #00d4b8;
-  --color-link:              #00d4b8;
-  --color-link-hover:        #6EF7D4;
-  
+  --color-text-accent: #00d4b8;
+  --color-link: #00d4b8;
+  --color-link-hover: #6ef7d4;
+
   /* Buttons — teal gradient */
-  --color-button-primary-bg:    #00d4b8;
-  --color-button-primary-text:  #0a0f1e;
+  --color-button-primary-bg: #00d4b8;
+  --color-button-primary-text: #0a0f1e;
   --color-button-primary-hover: #00f5cc;
-  
+
   /* Brand */
-  --color-brand-accent:      #00d4b8;
+  --color-brand-accent: #00d4b8;
   --color-brand-accent-warm: #a87ef5;
-  
+
   /* Neuron Canvas */
-  --neuron-color:            #00d4b8;
-  --neuron-secondary:         #a87ef5;
-  --neuron-opacity:           0.35;
-  
+  --neuron-color: #00d4b8;
+  --neuron-secondary: #a87ef5;
+  --neuron-opacity: 0.35;
+
   /* Shadows */
-  --shadow-sm:   0 1px 2px rgba(4, 18, 64, 0.4);
-  --shadow-md:   0 4px 12px rgba(4, 18, 64, 0.5);
-  --shadow-lg:   0 8px 30px rgba(4, 18, 64, 0.6);
+  --shadow-sm: 0 1px 2px rgba(4, 18, 64, 0.4);
+  --shadow-md: 0 4px 12px rgba(4, 18, 64, 0.5);
+  --shadow-lg: 0 8px 30px rgba(4, 18, 64, 0.6);
   --shadow-glow: 0 0 24px rgba(0, 212, 184, 0.25);
 }
 
@@ -109,49 +109,49 @@
    ============================================ */
 [data-theme="light"] {
   /* Surfaces — clean white */
-  --color-background:        #ffffff;
-  --color-surface:           #f8fafc;
-  --color-surface-elevated:  #ffffff;
-  --color-hero-bg:           #f8fafc;
-  
+  --color-background: #ffffff;
+  --color-surface: #f8fafc;
+  --color-surface-elevated: #ffffff;
+  --color-hero-bg: #f8fafc;
+
   /* Text — navy from logo */
-  --color-text-primary:      #0a0f1e;
-  --color-text-secondary:    rgba(10, 15, 30, 0.75);
-  --color-text-muted:        rgba(10, 15, 30, 0.55);
-  --color-text-inverse:      #ffffff;
-  
+  --color-text-primary: #0a0f1e;
+  --color-text-secondary: rgba(10, 15, 30, 0.75);
+  --color-text-muted: rgba(10, 15, 30, 0.55);
+  --color-text-inverse: #ffffff;
+
   /* Borders */
-  --color-border:             #e2e8f0;
-  --color-border-subtle:      #f1f5f9;
-  --color-border-accent:     rgba(0, 162, 129, 0.2);
-  
+  --color-border: #e2e8f0;
+  --color-border-subtle: #f1f5f9;
+  --color-border-accent: rgba(0, 162, 129, 0.2);
+
   /* Cards & Surfaces */
-  --color-card-bg:           rgba(0, 162, 129, 0.04);
-  --color-card-border:       rgba(0, 162, 129, 0.12);
-  
+  --color-card-bg: rgba(0, 162, 129, 0.04);
+  --color-card-border: rgba(0, 162, 129, 0.12);
+
   /* Accent — deep teal (WCAG contrast on white) */
-  --color-text-accent:       #00A381;
-  --color-link:              #00A381;
-  --color-link-hover:        #007A63;
-  
+  --color-text-accent: #00a381;
+  --color-link: #00a381;
+  --color-link-hover: #007a63;
+
   /* Buttons — deep teal */
-  --color-button-primary-bg:    #00A381;
-  --color-button-primary-text:  #ffffff;
-  --color-button-primary-hover: #007A63;
-  
+  --color-button-primary-bg: #00a381;
+  --color-button-primary-text: #ffffff;
+  --color-button-primary-hover: #007a63;
+
   /* Brand */
-  --color-brand-accent:      #00A381;
-  --color-brand-accent-warm: #8B5CF6;
-  
+  --color-brand-accent: #00a381;
+  --color-brand-accent-warm: #8b5cf6;
+
   /* Neuron Canvas */
-  --neuron-color:            #00A381;
-  --neuron-secondary:         #8B5CF6;
-  --neuron-opacity:           0.25;
-  
+  --neuron-color: #00a381;
+  --neuron-secondary: #8b5cf6;
+  --neuron-opacity: 0.25;
+
   /* Shadows */
-  --shadow-sm:   0 1px 2px rgba(8, 40, 104, 0.06);
-  --shadow-md:   0 4px 12px rgba(8, 40, 104, 0.1);
-  --shadow-lg:   0 8px 30px rgba(8, 40, 104, 0.14);
+  --shadow-sm: 0 1px 2px rgba(8, 40, 104, 0.06);
+  --shadow-md: 0 4px 12px rgba(8, 40, 104, 0.1);
+  --shadow-lg: 0 8px 30px rgba(8, 40, 104, 0.14);
   --shadow-glow: 0 0 20px rgba(0, 162, 129, 0.18);
 }
 

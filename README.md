@@ -1,666 +1,174 @@
-# Cybin Enterprises — Developer README
+# Cybin Enterprises
 
-This document covers everything your development team needs to know to deploy, customize, integrate, and extend the Cybin Enterprises website.
+A comprehensive platform for healthcare and pharmaceutical solutions.
 
----
+## Overview
 
-## 🚀 Quick Reference (For Designers & Developers)
+Cybin Enterprises provides a suite of healthcare solutions including:
+- Payment processing solutions
+- Industry-specific healthcare portals
+- Fraud prevention systems
+- Hardware integration solutions
+- Insights and knowledge sharing
+- Partner and compliance management
 
-### 🎨 Designers — Where to Find & Update Things
+## Technology Stack
 
-| What You Need | Where to Go | File / Location |
-|--------------|-------------|-----------------|
-| **Logo** | Header & Footer | `src/frontend/public/assets/cybin-logo.png` |
-| **Hero Images** | Home, About, Industry pages | `src/frontend/public/assets/generated/` |
-| **Team Photos** | About, Team sections | `src/frontend/public/assets/mel-headshot.jpeg`, `uploads/IMG_2988-1.jpeg` |
-| **Colors** | Theme colors | `src/frontend/lib/theme/tokens.ts` |
-| **Fonts** | Typography | `src/frontend/lib/theme/tokens.ts` |
-| **Site Text** | All page copy | `src/frontend/components/pages/` (each page) |
-| **Blog Posts** | Blog section | `src/frontend/data/blogPosts.ts` |
-| **Industries Data** | Industries page | `src/frontend/data/industries.ts` |
-| **FAQ Content** | FAQ page | `src/frontend/components/pages/FaqPage.tsx` |
-### 💻 Developers — Key Files & Commands
-| What You Need | Location |
-|--------------|----------|
-| **Frontend Entry** | `src/frontend/App.tsx` |
-| **Main Layout** | `src/frontend/components/Layout.tsx` |
-| **Routing** | `src/frontend/lib/router.tsx` |
-| **Theme System** | `src/frontend/contexts/ThemeContext.tsx` |
-| **Image Settings Hook** | `src/frontend/hooks/useImageSettings.ts` |
-| **Site Settings Hook** | `src/frontend/hooks/useSiteSettings.ts` |
-| **Backend API** | `src/backend/main.mo` |
-| **Backend Types** | `src/frontend/declarations/backend.did.d.ts` |*Admin Panel** | `src/frontend/components/pages/AdminPage.tsx` |
+- **Frontend**: React 19, TypeScript, Vite
+- **State Management**: React Query (TanStack)
+- **UI Components**: Radix UI, Tailwind CSS
+- **Backend**: Internet Computer (ICP) Canisters
+- **Authentication**: Internet Identity
+- **Storage**: ICP Asset Canisters
 
+## Getting Started
+
+### Prerequisites- Node.js 18+ (Recommended: v20.x)
+- pnpm 8+
+- DFX (for local development) - https://sdk.dfinity.org/docs/install-guide
+- Internet Identity setup
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd cybin-enterprises-1
+   ```
+
+2. Install dependencies:
+   ```bash
+   pnpm install
+   ```
+
+3. Environment Setup:
+   ```bash
+   cp src/frontend/env.json.example src/frontend/env.json
+   # Edit env.json with your configuration
+   ```
+
+### Development
+
+Start the development server:
 ```bash
-# Install dependencies
-pnpm install
-
-# Start development
-cd src/frontend && pnpm dev
-
-# Build for production
-cd src/frontend && pnpm build
-
-# Deploy to ICP
-dfx deploy --network ic
-```
-
----
-
-## Table of Contents
-
-1. [Quick Reference](#-quick-reference-for-designers--developers)
-2. [Project Structure](#1-project-structure)
-3. [Common Updates Guide](#2-common-updates-guide)
-4. [Local Development Setup](#3-local-development-setup)
-5. [Building and Deploying to ICP](#4-building-and-deploying-to-icp)
-6. [Custom Domain Setup (GoDaddy, Cloudflare, Namecheap)](#5-custom-domain-setup)
-7. [Admin Panel Usage](#6-admin-panel-usage)
-8. [Third-Party Website Editor Integration](#7-third-party-website-editor-integration)
-9. [AI / LLM Integration (ChatGPT, Claude, Grok, Local LLM)](#8-ai--llm-integration)
-10. [Blog Automation and Webhooks](#9-blog-automation-and-webhooks)
-11. [GitHub Export and Handoff](#10-github-export-and-handoff)
-12. [Security Notes](#11-security-notes)
-13. [Environment Configuration Reference](#12-environment-configuration-reference)
-
----
-
-## 1. Project Structure
-
-```
-/
-├── src/
-│   ├── backend/           # Motoko backend canister (ICP)
-│   │   └── main.mo        # All backend API endpoints
-│   └── frontend/          # React + TypeScript + Tailwind frontend
-│       ├── public/
-│       │   └── assets/    # Images, logo, headshots
-│       │       ├── cybin-logo.png         # Main logo (OG image fallback)
-│       │       ├── cybin-logo-light.png   # Light mode logo
-│       │       ├── cybin-logo-dark.png    # Dark mode logo
-│       │       ├── mel-headshot.jpeg      # Mel's photo
-│       │       ├── uploads/               # User-uploaded images
-│       │       │   └── IMG_2988-1.jpeg    # Shane's photo
-│       │       └── generated/             # Optimized images
-│       ├── components/     # React components
-│       │   ├── Layout.tsx              # Header, footer, nav
-│       │   ├── pages/                  # Page components
-│       │   │   ├── admin/               # Admin panel tabs
-│       │   │   ├── home/                # Home page sections
-│       │   │   ├── HomePage.tsx
-│       │   │   ├── AboutPage.tsx
-│       │   │   ├── LegalPage.tsx        # Privacy Policy, Terms, Cookie Policy
-│       │   │   ├── PartnersPage.tsx
-│       │   │   ├── WizardPage.tsx       # Intake wizard
-│       │   │   └── ...
-│       │   └── ui/            # UI primitives (shadcn/ui)
-│       ├── hooks/             # Custom React hooks
-│       │   ├── useSiteSettings.ts       # Site-wide text/color settings
-│       │   └── useImageSettings.ts       # Image crop/zoom settings
-│       ├── lib/               # Utilities
-│       │   └── router.tsx     # React Router configuration
-│       ├── src/               # Theme & context (empty folder - see #195)
-│       │   └── contexts/
-│       │       └── ThemeContext.tsx
-│       ├── data/              # Static data
-│       │   ├── blogPosts.ts
-│       │   └── industries.ts
-│       ├── declarations/      # Auto-generated type bindings
-│       │   └── backend.did.d.ts
-│       ├── App.tsx            # Main app entry with routes
-│       ├── main.tsx          # React mount point
-│       ├── env.json          # Canister IDs (fill in after deploy)
-│       ├── index.html        # HTML template
-│       └── tailwind.config.js
-├── dfx.json               # ICP deployment configuration
-├── package.json
-└── README.md              # This file
-```
-
----
-
-
-## 2. Common Updates Guide
-
-### Updating the Logo
-1. Replace `src/frontend/public/assets/cybin-logo.png` with your new logo
-2. The logo automatically adapts: white background on light mode, black on dark mode
-3. Clear browser cache to see changes
-
-### Updating Site Colors
-- **Primary colors**: `src/frontend/lib/theme/tokens.ts` - Look for `color` and `accent` tokens
-- **Tailwind config**: `src/frontend/tailwind.config.js`
-- **Theme context**: `src/frontend/contexts/ThemeContext.tsx`
-
-### Updating Page Content
-Each page is a separate component in `src/frontend/components/pages/`:
-- HomePage.tsx - Landing page
-- AboutPage.tsx - About us
-- IndustriesPage.tsx - Industries we serve
-- PartnersPage.tsx - Partner program
-- BlogPostPage.tsx - Individual blog posts
-
-### Adding a New Page
-1. Create component in `src/frontend/components/pages/`
-2. Add route in `src/frontend/lib/router.tsx`
-3. Add navigation link in `src/frontend/components/Layout.tsx`
-
-### Updating Blog Posts
-Edit `src/frontend/data/blogPosts.ts` - Each post is an object with title, content, date, etc.
-
-### Updating Industries Data
-Edit `src/frontend/data/industries.ts` - Contains all industry-specific content and images.
-
-### Image Optimization
-- Source images go in `src/frontend/public/assets/uploads/`
-- Generated/optimized images in `src/frontend/public/assets/generated/`
-- Run `node scripts/resize-images.js` to optimize images
-- Run `node scripts/prune-unused-images.js` to remove unused images
-
-## 3. Local Development Setup
-
-### Prerequisites
-
-- Node.js 18+
-- pnpm (`npm install -g pnpm`)
-- DFX CLI (`sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"`)
-
-### Steps
-
-```bash
-# Install all dependencies
-pnpm install
-
-# Start local ICP replica
-dfx start --background
+# Start local replica (if needed)
+dfx start --background --clean
 
 # Deploy canisters locally
 dfx deploy
 
 # Start frontend dev server
-cd src/frontend
-pnpm dev
+pnpm dev -- --host
 ```
 
-The site will be available at `http://localhost:5173`.
+The application will be available at http://localhost:5173
 
----
-
-## 4. Building and Deploying to ICP
-
-### Deploy to ICP Mainnet
+### Building for Production
 
 ```bash
-# Make sure you have a cycles wallet funded with ICP
-dfx identity get-principal
-
-# Deploy to mainnet
-dfx deploy --network ic
-
-# Your canister IDs will be printed. Save them.
-# Update src/frontend/env.json with these values.
-```
-
-### Update env.json
-
-After deploying, fill in `src/frontend/env.json`:
-
-```json
-{
-  "backend_canister_id": "your-backend-canister-id",
-  "frontend_canister_id": "your-frontend-canister-id",
-  "backend_host": "https://icp0.io",
-  "project_id": "your-project-id",
-  "ii_derivation_origin": "https://your-canister-id.icp0.io"
-}
-```
-
----
-
-## 5. Custom Domain Setup
-
-To point `cybinenterprises.com` (or any custom domain) to your ICP-hosted site:
-
-### Step 1 — Get your canister IDs
-
-From the Caffeine project dashboard → Project Settings, or from `dfx deploy` output.
-
-### Step 2 — Add DNS records
-
-In your DNS provider (GoDaddy, Cloudflare, Namecheap):
-
-| Type  | Name              | Value                                  | TTL  |
-|-------|-------------------|----------------------------------------|------|
-| CNAME | www               | `<frontend-canister-id>.icp0.io`       | Auto |
-| CNAME | @                 | `<frontend-canister-id>.icp0.io`       | Auto |
-| CNAME | _canister-id      | `<frontend-canister-id>`               | Auto |
-| TXT   | _canister-id      | `<frontend-canister-id>`               | Auto |
-
-> **GoDaddy Note:** GoDaddy does not allow CNAME on the root `@`. Use `www` as the primary domain, or use Cloudflare as a proxy (recommended for root domain support).
-
-> **Cloudflare Note:** Set the CNAME proxy status to "DNS only" (grey cloud, not orange) for ICP domains.
-
-### Step 3 — Register domain in Caffeine / ICP
-
-In the Caffeine dashboard → Settings → Custom Domain, add `cybinenterprises.com` and `www.cybinenterprises.com`.
-
-This creates the `.well-known/ic-domains` verification file automatically.
-
-### Step 4 — Verify
-
-DNS propagation typically takes 5–30 minutes. Check with:
-
-```bash
-dig CNAME www.cybinenterprises.com
-nslookup www.cybinenterprises.com
-```
-
----
-
-## 6. Admin Panel Usage
-
-Access the admin panel at: `https://[your-site-url]/admin`
-
-**Default PIN:** `cybin2026`
-
-> Change the PIN by editing `AdminPage.tsx` and updating the `ADMIN_PIN` constant, then redeploying.
-
-### Admin Tabs
-
-| Tab | Description |
-|-----|-------------|
-| Image Editor | Drag-and-drop crop positioning, zoom, alignment grid for Mel, Shane, and logo |
-| Site Editor | Edit all text (hero, bios, contact info), adjust colors, Export & Integrations guide |
-| Blog Manager | Create, edit, publish, and delete blog posts. Includes AI/webhook integration docs |
-| Analytics | Privacy-first page view analytics stored locally |
-| Partner Leads | View all partner application submissions |
-| Applications | View all wizard intake form submissions |
-| Contact | View all contact form submissions |
-
-### Real-Time Editing
-
-All changes in the Site Editor and Image Editor apply **instantly** to the live site without a page reload. Changes are saved to browser `localStorage` and broadcast via `CustomEvent`. To make changes permanent across all browsers, export them and apply them as code-level defaults.
-
----
-
-## 7. Third-Party Website Editor Integration
-
-### Option A — Iframe Embed
-
-Embed the live site in any platform that supports iframes (Notion pages, Webflow containers, internal dashboards):
-
-```html
-<iframe
-  src="https://cybinenterprises.com"
-  width="100%"
-  height="100%"
-  frameborder="0"
-  allow="fullscreen"
-></iframe>
-```
-
-### Option B — Headless Rebuild in Webflow / Framer
-
-1. Export the project via GitHub (see Section 9)
-2. Open `src/frontend/index.css` — extract the design system variables (colors, fonts, spacing)
-3. Open `src/frontend/tailwind.config.js` — extract the color tokens
-4. Recreate the visual layer in Webflow or Framer using these exact tokens
-5. For dynamic data (blog posts, contact form, wizard submissions), connect Webflow to the ICP backend API using Webflow's custom code embed + fetch API calls
-6. Reference `src/frontend/backend.d.ts` for the exact API method signatures
-### Option C — Visual Site Builder with Live Edit (Admin Panel)
-
-The admin panel's **Site Editor** tab (`/admin` → Site Editor) provides a visual interface to edit all site copy, images, and colors without touching code. This is the recommended approach for non-technical content updates.
-
----
-
-## 8. AI / LLM Integration
-
-This site is built to receive AI-generated content through backend webhooks. API keys must never be stored in the frontend.
-
-### Option A — Public AI APIs (ChatGPT, Claude, Grok, Gemini)
-
-#### OpenAI (ChatGPT)
-
-```javascript
-// Server-side only (Node.js, Deno, or ICP HTTP outcall)
-const response = await fetch('https://api.openai.com/v1/chat/completions', {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    model: 'gpt-4o',
-    messages: [
-      { role: 'system', content: 'You are a payment industry expert writing for Cybin Enterprises.' },
-      { role: 'user', content: 'Write a 600-word blog post about preventing chargebacks.' }
-    ],
-  }),
-});
-const data = await response.json();
-const blogContent = data.choices[0].message.content;
-// Then POST to the Cybin backend createBlogPost endpoint
-```
-
-#### Anthropic (Claude)
-
-```javascript
-const response = await fetch('https://api.anthropic.com/v1/messages', {
-  method: 'POST',
-  headers: {
-    'x-api-key': process.env.ANTHROPIC_API_KEY,
-    'anthropic-version': '2023-06-01',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    model: 'claude-opus-4-5',
-    max_tokens: 1024,
-    messages: [{ role: 'user', content: 'Write a blog post about high-risk merchant accounts.' }],
-  }),
-});
-```
-
-#### xAI (Grok)
-
-```javascript
-const response = await fetch('https://api.x.ai/v1/chat/completions', {
-  method: 'POST',
-  headers: {
-    'Authorization': `Bearer ${process.env.XAI_API_KEY}`,
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    model: 'grok-3',
-    messages: [{ role: 'user', content: 'Write about payment processing trends in 2026.' }],
-  }),
-});
-```
-
-### Option B — Locally Hosted LLM (Ollama)
-
-```bash
-# Install Ollama
-curl -fsSL https://ollama.ai/install.sh | sh
-
-# Pull a model
-ollama pull llama3
-ollama pull mistral
-
-# Ollama runs a REST API at http://localhost:11434
-```
-
-```javascript
-// Call local Ollama
-const response = await fetch('http://localhost:11434/api/generate', {
-  method: 'POST',
-  body: JSON.stringify({
-    model: 'llama3',
-    prompt: 'Write a blog post about high-risk payment processing.',
-    stream: false,
-  }),
-});
-const data = await response.json();
-const blogContent = data.response;
-```
-
-For production, deploy Ollama to a VPS (Hetzner, DigitalOcean, Vultr) and call it via ICP HTTP outcalls from the backend canister.
-
-### Option C — ICP HTTP Outcalls (Recommended for Production)
-
-The most secure approach: call AI APIs directly from the ICP backend canister using HTTP outcalls (no external server required).
-
-```motoko
-// In src/backend/main.mo
-import HttpTypes "mo:base/HttpTypes";
-
-public func generateBlogPost(prompt: Text) : async Text {
-  let request : HttpTypes.HttpRequest = {
-    url = "https://api.openai.com/v1/chat/completions";
-    method = "POST";
-    body = Text.encodeUtf8("{ \"model\": \"gpt-4o\", ... }");
-    headers = [
-      ("Authorization", "Bearer " # OPENAI_API_KEY),
-      ("Content-Type", "application/json")
-    ];
-    transform = null;
-  };
-  // See ICP documentation: https://internetcomputer.org/docs/current/developer-docs/smart-contracts/advanced-features/https-outcalls/
-};
-```
-
----
-
-## 9. Blog Automation and Webhooks
-
-### Zapier / Make Integration
-
-1. Go to [zapier.com](https://zapier.com) or [make.com](https://make.com)
-2. Create a new Zap/Scenario
-3. Set a trigger (e.g., "New row in Google Sheets", "Scheduled time", "RSS feed item")
-4. Add an action: **Webhooks** → **POST** to `https://cybinenterprises.com/api/blog`
-5. Map the fields:
-
-```json
-{
-  "title": "Your blog post title",
-  "category": "Payment Infrastructure",
-  "excerpt": "Short description...",
-  "body": "Full article body...",
-  "author": "Cybin Enterprises",
-  "readTime": "5 min read",
-  "publishDate": "2026-03-07"
-}
-```
-
-> **Note:** The `/api/blog` webhook endpoint requires developer activation. Contact your dev team to enable and secure this endpoint with an API key.
-
-### n8n (Self-Hosted Automation)
-
-[n8n](https://n8n.io) is an open-source alternative to Zapier that you can self-host:
-
-```bash
-npx n8n
-# or
-docker run -it --rm -p 5678:5678 n8nio/n8n
-```
-
-Use the HTTP Request node in n8n to POST to the blog webhook.
-
----
-
-## 10. GitHub Export and Handoff
-
-### Via Caffeine Dashboard
-
-1. Go to your Caffeine project dashboard
-2. Settings → GitHub Export
-3. Authorize the Caffeine GitHub app
-4. Select or create a private repository
-5. Click "Push to GitHub"
-
-### Cloning and Running Locally
-
-```bash
-git clone https://github.com/yourorg/cybin-enterprises
-cd cybin-enterprises
-pnpm install
-cd src/frontend
-pnpm dev
-```
-
-### Deploying from GitHub
-
-```bash
-# From project root
-dfx deploy --network ic
-
-# Or build frontend only
-cd src/frontend
 pnpm build
-# Output: src/frontend/dist/
 ```
 
----
+The built assets will be in the `dist/` directory.
 
-## 11. Security Notes
+### Testing
 
-| Topic | Guidance |
-|-------|----------|
-| Admin PIN | Change `ADMIN_PIN` in `AdminPage.tsx` before going to production. Consider adding IP allowlisting. |
-| API Keys | Never store AI API keys in frontend code. Use ICP canister state or server-side environment variables. |
-| Canister IDs | Canister IDs are public by design on ICP but should not be embedded in third-party editor environments. |
-| CORS | The ICP backend canister enforces its own CORS policy. Third-party tools calling the API must be allowlisted. |
-| Input Validation | All form fields have `maxLength` attributes. Backend validates all inputs before storing. |
-| Rate Limiting | Consider adding rate limiting to the backend if you expose public API endpoints. |
-| PCI-DSS | This site does not process cardholder data. Ensure any payment processing integration uses PCI-DSS Level 1 validated processors only. |
+```bash
+# Run unit tests
+pnpm test
 
----
+# Run tests with UI
+pnpm test:ui
 
-## 12. Backend v2.0.0 - Professional API
-
-The backend has been upgraded to v2.0.0 with enterprise-grade features:
-
-### New Features
-
-| Feature | Description |
-|---------|-------------|
-| **Stable Storage** | Data persists across canister upgrades |
-| **Pagination** | All list queries support `page` and `pageSize` params |
-| **Rate Limiting** | 10 requests/minute per user |
-| **Audit Logging** | Track all create/update/delete operations |
-| **Analytics** | Monthly metrics for submissions, applications, leads |
-| **Status Workflows** | Each entity has status (New/InProgress/Completed) |
-| **Input Validation** | Email, phone, FEIN validation |
-
-### API Response Format
-
-All mutations now return `OperationResult<T>`:
-
-```typescript
-// Success
-{ ok: T }
-
-// Error
-{ err: { ValidationError: "error message" } }
+# Run tests in CI mode
+pnpm test:run# Generate coverage report
+pnpm coverage
 ```
 
-### Helper Functions
+Note: Vitest requires Vite 6.x for full functionality. Current setup uses Vite 5.x.
 
-```typescript
-import { isOk, getErrorMessage, createPaginationParams } from './backend';
+## Project Structure
 
-// Check if operation succeeded
-if (isOk(result)) {
-  const data = result.ok;
-}
-
-// Get error message
-const error = getErrorMessage(result);
-
-// Create pagination params
-const params = createPaginationParams(0, 20); // page 0, 20 items per page
+```
+src/
+├── frontend/                 # Frontend application
+│   ├── src/                  # Source code
+│   │   ├── components/       # Reusable UI components
+│   │   ├── contexts/         # React contexts (Theme, etc.)
+│   │   ├── hooks/            # Custom React hooks│   │   ├── lib/              # Utility functions and services
+│   │   ├── pages/            # Page components
+│   │   ├── widgets/          # Layout widgets
+│   │   └── test/             # Test utilities and setup│   ├── public/               # Static assets│   ├── vite.config.js        # Vite configuration
+│   ├── tsconfig.json         # TypeScript configuration
+│   └── package.json          # Frontend dependencies
+├── backend/                  # Backend canisters
+│   └── src/                  # Motoko source code
+└── package.json              # Root package.json (workspace)
 ```
 
-### Example: Submitting Contact Form
+## Available Scripts
 
-```typescript
-const result = await actor.submitContactForm(
-  name,
-  email,
-  phone,
-  businessType,
-  message
-);
+### Frontend (`src/frontend/package.json`)
 
-if (isOk(result)) {
-  console.log('Submission ID:', result.ok);
-} else {
-  console.error('Error:', getErrorMessage(result));
-}
-```
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm test` - Run Vitest with UI
+- `pnpm test:run` - Run tests in headless mode
+- `pnpm coverage` - Run tests with coverage report
+- `pnpm typecheck` - Run TypeScript type checking
 
-### Example: Paginated Query
+### Backend
 
-```typescript
-const result = await actor.getAllSubmissions(
-  createPaginationParams(0, 10)
-);
+See `src/backend/README.md` for backend-specific commands.
 
-if (isOk(result)) {
-  const { data, page } = result.ok;
-  console.log('Total pages:', page.totalPages);
-  console.log('Items:', data);
-}
-```
+## Configuration
 
-### Backend API Reference
+### Environment Variables
 
-| Endpoint | Description |
-|----------|-------------|
-| `healthCheck()` | System status |
-| `getAnalytics()` | Monthly metrics |
-| `getDatabaseStats()` | Record counts |
-| `submitContactForm()` | Contact form submission |
-| `submitWizardApplication()` | Intake wizard submission |
-| `submitPartnerLead()` | Partner application |
-| `createBlogPost()` | Create blog post |
-| `publishBlogPost()` | Publish blog post |
-| `getAuditLogs()` | Query audit trail |
+The application uses environment variables configured in `src/frontend/env.json`:
 
----
+- `CANISTER_ID_BACKEND` - Backend canister ID
+- `BASE_URL` - Base URL for API calls
+- `STORAGE_GATEWAY_URL` - URL for asset storage
+- `II_URL` - Internet Identity URL- `VITE_USE_MOCK` - Use mock backend (true/false)
 
-## 13. Custom Domain Setup - Developer Handoff
+### Internet Identity
 
-When handing off to your development team for custom domain deployment:
+The application integrates with Internet Identity for authentication. Configure the `II_URL` in env.json to point to your Identity provider.
 
-### Pre-Deployment Checklist
+## Deployment
 
-- [ ] Backend canister deployed to ICP mainnet
-- [ ] Frontend canister deployed to ICP mainnet
-- [ ] Canister IDs saved from deployment
-- [ ] env.json updated with production values
-- [ ] Admin PIN changed from default
-- [ ] Health check verified: `https://[canister].icp0.io/healthCheck`
+### Vercel
 
-### DNS Configuration Required
+The frontend is configured for Vercel deployment with `vercel.json`.
 
-| Record Type | Host | Value | Priority |
-|------------|------|-------|----------|
-| CNAME | @ | [canister-id].icp0.io | - |
-| CNAME | www | [canister-id].icp0.io | - |
-| CNAME | _canister-id | [canister-id] | - |
-| TXT | _canister-id | [canister-id] | - |
+### Internet Computer
 
-### Production Environment (env.json)
+For ICP deployment:
+1. Set up your identity and networks in `dfx.json`
+2. Update canister IDs in `src/frontend/env.json`
+3. Deploy using `dfx deploy`
 
-```json
-{
-  "backend_canister_id": "XXXXX-xxyyy-zzzz-aaaa-bbbbbbbbbbbb-ic",
-  "frontend_canister_id": "XXXXX-xxyyy-zzzz-aaaa-bbbbbbbbbbbb-ic",
-  "backend_host": "https://icp0.io",
-  "project_id": "your-project-id",
-  "ii_derivation_origin": "https://your-domain.com"
-}
-```
+## Contributing
 
----
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 14. Environment Configuration Reference
+## License
 
-### src/frontend/env.json
+This project is proprietary and confidential. All rights reserved.
 
-| Key | Description | Where to Find |
-|-----|-------------|---------------|
-| `backend_canister_id` | ICP canister ID of the backend | `dfx canister id backend --network ic` |
-| `frontend_canister_id` | ICP canister ID of the frontend | `dfx canister id frontend --network ic` |
-| `backend_host` | ICP API host | Always `https://icp0.io` for mainnet |
-| `project_id` | Caffeine project ID | Caffeine dashboard → Project Settings |
-| `ii_derivation_origin` | Internet Identity origin for auth | `https://<frontend-canister-id>.icp0.io` |
+## Contact
 
----
+For support and inquiries, please contact the development team.
 
-## Support
+## Acknowledgments
 
-- **Caffeine Platform:** [caffeine.ai](https://caffeine.ai)
-- **ICP Developer Docs:** [internetcomputer.org/docs](https://internetcomputer.org/docs)
-- **Cybin Enterprises Contact:** Customercare@cybinenterprises.com | 888-321-2100
+- Built with [React](https://reactjs.org/)
+- UI components from [Radix UI](https://radix-ui.com/)
+- Styled with [Tailwind CSS](https://tailwindcss.com/)
+- State management with [React Query](https://tanstack.com/query/v4)
+- Blockchain platform: [Internet Computer](https://internetcomputer.org/)

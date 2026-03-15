@@ -1,8 +1,7 @@
-import { JsonLd } from "@/src/components/JsonLd";
-import PaymentBadges from "@/src/components/PaymentBadges";
-import { useTheme } from "@/src/contexts/ThemeContext";
-import { useSeo } from "@/src/hooks/useSeo";
-import { Link } from "@/src/lib/router";
+import { JsonLd } from "@/components/JsonLd";
+import PaymentBadges from "@/components/PaymentBadges";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useSeo } from "@/hooks/useSeo";
 import {
   ArrowRight,
   Building2,
@@ -16,6 +15,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const capabilities = [
   {
