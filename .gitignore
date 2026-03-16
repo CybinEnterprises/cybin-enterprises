@@ -5,3 +5,6 @@ src/frontend/node_modules
 .vercel
 src/frontend/dist
 src/frontend/.env
+.env.vercel
+vercel.json
+src/frontend/env.json
