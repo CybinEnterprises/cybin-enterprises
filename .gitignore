@@ -1,3 +1,7 @@
 # Ignore NeuronCanvas changes
 src/frontend/src/components/NeuronCanvas.tsx
 node_modules
+src/frontend/node_modules
+.vercel
+src/frontend/dist
+src/frontend/.env
