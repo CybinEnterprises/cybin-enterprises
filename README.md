@@ -1,67 +1,64 @@
 # Cybin Enterprises
 
-A comprehensive platform for healthcare and pharmaceutical solutions.
+A comprehensive platform for high-risk payment processing and healthcare solutions.
 
 ## Overview
 
-Cybin Enterprises provides a suite of healthcare solutions including:
-- Payment processing solutions
-- Industry-specific healthcare portals
-- Fraud prevention systems
-- Hardware integration solutions
-- Insights and knowledge sharing
-- Partner and compliance management
+Cybin Enterprises provides a suite of solutions including:
+- **Payment Processing** - High-risk merchant account solutions
+- **Industry Portals** - Healthcare, peptides, and specialty industry platforms
+- **Fraud Prevention** - Chargeback prevention and fraud detection systems
+- **Hardware Integration** - Payment hardware solutions (POS, card readers, mobile readers)
+- **Partner Management** - Partner lead tracking and analytics
+- **Compliance** - Regulatory compliance and legal documentation
 
 ## Technology Stack
 
-- **Frontend**: React 19, TypeScript, Vite
-- **State Management**: React Query (TanStack)
-- **UI Components**: Radix UI, Tailwind CSS
-- **Backend**: Internet Computer (ICP) Canisters
-- **Authentication**: Internet Identity
-- **Storage**: ICP Asset Canisters
+| Layer | Technology |
+|-------|------------|
+| Frontend | React 19, TypeScript, Vite |
+| State Management | React Query (TanStack) |
+| UI Components | Radix UI, Tailwind CSS, shadcn/ui |
+| Routing | React Router v7 |
+| Animations | Motion (Framer Motion) |
+| Backend | Internet Computer (ICP) Canisters |
+| Authentication | Internet Identity |
+| Storage | ICP Asset Canisters |
 
-## Getting Started
+## Quick Start
 
-### Prerequisites- Node.js 18+ (Recommended: v20.x)
+### Prerequisites
+
+- Node.js 18+ (Recommended: v20.x)
 - pnpm 8+
-- DFX (for local development) - https://sdk.dfinity.org/docs/install-guide
-- Internet Identity setup
+- DFX (for local ICP development) - https://internetcomputer.org/docs/current/developer-docs/getting-started/install/
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd cybin-enterprises-1
-   ```
+```bash
+# Clone the repository
+git clone <repository-url>
+cd cybin-enterprises-1
 
-2. Install dependencies:
-   ```bash
-   pnpm install
-   ```
+# Install dependencies
+pnpm install
 
-3. Environment Setup:
-   ```bash
-   cp src/frontend/env.json.example src/frontend/env.json
-   # Edit env.json with your configuration
-   ```
+# Copy environment configuration
+cp src/frontend/env.json.example src/frontend/env.json 2>/dev/null || true
+```
 
 ### Development
 
-Start the development server:
 ```bash
-# Start local replica (if needed)
+# Start frontend dev server (hot reload)
+pnpm dev
+
+# Or with ICP local replica (if using backend)
 dfx start --background --clean
-
-# Deploy canisters locally
 dfx deploy
-
-# Start frontend dev server
-pnpm dev -- --host
 ```
 
-The application will be available at http://localhost:5173
+The application runs at **http://localhost:5173**
 
 ### Building for Production
 
@@ -69,106 +66,235 @@ The application will be available at http://localhost:5173
 pnpm build
 ```
 
-The built assets will be in the `dist/` directory.
+Output: `src/frontend/dist/`
 
 ### Testing
 
 ```bash
-# Run unit tests
+# Run tests with UI
 pnpm test
 
-# Run tests with UI
-pnpm test:ui
+# Run tests headless
+pnpm test:run
 
-# Run tests in CI mode
-pnpm test:run# Generate coverage report
+# Generate coverage
 pnpm coverage
 ```
-
-Note: Vitest requires Vite 6.x for full functionality. Current setup uses Vite 5.x.
 
 ## Project Structure
 
 ```
-src/
-├── frontend/                 # Frontend application
-│   ├── src/                  # Source code
-│   │   ├── components/       # Reusable UI components
-│   │   ├── contexts/         # React contexts (Theme, etc.)
-│   │   ├── hooks/            # Custom React hooks│   │   ├── lib/              # Utility functions and services
-│   │   ├── pages/            # Page components
-│   │   ├── widgets/          # Layout widgets
-│   │   └── test/             # Test utilities and setup│   ├── public/               # Static assets│   ├── vite.config.js        # Vite configuration
-│   ├── tsconfig.json         # TypeScript configuration
-│   └── package.json          # Frontend dependencies
-├── backend/                  # Backend canisters
-│   └── src/                  # Motoko source code
-└── package.json              # Root package.json (workspace)
+cybin-enterprises-1/
+├── src/
+│   ├── frontend/                    # React frontend application
+│   │   ├── app/                     # App entry point and routing
+│   │   ├── src/
+│   │   │   ├── components/         # React components
+│   │   │   │   ├── layout/          # Layout components (PageHero)
+│   │   │   │   └── pages/          # Page-specific components
+│   │   │   ├── contexts/            # React contexts (ThemeContext)
+│   │   │   ├── hooks/              # Custom hooks (useSeo, usePageTracking, etc.)
+│   │   │   └── test/               # Test setup
+│   │   ├── pages/                  # Page components (route handlers)
+│   │   ├── widgets/                # Composed widgets (Layout)
+│   │   ├── shared/ui/              # UI component library (shadcn/ui)
+│   │   ├── lib/                   # Utilities (router, theme, storage)
+│   │   ├── data/                  # Static data (industries, blog posts)
+│   │   ├── declarations/           # ICP canister type declarations
+│   │   ├── mocks/                 # Mock data for development
+│   │   ├── public/                 # Static assets
+│   │   ├── vite.config.js          # Vite configuration (dev/build)
+│   │   ├── vite.config.ts          # Vitest configuration
+│   │   ├── tsconfig.json           # TypeScript configuration
+│   │   └── package.json
+│   └── backend/                    # ICP canisters (Motoko)
+│       ├── main.mo
+│       └── system-idl/
+├── plans/                         # Architecture planning documents
+├── scripts/                       # Build/utility scripts
+├── package.json                   # Root workspace config
+└── pnpm-workspace.yaml           # pnpm workspace definition
 ```
+
+### Path Aliases
+
+The project uses path aliases for cleaner imports:
+
+| Alias | Resolution |
+|-------|------------|
+| `@/*` | `./src/*` |
+| `@/components/*` | `./src/components/*` |
+| `@/components/ui/*` | `./shared/ui/*` |
+| `@/hooks/*` | `./src/hooks/*` |
+| `@/contexts/*` | `./src/contexts/*` |
+| `@/pages/*` | `./pages/*` |
+| `@/widgets/*` | `./widgets/*` |
+| `@/shared/*` | `./shared/*` |
+| `@/lib/*` | `./lib/*` |
 
 ## Available Scripts
 
-### Frontend (`src/frontend/package.json`)
+### Root Workspace
 
-- `pnpm dev` - Start development server
-- `pnpm build` - Build for production
-- `pnpm test` - Run Vitest with UI
-- `pnpm test:run` - Run tests in headless mode
-- `pnpm coverage` - Run tests with coverage report
-- `pnpm typecheck` - Run TypeScript type checking
+```bash
+pnpm dev          # Start all dev servers
+pnpm build        # Build all packages
+pnpm test         # Run tests
+```
+
+### Frontend (`src/frontend/`)
+
+```bash
+cd src/frontend
+pnpm dev              # Start Vite dev server
+pnpm build            # Production build
+pnpm test             # Run Vitest with UI
+pnpm test:run         # Run tests headless
+pnpm coverage         # Coverage report
+pnpm typecheck        # TypeScript check
+```
 
 ### Backend
 
-See `src/backend/README.md` for backend-specific commands.
+```bash
+dfx start            # Start local ICP replica
+dfx deploy           # Deploy canisters
+dfx generate         # Regenerate types
+```
 
 ## Configuration
 
 ### Environment Variables
 
-The application uses environment variables configured in `src/frontend/env.json`:
+Create `src/frontend/env.json`:
 
-- `CANISTER_ID_BACKEND` - Backend canister ID
-- `BASE_URL` - Base URL for API calls
-- `STORAGE_GATEWAY_URL` - URL for asset storage
-- `II_URL` - Internet Identity URL- `VITE_USE_MOCK` - Use mock backend (true/false)
+```json
+{
+  "CANISTER_ID_BACKEND": "ryjl3-tyaaa-aaaaa-aaaba-cai",
+  "BASE_URL": "http://localhost:4943",
+  "STORAGE_GATEWAY_URL": "https://blob.caffeine.ai",
+  "II_URL": "https://identity.ic0.app",
+  "VITE_USE_MOCK": "false"
+}
+```
 
 ### Internet Identity
 
-The application integrates with Internet Identity for authentication. Configure the `II_URL` in env.json to point to your Identity provider.
+The app integrates with Internet Identity for authentication. Set `II_URL`:
+- Local: `http://rdmx6-jaaaa-aaaaa-aaadq-cai.localhost:8081/`
+- Production: `https://identity.ic0.app/`
+
+## UI Components
+
+This project uses [shadcn/ui](https://ui.shadcn.com/) for UI components. Components are located in `shared/ui/`.
+
+Available components include:
+- Accordion, Alert, AlertDialog
+- Avatar, Badge, Breadcrumb
+- Button, Calendar, Card, Carousel
+- Checkbox, Collapsible, Command
+- Dialog, Drawer, DropdownMenu
+- Form, Input, Label
+- NavigationMenu, Pagination
+- Select, Separator, Sheet
+- Slider, Switch, Tabs
+- Table, Textarea, Toast
+- Tooltip, Toggle
+
+## Pages
+
+| Route | Page | Description |
+|-------|------|-------------|
+| `/` | HomePage | Landing page with hero, industries, testimonials |
+| `/about` | AboutPage | Company information |
+| `/solutions` | SolutionsPage | Payment solutions overview |
+| `/solutions/enterprise` | SolutionsEnterprisePage | Enterprise solutions |
+| `/industries` | IndustriesPage | Industry directory |
+| `/industries/:slug` | IndustryLandingPage | Industry-specific landing |
+| `/how-it-works` | HowItWorksPage | Process explanation |
+| `/hardware` | HardwarePage | Payment hardware catalog |
+| `/integrations` | IntegrationsPage | Integration partners |
+| `/partners` | PartnersPage | Partner program |
+| `/insights` | InsightsPage | Blog and resources |
+| `/knowledge` | KnowledgePage | Knowledge base |
+| `/faq` | FaqPage | Frequently asked questions |
+| `/contact` | ContactPage | Contact form |
+| `/compliance` | CompliancePage | Compliance information |
+| `/accessibility` | AccessibilityPage | Accessibility statement |
+| `/apply` | WizardPage | Merchant application |
+| `/admin` | AdminPage | Admin dashboard |
 
 ## Deployment
 
-### Vercel
+### Vercel (Frontend)
 
-The frontend is configured for Vercel deployment with `vercel.json`.
+The frontend is configured for Vercel deployment:
 
-### Internet Computer
+```bash
+# Build command
+pnpm build
 
-For ICP deployment:
-1. Set up your identity and networks in `dfx.json`
-2. Update canister IDs in `src/frontend/env.json`
-3. Deploy using `dfx deploy`
+# Output directory
+src/frontend/dist
+```
 
-## Contributing
+### Internet Computer (Backend)
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+```bash
+# Configure networks in dfx.json
+dfx deploy --network ic
+```
+
+## Development Guidelines
+
+### TypeScript
+
+- All new code should be TypeScript
+- Use strict type checking
+- Run `pnpm typecheck` before committing
+
+### Component Structure
+
+```tsx
+// Use functional components with hooks
+function MyComponent({ title }: MyComponentProps) {
+  const [state, setState] = useState<string>("");
+
+  return <div>{title}</div>;
+}
+```
+
+### Styling
+
+- Use Tailwind CSS classes
+- Use theme tokens for colors: `text-foreground`, `bg-background`, `border-input`
+- Use `cn()` utility for conditional classes
+
+### Testing
+
+```bash
+# Write tests near components
+// MyComponent.test.tsx
+
+import { render, screen } from "@testing-library/react";
+import { MyComponent } from "./MyComponent";
+
+test("renders title", () => {
+  render(<MyComponent title="Hello" />);
+  expect(screen.getByText("Hello")).toBeInTheDocument();
+});
+```
 
 ## License
 
-This project is proprietary and confidential. All rights reserved.
-
-## Contact
-
-For support and inquiries, please contact the development team.
+Proprietary - All rights reserved.
 
 ## Acknowledgments
 
-- Built with [React](https://reactjs.org/)
-- UI components from [Radix UI](https://radix-ui.com/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
-- State management with [React Query](https://tanstack.com/query/v4)
-- Blockchain platform: [Internet Computer](https://internetcomputer.org/)
+- [React](https://react.dev/)
+- [Radix UI](https://radix-ui.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [TanStack Query](https://tanstack.com/query)
+- [Motion](https://motion.dev/)
+- [Internet Computer](https://internetcomputer.org/)

@@ -1,13 +1,3 @@
+# Ignore NeuronCanvas changes
+src/frontend/src/components/NeuronCanvas.tsx
 node_modules
-dist
-.env
-.env.local
-.env.production
-.DS_Store
-*.log
-coverage
-.nyc_output
-.cache
-.vscode/settings.json
-.idea
-.vercel

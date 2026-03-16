@@ -1,12 +1,17 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const InternetIdentityContext = createContext({
+interface InternetIdentityContextType {
+  identity: string | null;
+  isAuthenticated: boolean;
+}
+
+const InternetIdentityContext = createContext<InternetIdentityContextType>({
   identity: null,
   isAuthenticated: false
 });
 
-export function InternetIdentityProvider({ children }) {
-  const [identity, setIdentity] = useState(null);
+export function InternetIdentityProvider({ children }: { children: React.ReactNode }) {
+  const [identity, setIdentity] = useState<string | null>(null);
 
   useEffect(() => {
     const mockIdentity = "mock-principal";
