@@ -81,8 +81,8 @@ export default function Layout({ children }: LayoutProps) {
   const { resolved } = useTheme?.() ?? { resolved: "light" };
   const isLight = resolved === "light";
   const logoImg = isLight
-    ? "/assets/cybin-logo-light.png"
-    : "/assets/cybin-logo-dark.png";
+    ? "/assets/cybin-logo-light.webp"
+    : "/assets/cybin-logo-dark.webp";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -252,8 +252,8 @@ export default function Layout({ children }: LayoutProps) {
                   loading="eager"
                   fetchPriority="high"
                   style={{
-                    width: `${logoCfg.containerHeight * 1.5}px`,
-                    height: `${logoCfg.containerHeight * 1.5}px`,
+                    width: "auto",
+                    height: "52px",
                     display: "block",
                     flexShrink: 0,
                     border: "none",
